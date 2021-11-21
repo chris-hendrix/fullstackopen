@@ -1,9 +1,22 @@
 import React, { useState } from 'react';
 
 const App = () => {
-  const [persons, setPersons] = useState([{ name: 'Arto Hellas', number: '555-555-5555' }]);
+  const [persons, setPersons] = useState([
+    { name: 'Arto', number: '040-123456', id: 1 },
+    { name: 'Ada', number: '39-44-5323523', id: 2 },
+    { name: 'Dan', number: '12-43-234345', id: 3 },
+    { name: 'Mary', number: '39-23-6423122', id: 4 },
+  ]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+  const [newFilter, setNewFilter] = useState('');
+
+  const getFilteredPersons = (text) => {
+    if (text.length === 0) {
+      return persons;
+    }
+    return persons.filter((person) => person.name.toLowerCase().startsWith(text));
+  };
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -28,6 +41,9 @@ const App = () => {
       case 'number':
         setNewNumber(event.target.value);
         break;
+      case 'filter':
+        setNewFilter(event.target.value);
+        break;
       default:
         break;
     }
@@ -36,6 +52,10 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+        filter: <input id='filter' onChange={inputChange} value={newFilter} />
+      </div>
+      <h2>Add New</h2>
       <form>
         <div>
           name: <input id='name' onChange={inputChange} value={newName} />
@@ -50,10 +70,9 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map((person) => (
+      {getFilteredPersons(newFilter).map((person) => (
         <p key={person.name}>{person.name + ' ' + person.number}</p>
       ))}
-      number: {newNumber}
     </div>
   );
 };
