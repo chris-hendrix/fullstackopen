@@ -34,6 +34,23 @@ const App = () => {
     });
   };
 
+  // delete person
+  const deletePerson = (id) => {
+    const deletedPerson = persons.find((person) => person.id === id);
+    // check if person exists
+    if (deletedPerson === undefined) {
+      alert(`person ${id} not found`);
+      return;
+    }
+    // confirm delete
+    if (!window.confirm(`Delete ${deletedPerson.name}?`)) {
+      return;
+    }
+    personService.deletePerson(id).then(() => {
+      setPersons(persons.filter((person) => person.id !== id));
+    });
+  };
+
   const inputChange = (event) => {
     switch (event.target.id) {
       case 'name':
@@ -57,7 +74,7 @@ const App = () => {
       <h2>Add New</h2>
       <PersonForm onSubmit={addPerson} onChange={inputChange} name={newName} number={newNumber} />
       <h2>Numbers</h2>
-      <Persons persons={persons} filter={newFilter} />
+      <Persons persons={persons} filter={newFilter} deletePerson={deletePerson} />
     </div>
   );
 };
