@@ -1,59 +1,20 @@
-import React, { useState } from 'react';
-
-const Filter = ({ onChange, value }) => {
-  return (
-    <div>
-      filter: <input id='filter' onChange={onChange} value={value} />
-    </div>
-  );
-};
-
-const PersonForm = ({ onSubmit, onChange, name, number }) => {
-  return (
-    <form>
-      <div>
-        name: <input id='name' onChange={onChange} value={name} />
-      </div>
-      <div>
-        number: <input id='number' onChange={onChange} value={number} />
-      </div>
-      <div>
-        <button onClick={onSubmit} type='submit'>
-          add
-        </button>
-      </div>
-    </form>
-  );
-};
-
-const Persons = ({ persons, filter }) => {
-  const getFilteredPersons = (text) => {
-    if (text.length === 0) {
-      return persons;
-    }
-    return persons.filter((person) => person.name.toLowerCase().startsWith(text.toLowerCase()));
-  };
-
-  return (
-    <div>
-      {getFilteredPersons(filter).map((person) => (
-        <p key={person.name}>{person.name + ' ' + person.number}</p>
-      ))}
-    </div>
-  );
-};
+import React, { useState, useEffect } from 'react';
+import Filter from './components/Filter';
+import PersonForm from './components/PersonForm';
+import Persons from './components/Persons';
+import personService from './services/persons';
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto', number: '040-123456', id: 1 },
-    { name: 'Ada', number: '39-44-5323523', id: 2 },
-    { name: 'Dan', number: '12-43-234345', id: 3 },
-    { name: 'Mary', number: '39-23-6423122', id: 4 },
-    { name: 'Daniel', number: '39-23-6423122', id: 5 },
-  ]);
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [newFilter, setNewFilter] = useState('');
+
+  useEffect(() => {
+    personService.getAll().then((initalPersons) => {
+      setPersons(initalPersons);
+    });
+  }, []);
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -65,9 +26,12 @@ const App = () => {
     }
 
     // add person
-    setPersons(persons.concat({ name: newName, number: newNumber }));
-    setNewName('');
-    setNewNumber('');
+    const personObject = { name: newName, number: newNumber };
+    personService.create(personObject).then((returnedPerson) => {
+      setPersons(persons.concat(returnedPerson));
+      setNewName('');
+      setNewNumber('');
+    });
   };
 
   const inputChange = (event) => {
