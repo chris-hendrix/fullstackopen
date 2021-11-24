@@ -2,12 +2,12 @@
   "persons": [
     {
       "name": "Arto",
-      "number": "040-123456",
+      "number": "7",
       "id": 1
     },
     {
       "name": "Ada",
-      "number": "39-44-5323523",
+      "number": "6",
       "id": 2
     },
     {

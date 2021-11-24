@@ -20,12 +20,22 @@ const App = () => {
     event.preventDefault();
 
     // new name check
-    if (persons.filter((person) => person.name === newName).length > 0) {
-      alert(`${newName} is already added to phonebook`);
+    const foundPerson = persons.find((person) => person.name === newName);
+    if (foundPerson !== undefined) {
+      if (!window.confirm(`${newName} already exists, update number to ${newNumber}?`)) {
+        return;
+      }
+      // update number
+      const changedPerson = { ...foundPerson, number: newNumber };
+      personService.update(foundPerson.id, changedPerson).then((returnedPerson) => {
+        setPersons(
+          persons.map((person) => (person.id !== foundPerson.id ? person : changedPerson))
+        );
+      });
       return;
     }
 
-    // add person
+    // add person if name doesn't exist
     const personObject = { name: newName, number: newNumber };
     personService.create(personObject).then((returnedPerson) => {
       setPersons(persons.concat(returnedPerson));
