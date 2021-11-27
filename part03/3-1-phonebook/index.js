@@ -3,7 +3,18 @@ const morgan = require('morgan');
 const app = express();
 
 app.use(express.json());
-app.use(morgan('tiny'));
+
+// morgan middleware
+morgan.token('id', function getId(req) {
+  return req.id;
+});
+
+morgan.token('post', (request) => {
+  if (request.method === 'POST') {
+    return JSON.stringify(request.body);
+  }
+});
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :post'));
 
 let persons = [
   {
