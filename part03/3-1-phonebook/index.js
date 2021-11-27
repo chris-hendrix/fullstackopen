@@ -31,6 +31,15 @@ app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>');
 });
 
+// GET info
+app.get('/info', (request, response) => {
+  const count = persons.length;
+  const date = new Date();
+  let html = `<p>Phonebook has info for ${count} people</p>`;
+  html += `<p>${date.toString()}</p>`;
+  response.send(html);
+});
+
 // GET persons
 app.get('/api/persons', (request, response) => {
   response.json(persons);
