@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
+import Notification from './components/Notification';
 import personService from './services/persons';
 
 const App = () => {
@@ -9,12 +10,19 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [newFilter, setNewFilter] = useState('');
+  const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState(null);
 
   useEffect(() => {
     personService.getAll().then((initalPersons) => {
       setPersons(initalPersons);
     });
   }, []);
+
+  const setNotification = (message, type) => {
+    setMessage(message);
+    setMessageType(type);
+  };
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -38,6 +46,10 @@ const App = () => {
     // add person if name doesn't exist
     const personObject = { name: newName, number: newNumber };
     personService.create(personObject).then((returnedPerson) => {
+      setNotification(`Added ${newName}`, 'success');
+      setTimeout(() => {
+        setNotification(null, null);
+      }, 5000);
       setPersons(persons.concat(returnedPerson));
       setNewName('');
       setNewNumber('');
@@ -56,9 +68,17 @@ const App = () => {
     if (!window.confirm(`Delete ${deletedPerson.name}?`)) {
       return;
     }
-    personService.deletePerson(id).then(() => {
-      setPersons(persons.filter((person) => person.id !== id));
-    });
+    personService
+      .deletePerson(id)
+      .then(() => {
+        setPersons(persons.filter((person) => person.id !== id));
+      })
+      .catch((error) =>
+        setNotification(
+          `Infomration of ${deletedPerson.name} has already been removed from the server`,
+          'error'
+        )
+      );
   };
 
   const inputChange = (event) => {
@@ -80,6 +100,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} type={messageType} />
       <Filter onChange={inputChange} value={newFilter} />
       <h2>Add New</h2>
       <PersonForm onSubmit={addPerson} onChange={inputChange} name={newName} number={newNumber} />
