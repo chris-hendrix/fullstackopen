@@ -5,15 +5,19 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev-server": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run dev-server\" \"npm run client\""
   },
   "author": "Chris Hendrix",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "concurrently": "^6.4.0",
     "nodemon": "^2.0.15"
   }
 }
