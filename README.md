@@ -1,4 +1,4 @@
-# fullstackopen
+# [fullstackopen 2021](https://fullstackopen.com/en/)
 
 Repo for learning React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one go!
 

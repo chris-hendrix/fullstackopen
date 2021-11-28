@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-// app.use(express.static('./client/build'));
+app.use(express.static('./client/build'));
 
 // morgan middleware
 morgan.token('id', function getId(req) {
