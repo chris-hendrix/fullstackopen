@@ -1,11 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const morgan = require('morgan');
 const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(express.static('./client/build'));
 
 // morgan middleware
 morgan.token('id', function getId(req) {
@@ -111,6 +111,17 @@ app.post('/api/persons', (request, response) => {
 
   response.json(person);
 });
+
+console.log(process.env.NODE_ENV);
+// serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
