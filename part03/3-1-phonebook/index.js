@@ -1,8 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 const morgan = require('morgan');
 const app = express();
 
 app.use(express.json());
+app.use(cors());
+// app.use(express.static('./client/build'));
 
 // morgan middleware
 morgan.token('id', function getId(req) {
@@ -78,6 +81,15 @@ app.delete('/api/persons/:id', (request, response) => {
   response.status(204).end();
 });
 
+// PUT updated person
+app.put('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id);
+  const index = persons.findIndex((person) => person.id == id);
+  persons[index] = request.body;
+
+  response.json(persons[index]);
+});
+
 // POST new person
 app.post('/api/persons', (request, response) => {
   const body = request.body;
@@ -105,7 +117,7 @@ app.post('/api/persons', (request, response) => {
   response.json(person);
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

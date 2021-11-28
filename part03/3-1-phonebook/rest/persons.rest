@@ -22,7 +22,29 @@ Content-Type: application/json
     "name": "Person 999",
     "number": "999-999-9999"
 }
+
 ### GET person 999
 GET http://localhost:3001/api/persons/999
+
 ### DELETE person 999
 DELETE http://localhost:3001/api/persons/999
+
+### PUT updated person 1
+PUT http://localhost:3001/api/persons/1
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "Arto Hellas",
+    "number": "555-555555"
+}
+
+### PUT updated person 1
+PUT http://localhost:3001/api/persons/1
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "Arto Hellas",
+    "number": "666-666666"
+}
