@@ -42,11 +42,6 @@ let persons = [
   },
 ];
 
-// GET hello world
-app.get('/', (request, response) => {
-  response.send('<h1>Hello World!</h1>');
-});
-
 // GET info
 app.get('/info', (request, response) => {
   const count = persons.length;
