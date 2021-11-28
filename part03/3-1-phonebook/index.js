@@ -113,7 +113,6 @@ app.post('/api/persons', (request, response) => {
   response.json(person);
 });
 
-console.log(process.env.NODE_ENV);
 // serve static assets in production
 if (process.env.NODE_ENV === 'production') {
   // set static folder
