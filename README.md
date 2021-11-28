@@ -16,3 +16,7 @@ Repo for learning React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one 
 - Part 11 - CI/CD
 - Part 12 - Containers
 - Part 13 - Using relational databases
+
+### Deployed exercises
+
+- Part 3 - Phonebook: https://fullstackopen-03-01-phonebook.herokuapp.com/
