@@ -1,11 +1,12 @@
 const express = require('express');
 const cors = require('cors');
+const dotenv = require('dotenv').config();
+const path = require('path');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('./client/build'));
 
 let notes = [
   {
@@ -27,11 +28,6 @@ let notes = [
     important: true,
   },
 ];
-
-// GET hello world
-app.get('/', (request, response) => {
-  response.send('<h1>Hello World!</h1>');
-});
 
 // GET notes
 app.get('/api/notes', (request, response) => {
@@ -100,6 +96,16 @@ const unknownEndpoint = (request, response) => {
 };
 
 app.use(unknownEndpoint);
+
+// serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
