@@ -91,11 +91,11 @@ app.post('/api/notes', (request, response) => {
 });
 
 // middleware
-const unknownEndpoint = (request, response) => {
+/*const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' });
 };
 
-app.use(unknownEndpoint);
+app.use(unknownEndpoint);*/
 
 // serve static assets in production
 if (process.env.NODE_ENV === 'production') {
