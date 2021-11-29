@@ -10,6 +10,7 @@
     "server": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm start --prefix client",
+    "debug": "npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Chris Hendrix",
@@ -17,7 +18,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13"
   },
   "devDependencies": {
     "concurrently": "^6.4.0",
