@@ -1,8 +1,8 @@
 ### GET all persons
 GET http://localhost:3001/api/persons
 
-### GET person 1
-GET http://localhost:3001/api/persons/1
+### GET person
+GET http://localhost:3001/api/persons/61a44a39557b551e1353066a
 
 ### POST new person
 POST http://localhost:3001/api/persons
@@ -13,13 +13,12 @@ Content-Type: application/json
     "number": "555-555-5555"
 }
 
-### POST person 999
+### POST person 
 POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "id": 999,
-    "name": "Person 999",
+    "name": "Chris Hendrix",
     "number": "999-999-9999"
 }
 
@@ -30,21 +29,19 @@ GET http://localhost:3001/api/persons/999
 DELETE http://localhost:3001/api/persons/999
 
 ### PUT updated person 1
-PUT http://localhost:3001/api/persons/1
+PUT http://localhost:3001/api/persons/61a44a39557b551e1353066a
 Content-Type: application/json
 
 {
-    "id": 1,
     "name": "Arto Hellas",
     "number": "555-555555"
 }
 
 ### PUT updated person 1
-PUT http://localhost:3001/api/persons/1
+PUT http://localhost:3001/api/persons/61a44a39557b551e1353066a
 Content-Type: application/json
 
 {
-    "id": 1,
     "name": "Arto Hellas",
     "number": "666-666666"
 }

@@ -4,10 +4,13 @@ const morgan = require('morgan');
 const dotenv = require('dotenv').config();
 const path = require('path');
 const app = express();
+const mongoose = require('mongoose');
+const Person = require('./models/person');
 
 app.use(express.json());
 app.use(cors());
 
+/*
 // morgan middleware
 morgan.token('id', function getId(req) {
   return req.id;
@@ -19,6 +22,7 @@ morgan.token('post', (request) => {
   }
 });
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :post'));
+
 
 let persons = [
   {
@@ -42,75 +46,84 @@ let persons = [
     number: '39-23-6423122',
   },
 ];
+*/
+
+// connect to mongoose
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then((result) => {
+    console.log('connected to MongoDB');
+  })
+  .catch((error) => {
+    console.log('error connecting to MongoDB:', error.message);
+  });
 
 // GET info
 app.get('/info', (request, response) => {
-  const count = persons.length;
-  const date = new Date();
-  let html = `<p>Phonebook has info for ${count} people</p>`;
-  html += `<p>${date.toString()}</p>`;
-  response.send(html);
+  Person.find({})
+    .then((persons) => {
+      const count = persons.length;
+      const date = new Date();
+      let html = `<p>Phonebook has info for ${count} people</p>`;
+      html += `<p>${date.toString()}</p>`;
+      response.send(html);
+    })
+    .catch((error) => response.json({ error }));
 });
 
 // GET persons
 app.get('/api/persons', (request, response) => {
-  response.json(persons);
+  Person.find({})
+    .then((persons) => response.json(persons))
+    .catch((error) => response.json(error));
 });
 
 // GET person
 app.get('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id);
-  const person = persons.find((person) => person.id === id);
-
-  if (person) {
-    response.json(person);
-  } else {
-    response.status(404).end();
-  }
-});
-
-// DELETE person
-app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id);
-  persons = persons.filter((person) => person.id !== id);
-
-  response.status(204).end();
-});
-
-// PUT updated person
-app.put('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id);
-  const index = persons.findIndex((person) => person.id == id);
-  persons[index] = request.body;
-
-  response.json(persons[index]);
+  const id = request.params.id;
+  const person = Person.find({ id })
+    .then((foundPerson) => response.json(foundPerson))
+    .catch((error) => response.status(404).json({ error }));
 });
 
 // POST new person
 app.post('/api/persons', (request, response) => {
-  const body = request.body;
-  // name and number missing
-  if (!body.name || !body.number) {
-    return response.status(400).json({
-      error: 'content missing',
-    });
-  }
+  const { name, number } = request.body;
+
   // person exists
-  if (persons.filter((person) => person.name === body.name).length > 0) {
-    return response.status(400).json({
-      error: 'name must be unique',
-    });
-  }
-  const person = {
-    name: body.name,
-    number: body.number,
-    date: new Date(),
-    id: body.id || Math.floor(Math.random() * 999999),
-  };
+  const persons = Person.find({ name, number })
+    .then((persons) => {
+      if (persons.length > 0) {
+        return response.status(400).json({
+          error: 'name must be unique',
+        });
+      }
+    })
+    .catch((error) => response.json({ error }));
 
-  persons = persons.concat(person);
+  // save person
+  const person = new Person({ name, number });
+  person
+    .save()
+    .then((savedPerson) => response.json(savedPerson))
+    .catch((error) => response.json({ error }));
+});
 
-  response.json(person);
+// DELETE person
+app.delete('/api/persons/:id', (request, response) => {
+  const id = request.params.id;
+  Person.deleteMany({ _id: id })
+    .then((doc) => response.json(doc))
+    .catch((error) => response.status(204).json({ error }));
+});
+
+// PUT updated person
+app.put('/api/persons/:id', (request, response) => {
+  const id = request.params.id;
+  const { name, number } = request.body;
+  Person.updateOne({ id }, { $set: { name, number } })
+    .then((doc) => response.json(doc))
+    .catch((error) => response.json({ error }));
 });
 
 // serve static assets in production
