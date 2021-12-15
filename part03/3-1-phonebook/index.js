@@ -59,7 +59,7 @@ mongoose
   });
 
 // GET info
-app.get('/info', (request, response) => {
+app.get('/info', (request, response, next) => {
   Person.find({})
     .then((persons) => {
       const count = persons.length;
@@ -68,63 +68,65 @@ app.get('/info', (request, response) => {
       html += `<p>${date.toString()}</p>`;
       response.send(html);
     })
-    .catch((error) => response.json({ error }));
+    .catch((error) => next(error));
 });
 
 // GET persons
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (request, response, next) => {
   Person.find({})
     .then((persons) => response.json(persons))
-    .catch((error) => response.json(error));
+    .catch((error) => next(error));
 });
 
 // GET person
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
   const id = request.params.id;
   const person = Person.find({ id })
     .then((foundPerson) => response.json(foundPerson))
-    .catch((error) => response.status(404).json({ error }));
+    .catch((error) => next(error));
 });
 
 // POST new person
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
   const { name, number } = request.body;
-
-  // person exists
-  const persons = Person.find({ name, number })
-    .then((persons) => {
-      if (persons.length > 0) {
-        return response.status(400).json({
-          error: 'name must be unique',
-        });
-      }
-    })
-    .catch((error) => response.json({ error }));
 
   // save person
   const person = new Person({ name, number });
   person
     .save()
     .then((savedPerson) => response.json(savedPerson))
-    .catch((error) => response.json({ error }));
+    .catch((error) => next(error));
 });
 
 // DELETE person
-app.delete('/api/persons/:id', (request, response) => {
-  const id = request.params.id;
-  Person.deleteMany({ _id: id })
-    .then((doc) => response.json(doc))
-    .catch((error) => response.status(204).json({ error }));
+app.delete('/api/persons/:id', (request, response, next) => {
+  Person.findByIdAndRemove(request.params.id)
+    .then((result) => {
+      response.status(204).end();
+    })
+    .catch((error) => next(error));
 });
 
-// PUT updated person
-app.put('/api/persons/:id', (request, response) => {
-  const id = request.params.id;
+// PUT updated note
+app.put('/api/persons/:id', (request, response, next) => {
   const { name, number } = request.body;
-  Person.updateOne({ id }, { $set: { name, number } })
-    .then((doc) => response.json(doc))
-    .catch((error) => response.json({ error }));
+
+  Person.findByIdAndUpdate(request.params.id, { name, number }, { new: true })
+    .then((updatedNote) => {
+      response.json(updatedNote);
+    })
+    .catch((error) => next(error));
 });
+
+// middleware: handler of requests with result to errors
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message);
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' });
+  }
+  next(error);
+};
+app.use(errorHandler); // this has to be the last loaded middleware.
 
 // serve static assets in production
 if (process.env.NODE_ENV === 'production') {
