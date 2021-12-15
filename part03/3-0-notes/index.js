@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
 const Note = require('./models/note');
 const path = require('path');
+const { notDeepEqual } = require('assert');
 
 const app = express();
 
@@ -11,7 +12,14 @@ app.use(cors());
 app.use(express.json());
 
 // connect to mongoose
-mongoose.connect(process.env.MONGODB_URI);
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then((result) => {
+    console.log('connected to MongoDB');
+  })
+  .catch((error) => {
+    console.log('error connecting to MongoDB:', error.message);
+  });
 
 // GET notes
 app.get('/api/notes', (request, response) => {
@@ -21,27 +29,41 @@ app.get('/api/notes', (request, response) => {
 });
 
 // GET note
-app.get('/api/notes/:id', (request, response) => {
-  Note.findById(request.params.id).then((note) => {
-    response.json(note);
-  });
+app.get('/api/notes/:id', (request, response, next) => {
+  Note.findById(request.params.id)
+    .then((note) => {
+      if (note) {
+        response.json(note);
+      } else {
+        response.status(404).end();
+      }
+    })
+    .catch((error) => next(error));
 });
 
 // DELETE note
-app.delete('/api/notes/:id', (request, response) => {
-  const id = Number(request.params.id);
-  notes = notes.filter((note) => note.id !== id);
-
-  response.status(204).end();
+app.delete('/api/notes/:id', (request, response, next) => {
+  Note.findByIdAndRemove(request.params.id)
+    .then((result) => {
+      response.status(204).end();
+    })
+    .catch((error) => next(error));
 });
 
 // PUT updated note
-app.put('/api/notes/:id', (request, response) => {
-  const id = Number(request.params.id);
-  const index = notes.findIndex((note) => note.id == id);
-  notes[index] = request.body;
+app.put('/api/notes/:id', (request, response, next) => {
+  const body = request.body;
 
-  response.json(notes[index]);
+  const note = {
+    content: body.content,
+    important: body.important,
+  };
+
+  Note.findByIdAndUpdate(request.params.id, note, { new: true })
+    .then((updatedNote) => {
+      response.json(updatedNote);
+    })
+    .catch((error) => next(error));
 });
 
 // POST new note
@@ -63,12 +85,21 @@ app.post('/api/notes', (request, response) => {
   });
 });
 
-// middleware
-/*const unknownEndpoint = (request, response) => {
+// handler of requests with unknown endpoint
+const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' });
 };
+app.use(unknownEndpoint);
 
-app.use(unknownEndpoint);*/
+// handler of requests with result to errors
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message);
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' });
+  }
+  next(error);
+};
+app.use(errorHandler); // this has to be the last loaded middleware.
 
 // serve static assets in production
 if (process.env.NODE_ENV === 'production') {
