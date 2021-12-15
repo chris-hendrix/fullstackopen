@@ -1,3 +1,6 @@
+### GET info
+GET http://localhost:3001/info
+
 ### GET all persons
 GET http://localhost:3001/api/persons
 
@@ -18,15 +21,15 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name": "Chris Hendrix",
+    "name": "Tom",
     "number": "999-999-9999"
 }
 
 ### GET person 999
-GET http://localhost:3001/api/persons/999
+GET http://localhost:3001/api/persons/61a44a39557b551e1353066a
 
 ### DELETE person 999
-DELETE http://localhost:3001/api/persons/999
+DELETE http://localhost:3001/api/persons/61a44a39557b551e1353066a
 
 ### PUT updated person 1
 PUT http://localhost:3001/api/persons/61a44a39557b551e1353066a
