@@ -1,0 +1,30 @@
+{
+  "name": "3-0-notes-server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd client && npm run build",
+    "install": "cd client && npm install",
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm start --prefix client",
+    "debug": "npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "lint": "eslint ."
+  },
+  "author": "Chris Hendrix",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13",
+    "mongoose-unique-validator": "^3.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^6.4.0",
+    "nodemon": "^2.0.15"
+  }
+}

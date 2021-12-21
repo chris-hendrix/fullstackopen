@@ -1,0 +1,38 @@
+### GET all blogs
+GET http://localhost:3001/api/blogs
+
+### GET blog 1
+GET http://localhost:3001/api/blogs/61c24f6bd23c199d2d70d031
+
+### POST blog
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+    "title": "rest test blog",
+    "author": "robot",
+    "url":"google.com",
+    "likes": 1
+}
+
+### PUT blog 1 likes to 2
+PUT http://localhost:3001/api/blogs/61c24f6bd23c199d2d70d031
+Content-Type: application/json
+
+{
+    "title": "rest test blog",
+    "author": "robot",
+    "url":"google.com",
+    "likes": 2
+}
+
+### PUT blog 1 likes to 3
+PUT http://localhost:3001/api/blogs/61c24f6bd23c199d2d70d031
+Content-Type: application/json
+
+{
+    "title": "rest test blog",
+    "author": "robot",
+    "url":"google.com",
+    "likes": 3
+}
