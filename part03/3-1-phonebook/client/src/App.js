@@ -45,15 +45,27 @@ const App = () => {
 
     // add person if name doesn't exist
     const personObject = { name: newName, number: newNumber };
-    personService.create(personObject).then((returnedPerson) => {
-      setNotification(`Added ${newName}`, 'success');
-      setTimeout(() => {
-        setNotification(null, null);
-      }, 5000);
-      setPersons(persons.concat(returnedPerson));
-      setNewName('');
-      setNewNumber('');
-    });
+    personService
+      .create(personObject)
+      .then((returnedPerson) => {
+        setNotification(`Added ${newName}`, 'success');
+        setTimeout(() => {
+          setNotification(null, null);
+        }, 5000);
+        setPersons(persons.concat(returnedPerson));
+        setNewName('');
+        setNewNumber('');
+      })
+      .catch((error) => {
+        // this is the way to access the error message
+        if (error.response.data.error) {
+          setNotification(error.response.data.error, 'error');
+          setTimeout(() => {
+            setNotification(null, null);
+          }, 5000);
+        }
+        //console.log(error.response.data);
+      });
   };
 
   // delete person

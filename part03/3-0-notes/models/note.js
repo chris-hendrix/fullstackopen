@@ -5,16 +5,14 @@ const mongoose = require('mongoose');
 const noteSchema = new mongoose.Schema({
   content: {
     type: String,
-    required: 'note cannot be blank',
+    minLength: 5,
+    required: true,
   },
   date: {
     type: Date,
-    default: Date.now,
+    required: true,
   },
-  important: {
-    type: Boolean,
-    default: true,
-  },
+  important: Boolean,
 });
 
 // converts id to string and deletes v from json results

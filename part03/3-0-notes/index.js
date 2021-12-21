@@ -23,6 +23,10 @@ mongoose
 
 // GET notes
 app.get('/api/notes', (request, response) => {
+  const body = request.body;
+  if (body.content === undefined) {
+    return response.status(400).json({ error: 'content missing' });
+  }
   Note.find({}).then((notes) => {
     response.json(notes);
   });
@@ -53,11 +57,7 @@ app.delete('/api/notes/:id', (request, response, next) => {
 // PUT updated note
 app.put('/api/notes/:id', (request, response, next) => {
   const body = request.body;
-
-  const note = {
-    content: body.content,
-    important: body.important,
-  };
+  const { content, important } = body;
 
   Note.findByIdAndUpdate(request.params.id, note, { new: true })
     .then((updatedNote) => {
@@ -69,7 +69,6 @@ app.put('/api/notes/:id', (request, response, next) => {
 // POST new note
 app.post('/api/notes', (request, response) => {
   const body = request.body;
-
   if (body.content === undefined) {
     return response.status(400).json({ error: 'content missing' });
   }
@@ -80,9 +79,13 @@ app.post('/api/notes', (request, response) => {
     date: new Date(),
   });
 
-  note.save().then((savedNote) => {
-    response.json(savedNote);
-  });
+  note
+    .save()
+    .then((savedNote) => savedNote.toJSON())
+    .then((savedAndFormattedNote) => {
+      response.json(savedAndFormattedNote);
+    })
+    .catch((error) => next(error));
 });
 
 // handler of requests with unknown endpoint
@@ -94,9 +97,13 @@ app.use(unknownEndpoint);
 // handler of requests with result to errors
 const errorHandler = (error, request, response, next) => {
   console.error(error.message);
+
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' });
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message });
   }
+
   next(error);
 };
 app.use(errorHandler); // this has to be the last loaded middleware.
