@@ -11,7 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-client": "npm run build --prefix client",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "lint": "eslint ."
   },
   "author": "Chris Hendrix",
   "license": "MIT",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "concurrently": "^6.4.0",
+    "eslint": "^8.5.0",
     "nodemon": "^2.0.15"
   }
 }
