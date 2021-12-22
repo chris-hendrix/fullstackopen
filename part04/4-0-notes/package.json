@@ -8,11 +8,11 @@
     "install": "cd client && npm install",
     "start": "node index.js",
     "server": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm start --prefix client",
     "debug": "npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "jest --verbose"
   },
   "author": "Chris Hendrix",
   "license": "MIT",
@@ -25,6 +25,12 @@
   },
   "devDependencies": {
     "concurrently": "^6.4.0",
+    "eslint": "^8.5.0",
+    "eslint-plugin-react": "^7.27.1",
+    "jest": "^27.4.5",
     "nodemon": "^2.0.15"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
