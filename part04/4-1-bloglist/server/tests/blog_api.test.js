@@ -44,6 +44,19 @@ test('a blog with no title or url results in status code 400', async () => {
   await api.post('/api/blogs').send({ author: 'Mr Forgetful' }).expect(400);
 });
 
+describe('deletion of a blog', () => {
+  test('succeeds with status code 204 if id is valid', async () => {
+    const blogsAtStart = await helper.blogsInDb();
+    const blogToDelete = blogsAtStart[0];
+    console.log(blogToDelete);
+
+    await api.delete(`/api/blogs/${blogToDelete._id}`).expect(204);
+
+    const blogsAtEnd = await helper.blogsInDb();
+    expect(blogsAtEnd).toHaveLength(helper.blogs.length - 1);
+  });
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
