@@ -12,7 +12,7 @@
     "debug": "npm run dev",
     "dev": "set NODE_ENV=development&&concurrently \"npm run server\" \"npm run client\"",
     "lint": "eslint .",
-    "test": "set NODE_ENV=test&&jest --verbose"
+    "test": "set NODE_ENV=test&&jest --verbose --runInBand"
   },
   "author": "Chris Hendrix",
   "license": "MIT",
@@ -21,6 +21,7 @@
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
     "mongoose": "^6.0.13",
     "mongoose-unique-validator": "^3.0.0"
   },
@@ -29,7 +30,8 @@
     "eslint-plugin-react": "^7.27.1",
     "jest": "^27.4.5",
     "nodemon": "^2.0.15",
-    "react-test-renderer": "^17.0.2"
+    "react-test-renderer": "^17.0.2",
+    "supertest": "^6.1.6"
   },
   "jest": {
     "testEnvironment": "node"
