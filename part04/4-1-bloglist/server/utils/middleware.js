@@ -1,5 +1,4 @@
 const logger = require('./logger');
-const jwt = require('jsonwebtoken');
 
 const tokenExtractor = (request, response, next) => {
   // code that extracts the token
