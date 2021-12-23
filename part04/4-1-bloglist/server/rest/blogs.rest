@@ -1,5 +1,6 @@
 ### GET all blogs
 GET http://localhost:3001/api/blogs
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxYzRkMzIyMWQzMzc4ODA1MjgwNjg3MyIsImlhdCI6MTY0MDI5OTUyMiwiZXhwIjoxNjQwMzAzMTIyfQ.Lda1PGoJ-5xcjMWY0PzwLjf74-E33NTB1J9ywe0I4fI
 
 ### GET blog 1
 GET http://localhost:3001/api/blogs/61c24f6bd23c199d2d70d031
@@ -11,7 +12,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb
 ### POST blog
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxYzRkMzIyMWQzMzc4ODA1MjgwNjg3MyIsImlhdCI6MTY0MDI5NDgyMSwiZXhwIjoxNjQwMjk4NDIxfQ.jSTNRdmR_8EmJZrA4uX-KTtwrPweSqzpQXgwG5o2EbI
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxYzRkMzIyMWQzMzc4ODA1MjgwNjg3MyIsImlhdCI6MTY0MDI5OTUyMiwiZXhwIjoxNjQwMzAzMTIyfQ.Lda1PGoJ-5xcjMWY0PzwLjf74-E33NTB1J9ywe0I4fI
 
 {
     "title": "rest test blog",

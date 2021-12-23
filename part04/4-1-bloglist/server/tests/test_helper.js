@@ -54,15 +54,25 @@ const users = [
     username: 'testuser1',
     name: 'Test User 1',
     passwordHash: '$2b$10$FSt12DOhAWi8oQsCPymSs.TAW513ZTJZcFBQzUfOru0vsjrZDLDvK', //123456
+    password: '123456',
     blogs: [],
   },
   {
     username: 'testuser2',
     name: 'Test User 2',
     passwordHash: '$2b$10$FSt12DOhAWi8oQsCPymSs.TAW513ZTJZcFBQzUfOru0vsjrZDLDvK',
+    password: '123456',
     blogs: [],
   },
 ];
+
+const user = {
+  username: 'testuser',
+  name: 'Test User',
+  password: '123456',
+  blogs: [],
+};
+
 const blogsInDb = async () => {
   const blogs = await Blog.find({});
   return blogs.map((blog) => blog.toJSON());
@@ -76,6 +86,7 @@ const usersInDb = async () => {
 module.exports = {
   listWithOneBlog,
   blogs,
+  user,
   users,
   blogsInDb,
   usersInDb,
