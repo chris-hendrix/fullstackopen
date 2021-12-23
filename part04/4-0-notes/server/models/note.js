@@ -1,18 +1,18 @@
-const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
 
 // note schema
 const noteSchema = new mongoose.Schema({
   content: {
     type: String,
-    minLength: 5,
     required: true,
+    minlength: 5,
   },
-  date: {
-    type: Date,
-    required: true,
-  },
+  date: Date,
   important: Boolean,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
 });
 
 // converts id to string and deletes v from json results
