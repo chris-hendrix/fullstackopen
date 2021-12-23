@@ -8,14 +8,6 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs.map((blog) => blog.toJSON()));
 });
 
-const getTokenFrom = (request) => {
-  const authorization = request.get('authorization');
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    return authorization.substring(7);
-  }
-  return null;
-};
-
 blogsRouter.post('/', async (request, response) => {
   // check for body and title
   const { title, url } = request.body;
@@ -23,7 +15,8 @@ blogsRouter.post('/', async (request, response) => {
     response.status(400).json({ error: 'title, url, and userId required' });
   }
   // get user by token
-  const token = getTokenFrom(request);
+  // const token = getTokenFrom(request);
+  const token = request.token;
   const decodedToken = jwt.verify(token, process.env.SECRET);
   if (!token || !decodedToken.id) {
     return response.status(401).json({ error: 'token missing or invalid' });
