@@ -7,6 +7,7 @@ GET http://localhost:3001/api/notes/1
 ### POST note
 POST http://localhost:3001/api/notes
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxYzQ5ZjIwNjFhZjcwZDJjNmIxODAxMCIsImlhdCI6MTY0MDI4NTg2OH0.qUeauDeGeHcwL9vgBHXS5DbWXUzDJzsthstY-_PoaEc
 
 {
     "content": "VS Code REST client is pretty good",
