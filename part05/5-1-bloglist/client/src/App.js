@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Blog from './components/Blog';
+import Notification from './components/Notification';
 import blogService from './services/blogs';
+import loginService from './services/login';
 
 const App = () => {
+  const localUserKey = 'bloglistUser';
   const [blogs, setBlogs] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
@@ -12,8 +16,34 @@ const App = () => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
   }, []);
 
-  const handleLogin = () => {
-    // TODO
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem(localUserKey);
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      blogService.setToken(user.token);
+    }
+  }, []);
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    try {
+      const user = await loginService.login({
+        username,
+        password,
+      });
+      window.localStorage.setItem(localUserKey, JSON.stringify(user));
+      blogService.setToken(user.token);
+      setUser(user);
+      setUsername('');
+      setPassword('');
+    } catch (exception) {
+      setErrorMessage('Wrong credentials');
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
+    }
   };
 
   const loginForm = () => (
@@ -42,6 +72,7 @@ const App = () => {
 
   const blogList = () => (
     <div>
+      <h3>{user.name}</h3>
       <h2>blogs</h2>
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
@@ -49,7 +80,12 @@ const App = () => {
     </div>
   );
 
-  return <div>{user ? blogList() : loginForm()}</div>;
+  return (
+    <div>
+      <Notification message={errorMessage} />
+      {user ? blogList() : loginForm()}
+    </div>
+  );
 };
 
 export default App;

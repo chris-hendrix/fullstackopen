@@ -1,8 +1,8 @@
 ### GET users
-GET http://localhost:3001/api/users
+GET http://localhost:3003/api/users
 
 ### POST user
-POST http://localhost:3001/api/users
+POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
@@ -13,7 +13,7 @@ Content-Type: application/json
 }
 
 ### POST user 2
-POST http://localhost:3001/api/users
+POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
