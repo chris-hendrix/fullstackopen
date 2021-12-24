@@ -42,3 +42,8 @@ Content-Type: application/json
     "url":"google.com",
     "likes": 3
 }
+
+### DELETE blog
+DELETE http://localhost:3000/api/blogs/61c24f6bd23c199d2d70d031
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxYzVlNzM4Yzg3ZjY5YmMzMTEwZjhiNCIsImlhdCI6MTY0MDM4MDg1OCwiZXhwIjoxNjQwMzg0NDU4fQ.c_2PnISxFPGGX1O0UJuJ9qN7SBb5gDJ1RstlCYVTt8A

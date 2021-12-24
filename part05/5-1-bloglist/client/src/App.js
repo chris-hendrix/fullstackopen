@@ -48,24 +48,34 @@ const App = () => {
 
   const updateBlog = async (updatedBlog, showMessage = false) => {
     const user = JSON.parse(window.localStorage.getItem(localUserKey));
+    const index = blogs.map((blog) => blog._id).indexOf(updatedBlog._id);
     blogService.setToken(user.token);
     const savedBlog = await blogService.update(updatedBlog._id, updatedBlog);
     const { title, author } = savedBlog;
     if (showMessage) displayMessage(`${title} by ${author} successfully updated`, 'success');
-    setBlogs([...blogs, savedBlog]);
+    const newBlogs = [...blogs];
+    newBlogs[index] = savedBlog;
+    setBlogs(newBlogs);
+  };
+
+  const deleteBlog = async (blogToDelete) => {
+    const { _id, title, author } = blogToDelete;
+    if (!blogToDelete.user || blogToDelete.user._id !== user._id) {
+      displayMessage(`User not authorized to delete.`, 'error');
+      return;
+    }
+    if (window.confirm(`delete ${title} by ${author}?`)) {
+      const user = JSON.parse(window.localStorage.getItem(localUserKey));
+      blogService.setToken(user.token);
+      await blogService.deleteOne(_id);
+      displayMessage(`${title} by ${author} successfully deleted`, 'success');
+      setBlogs([...blogs].filter((blog) => blog._id !== _id));
+    }
   };
 
   const handleInputChange = ({ name, value }) => {
-    switch (name) {
-      case 'username':
-        setCredentials({ ...credentials, username: value });
-        break;
-      case 'password':
-        setCredentials({ ...credentials, password: value });
-        break;
-      default:
-        break;
-    }
+    if (name === 'username') setCredentials({ ...credentials, username: value });
+    if (name === 'password') setCredentials({ ...credentials, password: value });
   };
 
   const handleLogin = async (event) => {
@@ -131,7 +141,7 @@ const App = () => {
         <div>{blogForm()}</div>
         <h2>blogs</h2>
         {sortedBlogs.map((blog) => (
-          <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
+          <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} />
         ))}
       </div>
     );

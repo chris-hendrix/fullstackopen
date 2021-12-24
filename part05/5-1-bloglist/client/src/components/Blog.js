@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, deleteBlog }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
   const [updatedBlog, setUpdatedBlog] = useState(blog);
   const blogStyle = {
@@ -19,11 +19,18 @@ const Blog = ({ blog, updateBlog }) => {
     await updateBlog({ ...updatedBlog, likes: updatedBlog.likes + 1 });
   };
 
+  const handleDelete = async () => {
+    deleteBlog({ ...updatedBlog });
+  };
+
   const blogDetails = () => (
     <div>
       <p>
         {updatedBlog.url} <br /> likes: {updatedBlog.likes}
       </p>
+      <button onClick={handleDelete} type='button'>
+        remove
+      </button>
     </div>
   );
   return (
