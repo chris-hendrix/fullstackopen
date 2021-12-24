@@ -6,10 +6,12 @@ import loginService from './services/login';
 
 const App = () => {
   const localUserKey = 'bloglistUser';
+  const initialBlog = { title: '', author: '', url: '' };
+  const initialCredentials = { username: '', password: '' };
   const [blogs, setBlogs] = useState([]);
   const [message, setMessage] = useState(null);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [credentials, setCredentials] = useState({ ...initialCredentials });
+  const [newBlog, setNewBlog] = useState({ ...initialBlog });
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -32,19 +34,38 @@ const App = () => {
     }, 5000);
   };
 
+  const handleInputChange = ({ name, value }) => {
+    switch (name) {
+      case 'username':
+        setCredentials({ ...credentials, username: value });
+        break;
+      case 'password':
+        setCredentials({ ...credentials, password: value });
+        break;
+      case 'title':
+        setNewBlog({ ...newBlog, title: value });
+        break;
+      case 'author':
+        setNewBlog({ ...newBlog, author: value });
+        break;
+      case 'url':
+        setNewBlog({ ...newBlog, url: value });
+        break;
+      default:
+        break;
+    }
+  };
+
   const handleLogin = async (event) => {
     event.preventDefault();
 
     try {
-      const user = await loginService.login({
-        username,
-        password,
-      });
+      const { username, password } = newBlog;
+      const user = await loginService.login({ username, password });
       window.localStorage.setItem(localUserKey, JSON.stringify(user));
       blogService.setToken(user.token);
       setUser(user);
-      setUsername('');
-      setPassword('');
+      setNewBlog({ ...initialBlog });
       displayMessage('Successful login');
     } catch (exception) {
       displayMessage('Wrong credentials');
@@ -57,27 +78,69 @@ const App = () => {
     displayMessage('Successful logout');
   };
 
+  const handleNewBlogSubmit = async (event) => {
+    event.preventDefault();
+    const user = JSON.parse(window.localStorage.getItem(localUserKey));
+    blogService.setToken(user.token);
+    const savedBlog = await blogService.create(newBlog);
+    setBlogs([...blogs, savedBlog]);
+    setNewBlog({ ...initialBlog });
+  };
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
         username
         <input
           type='text'
-          value={username}
+          value={credentials.username}
           name='Username'
-          onChange={({ target }) => setUsername(target.value)}
+          onChange={({ target }) => handleInputChange(target)}
         />
       </div>
       <div>
         password
         <input
           type='password'
-          value={password}
+          value={credentials.password}
           name='Password'
-          onChange={({ target }) => setPassword(target.value)}
+          onChange={({ target }) => handleInputChange(target)}
         />
       </div>
       <button type='submit'>login</button>
+    </form>
+  );
+
+  const blogForm = () => (
+    <form onSubmit={handleNewBlogSubmit}>
+      <div>
+        title:
+        <input
+          type='text'
+          value={newBlog.title}
+          name='title'
+          onChange={({ target }) => handleInputChange(target)}
+        />
+      </div>
+      <div>
+        author:
+        <input
+          type='text'
+          value={newBlog.author}
+          name='author'
+          onChange={({ target }) => handleInputChange(target)}
+        />
+      </div>
+      <div>
+        url:
+        <input
+          type='text'
+          value={newBlog.url}
+          name='url'
+          onChange={({ target }) => handleInputChange(target)}
+        />
+      </div>
+      <button type='submit'>Submit</button>
     </form>
   );
 
@@ -87,6 +150,8 @@ const App = () => {
       <button onClick={handleLogout} type='button'>
         Logout
       </button>
+      <h2>create new</h2>
+      <div>{blogForm()}</div>
       <h2>blogs</h2>
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
