@@ -21,4 +21,5 @@ const create = async (newObject) => {
   return response.data;
 };
 
-export default { setToken, getAll, create };
+const blogService = { setToken, getAll, create };
+export default blogService;

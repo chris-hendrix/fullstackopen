@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Blog from './components/Blog';
 import Notification from './components/Notification';
+import Togglable from './components/Togglable';
 import blogService from './services/blogs';
 import loginService from './services/login';
 
@@ -14,6 +15,7 @@ const App = () => {
   const [credentials, setCredentials] = useState({ ...initialCredentials });
   const [newBlog, setNewBlog] = useState({ ...initialBlog });
   const [user, setUser] = useState(null);
+  const blogFormRef = useRef();
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -82,6 +84,7 @@ const App = () => {
 
   const handleNewBlogSubmit = async (event) => {
     event.preventDefault();
+    blogFormRef.current.toggleVisibility();
     const user = JSON.parse(window.localStorage.getItem(localUserKey));
     blogService.setToken(user.token);
     const savedBlog = await blogService.create(newBlog);
@@ -116,41 +119,43 @@ const App = () => {
   );
 
   const blogForm = () => (
-    <form onSubmit={handleNewBlogSubmit}>
-      <div>
-        title:
-        <input
-          type='text'
-          value={newBlog.title}
-          name='title'
-          onChange={({ target }) => handleInputChange(target)}
-        />
-      </div>
-      <div>
-        author:
-        <input
-          type='text'
-          value={newBlog.author}
-          name='author'
-          onChange={({ target }) => handleInputChange(target)}
-        />
-      </div>
-      <div>
-        url:
-        <input
-          type='text'
-          value={newBlog.url}
-          name='url'
-          onChange={({ target }) => handleInputChange(target)}
-        />
-      </div>
-      <button type='submit'>Submit</button>
-    </form>
+    <Togglable buttonLabel='create new blog' ref={blogFormRef}>
+      <form onSubmit={handleNewBlogSubmit}>
+        <div>
+          title:
+          <input
+            type='text'
+            value={newBlog.title}
+            name='title'
+            onChange={({ target }) => handleInputChange(target)}
+          />
+        </div>
+        <div>
+          author:
+          <input
+            type='text'
+            value={newBlog.author}
+            name='author'
+            onChange={({ target }) => handleInputChange(target)}
+          />
+        </div>
+        <div>
+          url:
+          <input
+            type='text'
+            value={newBlog.url}
+            name='url'
+            onChange={({ target }) => handleInputChange(target)}
+          />
+        </div>
+        <button type='submit'>Submit</button>
+      </form>
+    </Togglable>
   );
 
   const blogList = () => (
     <div>
-      <h3>{user.name}</h3>
+      <p>{user.name} is logged in</p>
       <button onClick={handleLogout} type='button'>
         Logout
       </button>
