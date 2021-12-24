@@ -4,7 +4,6 @@ import { render, fireEvent, prettyDOM } from '@testing-library/react';
 import Blog from '../components/Blog';
 
 describe('<Blog />', () => {
-  let component;
   const testBlog = { title: 'Test Title', author: 'Test Author', url: 'test.com', likes: 2 };
 
   beforeEach(() => {});
