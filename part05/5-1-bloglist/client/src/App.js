@@ -31,7 +31,6 @@ const App = () => {
 
   const displayMessage = (text, type) => {
     setMessage({ text, type });
-    console.log(message);
     setTimeout(() => {
       setMessage({ ...initialMessage });
     }, 5000);
@@ -44,6 +43,15 @@ const App = () => {
     const savedBlog = await blogService.create(newBlog);
     const { title, author } = savedBlog;
     displayMessage(`a new blog ${title} by ${author} successfully added`, 'success');
+    setBlogs([...blogs, savedBlog]);
+  };
+
+  const updateBlog = async (updatedBlog, showMessage = false) => {
+    const user = JSON.parse(window.localStorage.getItem(localUserKey));
+    blogService.setToken(user.token);
+    const savedBlog = await blogService.update(updatedBlog._id, updatedBlog);
+    const { title, author } = savedBlog;
+    if (showMessage) displayMessage(`${title} by ${author} successfully updated`, 'success');
     setBlogs([...blogs, savedBlog]);
   };
 
@@ -121,7 +129,7 @@ const App = () => {
       <div>{blogForm()}</div>
       <h2>blogs</h2>
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
       ))}
     </div>
   );

@@ -1,6 +1,7 @@
-import React from 'react';
-import Togglable from './Togglable';
-const Blog = ({ blog }) => {
+import React, { useState } from 'react';
+const Blog = ({ blog, updateBlog }) => {
+  const [detailsVisible, setDetailsVisible] = useState(false);
+  const [updatedBlog, setUpdatedBlog] = useState(blog);
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -9,17 +10,32 @@ const Blog = ({ blog }) => {
     marginBottom: 5,
   };
 
+  const handleDetails = () => {
+    setDetailsVisible(!detailsVisible);
+  };
+
+  const handleLike = async () => {
+    setUpdatedBlog({ ...updatedBlog, likes: updatedBlog.likes + 1 });
+    await updateBlog({ ...updatedBlog, likes: updatedBlog.likes + 1 });
+  };
+
   const blogDetails = () => (
     <div>
       <p>
-        {blog.url} <br /> likes: {blog.likes}
+        {updatedBlog.url} <br /> likes: {updatedBlog.likes}
       </p>
     </div>
   );
   return (
     <div style={blogStyle}>
-      {blog.title} by {blog.author}
-      <Togglable buttonLabel='view'>{blogDetails()}</Togglable>
+      {updatedBlog.title} by {updatedBlog.author + ' '}
+      <button onClick={handleDetails} type='button'>
+        {detailsVisible ? 'hide' : 'view'}
+      </button>
+      <button onClick={handleLike} type='button'>
+        like
+      </button>
+      <div> {detailsVisible && blogDetails()} </div>
     </div>
   );
 };
