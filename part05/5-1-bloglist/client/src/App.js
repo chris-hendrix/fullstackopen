@@ -8,8 +8,9 @@ const App = () => {
   const localUserKey = 'bloglistUser';
   const initialBlog = { title: '', author: '', url: '' };
   const initialCredentials = { username: '', password: '' };
+  const initialMessage = { text: null, type: null };
   const [blogs, setBlogs] = useState([]);
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState({ ...initialMessage });
   const [credentials, setCredentials] = useState({ ...initialCredentials });
   const [newBlog, setNewBlog] = useState({ ...initialBlog });
   const [user, setUser] = useState(null);
@@ -27,10 +28,11 @@ const App = () => {
     }
   }, []);
 
-  const displayMessage = (message) => {
-    setMessage(message);
+  const displayMessage = (text, type) => {
+    setMessage({ text, type });
+    console.log(message);
     setTimeout(() => {
-      setMessage(null);
+      setMessage({ ...initialMessage });
     }, 5000);
   };
 
@@ -60,22 +62,22 @@ const App = () => {
     event.preventDefault();
 
     try {
-      const { username, password } = newBlog;
+      const { username, password } = credentials;
       const user = await loginService.login({ username, password });
       window.localStorage.setItem(localUserKey, JSON.stringify(user));
       blogService.setToken(user.token);
       setUser(user);
       setNewBlog({ ...initialBlog });
-      displayMessage('Successful login');
+      displayMessage('Successful login', 'success');
     } catch (exception) {
-      displayMessage('Wrong credentials');
+      displayMessage('Wrong credentials', 'error');
     }
   };
 
   const handleLogout = () => {
     setUser(null);
     window.localStorage.removeItem(localUserKey);
-    displayMessage('Successful logout');
+    displayMessage('Successful logout', 'success');
   };
 
   const handleNewBlogSubmit = async (event) => {
@@ -83,6 +85,8 @@ const App = () => {
     const user = JSON.parse(window.localStorage.getItem(localUserKey));
     blogService.setToken(user.token);
     const savedBlog = await blogService.create(newBlog);
+    const { title, author } = savedBlog;
+    displayMessage(`a new blog ${title} by ${author} successfully added`, 'success');
     setBlogs([...blogs, savedBlog]);
     setNewBlog({ ...initialBlog });
   };
@@ -94,7 +98,7 @@ const App = () => {
         <input
           type='text'
           value={credentials.username}
-          name='Username'
+          name='username'
           onChange={({ target }) => handleInputChange(target)}
         />
       </div>
@@ -103,7 +107,7 @@ const App = () => {
         <input
           type='password'
           value={credentials.password}
-          name='Password'
+          name='password'
           onChange={({ target }) => handleInputChange(target)}
         />
       </div>
@@ -161,7 +165,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={message} />
+      <Notification text={message.text} type={message.type} />
       {user ? blogList() : loginForm()}
     </div>
   );
