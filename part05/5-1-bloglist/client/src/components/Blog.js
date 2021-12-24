@@ -36,7 +36,7 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
     </div>
   );
   return (
-    <div style={blogStyle}>
+    <div className='blogItem' style={blogStyle}>
       {updatedBlog.title} by {updatedBlog.author + ' '}
       <button onClick={handleDetails} type='button'>
         {detailsVisible ? 'hide' : 'view'}

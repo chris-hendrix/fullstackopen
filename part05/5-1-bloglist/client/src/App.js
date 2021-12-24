@@ -132,7 +132,7 @@ const App = () => {
   const blogList = () => {
     const sortedBlogs = [...blogs].sort((a, b) => (a.likes > b.likes ? -1 : 1));
     return (
-      <div>
+      <div className='blogList'>
         <p>{user.name} is logged in</p>
         <button onClick={handleLogout} type='button'>
           Logout
