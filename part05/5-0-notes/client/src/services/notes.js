@@ -26,5 +26,5 @@ const update = (id, newObject) => {
   return request.then((response) => response.data);
 };
 
-const toExport = { getAll, create, update, setToken };
-export default toExport;
+const noteService = { getAll, create, update, setToken };
+export default noteService;
