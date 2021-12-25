@@ -22,7 +22,8 @@
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
     "logs:prod": "heroku logs --tail",
     "dev": "concurrently \"npm run start\" \"npm run server\"",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "test:e2e": "cypress run"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {

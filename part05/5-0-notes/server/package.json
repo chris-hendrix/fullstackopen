@@ -13,8 +13,8 @@
     "dev": "set NODE_ENV=development&&concurrently \"npm run server\" \"npm run client\"",
     "lint": "eslint .",
     "test": "set NODE_ENV=test&&jest --verbose --runInBand",
-    "start:test": "set NODE_ENV=test nodemon index.js",
-    "dev:test": "set NODE_ENV=test&&concurrently \"npm run server\" \"npm run client\""
+    "cypress:open": "cypress:open --prefix ../client",
+    "dev:test": "set NODE_ENV=test&&concurrently \"npm run server\" \"npm run client\" \"npm run cypress:open\""
   },
   "author": "Chris Hendrix",
   "license": "MIT",
