@@ -1,5 +1,5 @@
 {
-  "name": "3-0-notes-server",
+  "name": "notes-server",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -12,7 +12,9 @@
     "debug": "npm run dev",
     "dev": "set NODE_ENV=development&&concurrently \"npm run server\" \"npm run client\"",
     "lint": "eslint .",
-    "test": "set NODE_ENV=test&&jest --verbose --runInBand"
+    "test": "set NODE_ENV=test&&jest --verbose --runInBand",
+    "start:test": "set NODE_ENV=test nodemon index.js",
+    "dev:test": "set NODE_ENV=test&&concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Chris Hendrix",
   "license": "MIT",
