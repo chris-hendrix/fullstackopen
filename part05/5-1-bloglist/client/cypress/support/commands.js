@@ -26,7 +26,7 @@
 import loginService from '../../src/services/login';
 
 Cypress.Commands.add('login', ({ username, password }) => {
-  cy.request('POST', 'http://localhost:3001/api/login', {
+  cy.request('POST', 'http://localhost:3003/api/login', {
     username,
     password,
   }).then(({ body }) => {
