@@ -44,7 +44,20 @@ describe('Blog app', function () {
       cy.contains(`${testBlog.title} by ${testBlog.author}`);
     });
 
-    describe('When a blog is created', function () {
+    it('A blog can be deleted', function () {
+      // create blog
+      cy.contains('button', 'create new').click();
+      cy.get('#title').type(testBlog.title);
+      cy.get('#author').type(testBlog.author);
+      cy.get('#url').type(testBlog.url);
+      cy.contains('button', 'Submit').click();
+      // delete blog
+      cy.contains('button', 'view').click();
+      cy.contains('button', 'remove').click();
+      cy.get('.blogList').should('not.contain', `${testBlog.title} by ${testBlog.author}`);
+    });
+
+    describe('When one blog is created', function () {
       beforeEach(function () {
         cy.createBlog(testBlog);
       });
