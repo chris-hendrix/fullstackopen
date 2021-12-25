@@ -43,5 +43,17 @@ describe('Blog app', function () {
       cy.contains('button', 'Submit').click();
       cy.contains(`${testBlog.title} by ${testBlog.author}`);
     });
+
+    describe('When a blog is created', function () {
+      beforeEach(function () {
+        cy.createBlog(testBlog);
+      });
+
+      it('a user can like a blog', function () {
+        cy.contains('button', 'like').click();
+        cy.contains('button', 'view').click();
+        cy.contains('likes: 1');
+      });
+    });
   });
 });
