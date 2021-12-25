@@ -4,8 +4,10 @@ module.exports = {
     commonjs: true,
     es2021: true,
     jest: true,
+    'cypress/globals': true,
   },
-  extends: 'eslint:recommended',
+  plugins: ['cypress'],
+  extends: ['eslint:recommended', 'plugin:cypress/recommended'],
   parserOptions: {
     ecmaVersion: 2018,
   },
