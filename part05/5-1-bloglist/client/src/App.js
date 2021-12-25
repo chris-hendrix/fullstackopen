@@ -7,7 +7,6 @@ import blogService from './services/blogs';
 import loginService from './services/login';
 
 const App = () => {
-  const localUserKey = 'bloglistUser';
   const initialCredentials = { username: '', password: '' };
   const initialMessage = { text: null, type: null };
   const [blogs, setBlogs] = useState([]);
@@ -21,7 +20,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem(localUserKey);
+    const loggedUserJSON = window.localStorage.getItem(loginService.localUserKey);
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
@@ -38,7 +37,7 @@ const App = () => {
 
   const createBlog = async (newBlog) => {
     blogFormRef.current.toggleVisibility();
-    const user = JSON.parse(window.localStorage.getItem(localUserKey));
+    const user = JSON.parse(window.localStorage.getItem(loginService.localUserKey));
     blogService.setToken(user.token);
     const savedBlog = await blogService.create(newBlog);
     const { title, author } = savedBlog;
@@ -47,7 +46,7 @@ const App = () => {
   };
 
   const updateBlog = async (updatedBlog, showMessage = false) => {
-    const user = JSON.parse(window.localStorage.getItem(localUserKey));
+    const user = JSON.parse(window.localStorage.getItem(loginService.localUserKey));
     const index = blogs.map((blog) => blog._id).indexOf(updatedBlog._id);
     blogService.setToken(user.token);
     const savedBlog = await blogService.update(updatedBlog._id, updatedBlog);
@@ -65,7 +64,7 @@ const App = () => {
       return;
     }
     if (window.confirm(`delete ${title} by ${author}?`)) {
-      const user = JSON.parse(window.localStorage.getItem(localUserKey));
+      const user = JSON.parse(window.localStorage.getItem(loginService.localUserKey));
       blogService.setToken(user.token);
       await blogService.deleteOne(_id);
       displayMessage(`${title} by ${author} successfully deleted`, 'success');
@@ -84,7 +83,7 @@ const App = () => {
     try {
       const { username, password } = credentials;
       const user = await loginService.login({ username, password });
-      window.localStorage.setItem(localUserKey, JSON.stringify(user));
+      window.localStorage.setItem(loginService.localUserKey, JSON.stringify(user));
       blogService.setToken(user.token);
       setUser(user);
       displayMessage('Successful login', 'success');
@@ -95,7 +94,7 @@ const App = () => {
 
   const handleLogout = () => {
     setUser(null);
-    window.localStorage.removeItem(localUserKey);
+    window.localStorage.removeItem(loginService.localUserKey);
     displayMessage('Successful logout', 'success');
   };
 
@@ -104,6 +103,7 @@ const App = () => {
       <div>
         username
         <input
+          id='username'
           type='text'
           value={credentials.username}
           name='username'
@@ -113,6 +113,7 @@ const App = () => {
       <div>
         password
         <input
+          id='password'
           type='password'
           value={credentials.password}
           name='password'

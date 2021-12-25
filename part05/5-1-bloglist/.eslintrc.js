@@ -6,11 +6,11 @@ module.exports = {
     jest: true,
     'cypress/globals': true,
   },
-  plugins: ['cypress'],
   extends: ['eslint:recommended', 'plugin:cypress/recommended'],
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2017,
   },
+  plugins: ['react', 'jest', 'cypress'],
   rules: {
     indent: ['error', 2],
     'linebreak-style': ['error', 'windows'],
