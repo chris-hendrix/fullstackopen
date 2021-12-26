@@ -1,17 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { voteForAnecdote, createAnecdote } from './reducers/anecdoteReducer';
+import { voteForAnecdote } from './reducers/anecdoteReducer';
+import AnecdoteForm from './components/AnecdoteForm';
 
 const App = () => {
   const anecdotes = useSelector((state) => [...state].sort((a, b) => (a.votes > b.votes ? -1 : 1)));
   const dispatch = useDispatch();
 
-  const create = (e) => {
-    e.preventDefault();
-    if (e.target.value === '') return;
-    dispatch(createAnecdote(e.target.content.value));
-    e.target.content.value = '';
-  };
   return (
     <div>
       <h2>Anecdotes</h2>
@@ -24,13 +19,7 @@ const App = () => {
           </div>
         </div>
       ))}
-      <h2>create new</h2>
-      <form onSubmit={create}>
-        <div>
-          <input name='content' />
-        </div>
-        <button type='submit'>create</button>
-      </form>
+      <AnecdoteForm />
     </div>
   );
 };
