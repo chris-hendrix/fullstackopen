@@ -4,9 +4,16 @@ import { voteForAnecdote } from '../reducers/anecdoteReducer';
 import { setMessage } from '../reducers/messageReducer';
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector((state) =>
-    [...state.anecdotes].sort((a, b) => (a.votes > b.votes ? -1 : 1))
-  );
+  const anecdotes = useSelector((state) => {
+    let modified = [...state.anecdotes];
+    modified.sort((a, b) => (a.votes > b.votes ? -1 : 1));
+    if (state.filter && state.filter !== '') {
+      modified = modified.filter((a) =>
+        a.content.toLowerCase().includes(state.filter.toLowerCase())
+      );
+    }
+    return modified;
+  });
   const dispatch = useDispatch();
   const vote = ({ id, content }) => {
     dispatch(voteForAnecdote(id));
