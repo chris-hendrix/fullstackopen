@@ -1,8 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { createAnecdote } from '../reducers/anecdoteReducer';
+
 const AnecdoteForm = () => {
   const dispatch = useDispatch();
+
   const create = (e) => {
     e.preventDefault();
     if (e.target.value === '') return;
