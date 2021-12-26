@@ -3,12 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { voteForAnecdote, createAnecdote } from './reducers/anecdoteReducer';
 
 const App = () => {
-  const anecdotes = useSelector((state) => state);
+  const anecdotes = useSelector((state) => [...state].sort((a, b) => (a.votes > b.votes ? -1 : 1)));
   const dispatch = useDispatch();
 
   const create = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
     if (e.target.value === '') return;
     dispatch(createAnecdote(e.target.content.value));
     e.target.content.value = '';
