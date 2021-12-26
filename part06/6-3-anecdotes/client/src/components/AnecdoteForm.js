@@ -1,15 +1,21 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { createAnecdote } from '../reducers/anecdoteReducer';
+import { setMessage } from '../reducers/messageReducer';
 
 const AnecdoteForm = () => {
   const dispatch = useDispatch();
 
   const create = (e) => {
     e.preventDefault();
-    if (e.target.value === '') return;
-    dispatch(createAnecdote(e.target.content.value));
+    const content = e.target.content.value;
+    if (content === '') return;
+    dispatch(createAnecdote(content));
+    dispatch(setMessage(`created '${content}'`));
     e.target.content.value = '';
+    setTimeout(() => {
+      dispatch(setMessage(''));
+    }, 5000);
   };
 
   return (
