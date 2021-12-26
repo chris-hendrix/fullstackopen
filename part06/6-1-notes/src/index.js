@@ -1,9 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import App from './App';
 import noteReducer from './reducers/noteReducer';
 
-const store = createStore(noteReducer);
+const store = createStore(
+  noteReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 store.dispatch({
   type: 'NEW_NOTE',
@@ -23,23 +28,9 @@ store.dispatch({
   },
 });
 
-const App = () => {
-  return (
-    <div>
-      <ul>
-        {store.getState().map((note) => (
-          <li key={note.id}>
-            {note.content} <strong>{note.important ? 'important' : ''}</strong>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-const renderApp = () => {
-  ReactDOM.render(<App />, document.getElementById('root'));
-};
-
-renderApp();
-store.subscribe(renderApp);
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
