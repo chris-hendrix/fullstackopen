@@ -26,8 +26,8 @@ export const voteForAnecdote = (id) => {
   return { type: 'VOTE_FOR_ANECDOTE', data: { id } };
 };
 
-export const createAnecdote = (content) => {
-  return { type: 'CREATE_ANECDOTE', data: { content } };
+export const createAnecdote = (anecdote) => {
+  return { type: 'CREATE_ANECDOTE', data: anecdote };
 };
 
 export default anecdoteReducer;
