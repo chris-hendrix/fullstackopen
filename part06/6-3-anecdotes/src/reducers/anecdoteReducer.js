@@ -18,6 +18,7 @@ const asObject = (anecdote) => {
 };
 
 const initialState = anecdotesAtStart.map(asObject);
+console.log(initialState);
 
 const anecdoteReducer = (state = initialState, action) => {
   switch (action.type) {
