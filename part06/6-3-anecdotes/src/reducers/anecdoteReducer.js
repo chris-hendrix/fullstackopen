@@ -7,6 +7,7 @@ const anecdoteReducer = (state = [], action) => {
     }
     case 'VOTE_FOR_ANECDOTE': {
       const changedAnecdote = action.data;
+      console.log(changedAnecdote);
       return state.map((a) => (a.id === changedAnecdote.id ? changedAnecdote : a));
     }
     case 'CREATE_ANECDOTE': {
@@ -25,13 +26,13 @@ export const getAnecdotes = () => {
   };
 };
 
-export const voteForAnecdote = ({ id, content, likes }) => {
+export const voteForAnecdote = ({ id, content, votes }) => {
   return async (dispatch) => {
-    const savedAnecdote = await anecdoteService.update(id, {
+    const changedAnecdote = await anecdoteService.update(id, {
       content,
-      likes: likes ? likes + 1 : 1,
+      votes: votes ? votes + 1 : 1,
     });
-    dispatch({ type: 'VOTE_FOR_ANECDOTE', data: savedAnecdote });
+    dispatch({ type: 'VOTE_FOR_ANECDOTE', data: changedAnecdote });
   };
 };
 
