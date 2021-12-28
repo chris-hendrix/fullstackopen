@@ -8,10 +8,18 @@ const messageReducer = (state = '', action) => {
   }
 };
 
-export const setMessage = (message) => {
-  return {
-    type: 'SET_MESSAGE',
-    message,
+export const setMessage = (message, seconds = 5) => {
+  return async (dispatch) => {
+    dispatch({ type: 'SET_MESSAGE', message });
+    setTimeout(() => {
+      dispatch({ type: 'SET_MESSAGE', message: '' });
+    }, seconds * 1000);
   };
 };
 export default messageReducer;
+/*
+dispatch(setMessage(`voted for '${anecdote.content}'`));
+setTimeout(() => {
+  dispatch(setMessage(''));
+},
+*/

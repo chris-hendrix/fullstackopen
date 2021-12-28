@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { createAnecdote } from '../reducers/anecdoteReducer';
 import { setMessage } from '../reducers/messageReducer';
-import anecdoteService from '../services/anecdotes';
 
 const AnecdoteForm = () => {
   const dispatch = useDispatch();
@@ -11,12 +10,8 @@ const AnecdoteForm = () => {
     e.preventDefault();
     const content = e.target.content.value;
     if (content === '') return;
-    dispatch(createAnecdote({ content }));
+    dispatch(createAnecdote({ content, votes: 0 }));
     dispatch(setMessage(`created '${content}'`));
-    e.target.content.value = '';
-    setTimeout(() => {
-      dispatch(setMessage(''));
-    }, 5000);
   };
 
   return (

@@ -19,9 +19,6 @@ const AnecdoteList = () => {
   const vote = (anecdote) => {
     dispatch(voteForAnecdote(anecdote));
     dispatch(setMessage(`voted for '${anecdote.content}'`));
-    setTimeout(() => {
-      dispatch(setMessage(''));
-    }, 5000);
   };
 
   return (
