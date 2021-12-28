@@ -14,10 +14,11 @@ const AnecdoteList = () => {
     }
     return modified;
   });
+
   const dispatch = useDispatch();
-  const vote = ({ id, content }) => {
-    dispatch(voteForAnecdote(id));
-    dispatch(setMessage(`voted for '${content}'`));
+  const vote = (anecdote) => {
+    dispatch(voteForAnecdote(anecdote));
+    dispatch(setMessage(`voted for '${anecdote.content}'`));
     setTimeout(() => {
       dispatch(setMessage(''));
     }, 5000);
