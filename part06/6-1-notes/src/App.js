@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import NewNote from './components/NewNote';
-import Notes from './components/Notes';
+import Notes from './components/Notes_Connect';
 import VisibilityFilter from './components/VisibilityFilter';
 import { initializeNotes } from './reducers/noteReducer';
 import { useDispatch } from 'react-redux';
