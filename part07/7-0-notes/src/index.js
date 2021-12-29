@@ -1,13 +1,10 @@
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom/cjs/react-router-dom.min';
-import './index.css';
-import App from './App';
+import App from './App_bootstrap';
 
 ReactDOM.render(
   <Router>
     <App />
-  </Router>
-    , 
+  </Router>,
   document.getElementById('root')
 );
-
