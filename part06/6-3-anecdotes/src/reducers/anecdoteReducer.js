@@ -7,7 +7,6 @@ const anecdoteReducer = (state = [], action) => {
     }
     case 'VOTE_FOR_ANECDOTE': {
       const changedAnecdote = action.data;
-      console.log(changedAnecdote);
       return state.map((a) => (a.id === changedAnecdote.id ? changedAnecdote : a));
     }
     case 'CREATE_ANECDOTE': {
