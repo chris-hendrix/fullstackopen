@@ -1,6 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const getCountry = async (name) => {
+  if (!name || name === '') return null;
+  let country = { found: false };
+  try {
+    const response = await axios.get(`https://restcountries.com/v2/name/${name}`);
+    const countries = response.data;
+    if (Array.isArray(countries)) {
+      if (countries.length > 0) country = { data: countries[0], found: true };
+      return country;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  return country;
+};
+
 const useField = (type) => {
   const [value, setValue] = useState('');
 
@@ -17,9 +33,11 @@ const useField = (type) => {
 
 const useCountry = (name) => {
   const [country, setCountry] = useState(null);
-
-  useEffect(() => {});
-
+  useEffect(() => {
+    getCountry(name)
+      .then((country) => setCountry(country))
+      .catch((error) => console.log(error));
+  }, [name]);
   return country;
 };
 
@@ -51,7 +69,6 @@ const App = () => {
     e.preventDefault();
     setName(nameInput.value);
   };
-
   return (
     <div>
       <form onSubmit={fetch}>
