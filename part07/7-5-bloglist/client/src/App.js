@@ -1,26 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Blog from './components/Blog';
 import Notification from './components/Notification';
 import BlogForm from './components/BlogForm';
 import Togglable from './components/Togglable';
 import blogService from './services/blogs';
 import loginService from './services/login';
+
 import { setMessage } from './reducers/messageReducer';
+import { getBlogs } from './reducers/blogReducer';
 
 const App = () => {
   const initialCredentials = { username: '', password: '' };
-  const initialMessage = { text: null, type: null };
-  const [blogs, setBlogs] = useState([]);
   const [credentials, setCredentials] = useState({ ...initialCredentials });
   const [user, setUser] = useState(null);
   const blogFormRef = useRef();
 
   const dispatch = useDispatch();
+  const blogs = useSelector((state) => state.blog.blogs);
 
-  useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
-  }, []);
+  useEffect(() => dispatch(getBlogs()), [dispatch]);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem(loginService.localUserKey);
@@ -33,43 +32,6 @@ const App = () => {
 
   const displayMessage = (text, type) => {
     dispatch(setMessage({ text, type }));
-  };
-
-  const createBlog = async (newBlog) => {
-    blogFormRef.current.toggleVisibility();
-    const user = JSON.parse(window.localStorage.getItem(loginService.localUserKey));
-    blogService.setToken(user.token);
-    const savedBlog = await blogService.create(newBlog);
-    const { title, author } = savedBlog;
-    displayMessage(`a new blog ${title} by ${author} successfully added`, 'success');
-    setBlogs([...blogs, savedBlog]);
-  };
-
-  const updateBlog = async (updatedBlog, showMessage = false) => {
-    const user = JSON.parse(window.localStorage.getItem(loginService.localUserKey));
-    const index = blogs.map((blog) => blog._id).indexOf(updatedBlog._id);
-    blogService.setToken(user.token);
-    const savedBlog = await blogService.update(updatedBlog._id, updatedBlog);
-    const { title, author } = savedBlog;
-    if (showMessage) displayMessage(`${title} by ${author} successfully updated`, 'success');
-    const newBlogs = [...blogs];
-    newBlogs[index] = savedBlog;
-    setBlogs(newBlogs);
-  };
-
-  const deleteBlog = async (blogToDelete) => {
-    const { _id, title, author } = blogToDelete;
-    if (!blogToDelete.user || blogToDelete.user._id !== user._id) {
-      displayMessage(`User not authorized to delete.`, 'error');
-      return;
-    }
-    if (window.confirm(`delete ${title} by ${author}?`)) {
-      const user = JSON.parse(window.localStorage.getItem(loginService.localUserKey));
-      blogService.setToken(user.token);
-      await blogService.deleteOne(_id);
-      displayMessage(`${title} by ${author} successfully deleted`, 'success');
-      setBlogs([...blogs].filter((blog) => blog._id !== _id));
-    }
   };
 
   const handleInputChange = ({ name, value }) => {
@@ -126,7 +88,7 @@ const App = () => {
 
   const blogForm = () => (
     <Togglable buttonLabel='create new blog' ref={blogFormRef}>
-      <BlogForm createBlog={createBlog} />
+      <BlogForm />
     </Togglable>
   );
 
@@ -142,7 +104,7 @@ const App = () => {
         <div>{blogForm()}</div>
         <h2>blogs</h2>
         {sortedBlogs.map((blog) => (
-          <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} />
+          <Blog key={blog.id} blog={blog} />
         ))}
       </div>
     );

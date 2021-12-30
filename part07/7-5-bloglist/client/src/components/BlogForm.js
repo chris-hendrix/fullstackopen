@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createBlog } from '../reducers/blogReducer';
 
-const BlogForm = ({ createBlog }) => {
+const BlogForm = () => {
   const initialBlog = { title: '', author: '', url: '' };
   const [newBlog, setNewBlog] = useState({ ...initialBlog });
+
+  const dispatch = useDispatch();
 
   const handleInputChange = ({ name, value }) => {
     if (name === 'title') setNewBlog({ ...newBlog, title: value });
@@ -12,7 +16,7 @@ const BlogForm = ({ createBlog }) => {
 
   const handleNewBlogSubmit = async (event) => {
     event.preventDefault();
-    await createBlog(newBlog);
+    dispatch(createBlog(newBlog));
     setNewBlog({ ...initialBlog });
   };
 

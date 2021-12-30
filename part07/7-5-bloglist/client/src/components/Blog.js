@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateBlog, deleteBlog } from '../reducers/blogReducer';
+import { setMessage } from '../reducers/messageReducer';
+import blogService from '../services/blogs';
+import loginService from '../services/login';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { setBlogError } from '../reducers/blogReducer';
 
-const Blog = ({ blog, updateBlog, deleteBlog }) => {
+const Blog = ({ blog }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
-  const [updatedBlog, setUpdatedBlog] = useState(blog);
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -12,23 +18,35 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
     marginBottom: 5,
   };
 
+  const error = useSelector((state) => state.blog.error);
+
+  const dispatch = useDispatch();
+
   const handleDetails = () => {
     setDetailsVisible(!detailsVisible);
   };
 
-  const handleLike = async () => {
-    setUpdatedBlog({ ...updatedBlog, likes: updatedBlog.likes + 1 });
-    await updateBlog({ ...updatedBlog, likes: updatedBlog.likes + 1 });
+  const handleLike = () => {
+    dispatch(updateBlog({ ...blog, likes: blog.likes + 1 }));
   };
 
-  const handleDelete = async () => {
-    deleteBlog({ ...updatedBlog });
+  const handleDelete = () => {
+    const user = JSON.parse(window.localStorage.getItem(loginService.localUserKey));
+    blogService.setToken(user.token);
+    const { title, author } = blog;
+    dispatch(deleteBlog({ ...blog }));
+    if (error) {
+      dispatch(setMessage({ text: error, type: 'error' }));
+      dispatch(setBlogError(null));
+    } else {
+      dispatch(setMessage({ text: `${title} by ${author} successfully deleted`, type: 'success' }));
+    }
   };
 
   const blogDetails = () => (
     <div>
       <p>
-        {updatedBlog.url} <br /> likes: {updatedBlog.likes}
+        {blog.url} <br /> likes: {blog.likes}
       </p>
       <button onClick={handleDelete} type='button'>
         remove
@@ -37,7 +55,7 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
   );
   return (
     <div className='blogItem' style={blogStyle}>
-      {updatedBlog.title} by {updatedBlog.author + ' '}
+      {blog.title} by {blog.author + ' '}
       <button onClick={handleDetails} type='button'>
         {detailsVisible ? 'hide' : 'view'}
       </button>
@@ -51,8 +69,6 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  updateBlog: PropTypes.func.isRequired,
-  deleteBlog: PropTypes.func.isRequired,
 };
 
 export default Blog;

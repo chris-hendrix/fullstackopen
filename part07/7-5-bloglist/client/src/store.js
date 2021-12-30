@@ -5,7 +5,7 @@ import blogReducer from './reducers/blogReducer';
 import messageReducer from './reducers/messageReducer';
 
 const reducer = combineReducers({
-  blogs: blogReducer,
+  blog: blogReducer,
   message: messageReducer,
 });
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
