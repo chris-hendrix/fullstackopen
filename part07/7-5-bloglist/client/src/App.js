@@ -5,10 +5,21 @@ import Notification from './components/Notification';
 import BlogForm from './components/BlogForm';
 import Togglable from './components/Togglable';
 import UserBlogTable from './components/UserBlogTable';
+import UserView from './components/UserView';
 
 import { setMessage } from './reducers/messageReducer';
 import { getBlogs, getUserBlogMap } from './reducers/blogReducer';
 import { getUsers, loginUser, logoutUser, setUser } from './reducers/userReducer';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useRouteMatch,
+  useHistory,
+} from 'react-router-dom';
 
 const App = () => {
   const initialCredentials = { username: '', password: '' };
@@ -17,8 +28,8 @@ const App = () => {
 
   const dispatch = useDispatch();
   const blogs = useSelector((state) => state.blog.blogs);
-  const userBlogMap = useSelector((state) => state.blog.userBlogMap);
   const user = useSelector((state) => state.user.user);
+  const userBlogMap = useSelector((state) => state.blog.userBlogMap);
 
   useEffect(() => dispatch(getBlogs()), [dispatch]);
   useEffect(() => dispatch(getUserBlogMap()), [dispatch]);
@@ -37,13 +48,6 @@ const App = () => {
   const handleLogin = (event) => {
     event.preventDefault();
     dispatch(loginUser(credentials));
-    /*
-    if (user) {
-      displayMessage('Successful login', 'success');
-    } else {
-      displayMessage('Wrong credentials', 'error');
-    }
-    */
   };
 
   const handleLogout = () => {
@@ -103,10 +107,21 @@ const App = () => {
     );
   };
 
+  const match = useRouteMatch('/users/:id');
+  const matched = match ? userBlogMap[match.params.id] : null;
+
   return (
     <div>
-      <Notification />
-      {user ? blogList() : loginForm()}
+      <Switch>
+        <Route path='/users/:id'>
+          {console.log(matched)}
+          {matched && <UserView user={matched.user} blogs={matched.blogs} />}
+        </Route>
+        <Route path='/'>
+          <Notification />
+          {user ? blogList() : loginForm()}
+        </Route>
+      </Switch>
     </div>
   );
 };
