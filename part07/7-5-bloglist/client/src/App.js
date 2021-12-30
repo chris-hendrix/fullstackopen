@@ -1,19 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import Blog from './components/Blog';
 import Notification from './components/Notification';
 import BlogForm from './components/BlogForm';
 import Togglable from './components/Togglable';
 import blogService from './services/blogs';
 import loginService from './services/login';
+import { setMessage } from './reducers/messageReducer';
 
 const App = () => {
   const initialCredentials = { username: '', password: '' };
   const initialMessage = { text: null, type: null };
   const [blogs, setBlogs] = useState([]);
-  const [message, setMessage] = useState({ ...initialMessage });
   const [credentials, setCredentials] = useState({ ...initialCredentials });
   const [user, setUser] = useState(null);
   const blogFormRef = useRef();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -29,10 +32,7 @@ const App = () => {
   }, []);
 
   const displayMessage = (text, type) => {
-    setMessage({ text, type });
-    setTimeout(() => {
-      setMessage({ ...initialMessage });
-    }, 5000);
+    dispatch(setMessage({ text, type }));
   };
 
   const createBlog = async (newBlog) => {
@@ -150,7 +150,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification text={message.text} type={message.type} />
+      <Notification />
       {user ? blogList() : loginForm()}
     </div>
   );
