@@ -27,23 +27,49 @@ Repo for learning React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one 
   - c User administration
   - d Token authentication
 - [Part 5 - Testing React apps](https://fullstackopen.com/en/part5)
-  a Login in frontend
-  b props.children and proptypes
-  c Testing React apps
-  d End to end testing
+  - a Login in frontend
+  - b props.children and proptypes
+  - c Testing React apps
+  - d End to end testing
 - [Part 6 - State management with Redux](https://fullstackopen.com/en/part6)
-  a Flux-architecture and Redux
-  b Many reducers
-  c Communicating with server in a redux application
-  d connect
+  - a Flux-architecture and Redux
+  - b Many reducers
+  - c Communicating with server in a redux application
+  - d connect
 - [Part 7 - React router, custom hooks, styling app with CSS and webpack](https://fullstackopen.com/en/part7)
+  - a React-router
+  - b Custom hooks
+  - c More about styles
+  - d Webpack
+  - e Class components, Miscellaneous
+  - f Exercises: extending the bloglist
 - [Part 8 - GraphQL](https://fullstackopen.com/en/part8)
+  - a GraphQL-server
+  - b React and GraphQL
+  - c Database and user administration
+  - d Login and updating the cache
+  - e Fragments and subscriptions
 - [Part 9 - TypeScript](https://fullstackopen.com/en/part9)
+  - a Background and introduction
+  - b First steps with TypeScript
+  - c Typing the express app
+  - d React with types
 - [Part 10 - React Native](https://fullstackopen.com/en/part10)
+  - a Introduction to React Native
+  - b React Native basics
+  - c Communicating with server
+  - d Testing and extending our application
 - [Part 11 - CI/CD](https://fullstackopen.com/en/part11)
+  - a Introduction to CI/CD
+  - b Getting started with GitHub Actions
+  - c Deployment
+  - d Keeping green
+  - e Expanding Further
 - [Part 12 - Containers](https://fullstackopen.com/en/part12)
+  - a Introduction to Containers
+  - b Building and configuring environments
+  - c Basics of Orchestration
 - [Part 13 - Using relational databases](https://fullstackopen.com/en/part13)
-
-### Deployed exercises
-
-- Part 3 - Phonebook: https://fullstackopen-03-01-phonebook.herokuapp.com/
+  - a Using relational databases with Sequelize
+  - b Join tables and queries
+  - c Migrations, many-to-many relationships
