@@ -4,31 +4,26 @@ import Blog from './components/Blog';
 import Notification from './components/Notification';
 import BlogForm from './components/BlogForm';
 import Togglable from './components/Togglable';
-import blogService from './services/blogs';
-import loginService from './services/login';
+import UserBlogTable from './components/UserBlogTable';
 
 import { setMessage } from './reducers/messageReducer';
-import { getBlogs } from './reducers/blogReducer';
+import { getBlogs, getUserBlogMap } from './reducers/blogReducer';
+import { getUsers, loginUser, logoutUser, setUser } from './reducers/userReducer';
 
 const App = () => {
   const initialCredentials = { username: '', password: '' };
   const [credentials, setCredentials] = useState({ ...initialCredentials });
-  const [user, setUser] = useState(null);
   const blogFormRef = useRef();
 
   const dispatch = useDispatch();
   const blogs = useSelector((state) => state.blog.blogs);
+  const userBlogMap = useSelector((state) => state.blog.userBlogMap);
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => dispatch(getBlogs()), [dispatch]);
-
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem(loginService.localUserKey);
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
-      setUser(user);
-      blogService.setToken(user.token);
-    }
-  }, []);
+  useEffect(() => dispatch(getUserBlogMap()), [dispatch]);
+  useEffect(() => dispatch(getUsers()), [dispatch]);
+  useEffect(() => dispatch(setUser()), [dispatch]);
 
   const displayMessage = (text, type) => {
     dispatch(setMessage({ text, type }));
@@ -39,24 +34,20 @@ const App = () => {
     if (name === 'password') setCredentials({ ...credentials, password: value });
   };
 
-  const handleLogin = async (event) => {
+  const handleLogin = (event) => {
     event.preventDefault();
-
-    try {
-      const { username, password } = credentials;
-      const user = await loginService.login({ username, password });
-      window.localStorage.setItem(loginService.localUserKey, JSON.stringify(user));
-      blogService.setToken(user.token);
-      setUser(user);
+    dispatch(loginUser(credentials));
+    /*
+    if (user) {
       displayMessage('Successful login', 'success');
-    } catch (exception) {
+    } else {
       displayMessage('Wrong credentials', 'error');
     }
+    */
   };
 
   const handleLogout = () => {
-    setUser(null);
-    window.localStorage.removeItem(loginService.localUserKey);
+    dispatch(logoutUser());
     displayMessage('Successful logout', 'success');
   };
 
@@ -102,6 +93,8 @@ const App = () => {
         </button>
         <h2>create new</h2>
         <div>{blogForm()}</div>
+        <h2>users</h2>
+        <UserBlogTable />
         <h2>blogs</h2>
         {sortedBlogs.map((blog) => (
           <Blog key={blog.id} blog={blog} />

@@ -20,5 +20,5 @@ Content-Type: application/json
     "blogs": [],
     "username": "root2",
     "name": "Superuser",
-    "password": "12"
+    "password": "123456"
 }

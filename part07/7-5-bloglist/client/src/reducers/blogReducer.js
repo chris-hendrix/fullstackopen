@@ -1,6 +1,7 @@
 import blogService from '../services/blogs';
 
 const GET_BLOGS = 'GET_BLOGS';
+const GET_USER_BLOG_MAP = 'GET_USER_BLOG_MAP';
 const CREATE_BLOG = 'CREATE_BLOG';
 const UPDATE_BLOG = 'UPDATE_BLOG';
 const DELETE_BLOG = 'DELETE_BLOG';
@@ -8,6 +9,7 @@ const SET_BLOG_ERROR = 'SET_BLOG_ERROR';
 
 const initialState = {
   blogs: [],
+  userBlogMap: {},
   error: null,
 };
 
@@ -16,6 +18,8 @@ const blogReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_BLOGS:
       return { ...state, blogs: action.data };
+    case GET_USER_BLOG_MAP:
+      return { ...state, userBlogMap: action.data };
     case CREATE_BLOG:
       return { ...state, blogs: blogs.concat(action.data) };
     case UPDATE_BLOG:
@@ -61,6 +65,18 @@ export const deleteBlog = (blog) => async (dispatch) => {
 
 export const setBlogError = (error) => (dispatch) => {
   dispatch({ type: SET_BLOG_ERROR, data: error });
+};
+
+export const getUserBlogMap = () => async (dispatch) => {
+  const blogs = await blogService.getAll();
+  const map = {};
+  blogs.forEach((blog) => {
+    if (!blog.user) return;
+    const userId = blog.user._id;
+    if (!(userId in map)) map[userId] = { user: blog.user, blogs: [] };
+    map[userId].blogs.push(blog);
+  });
+  dispatch({ type: GET_USER_BLOG_MAP, data: map });
 };
 
 export default blogReducer;

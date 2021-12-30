@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createBlog } from '../reducers/blogReducer';
+import { createBlog, getUserBlogMap } from '../reducers/blogReducer';
 
 const BlogForm = () => {
   const initialBlog = { title: '', author: '', url: '' };
@@ -17,6 +17,7 @@ const BlogForm = () => {
   const handleNewBlogSubmit = async (event) => {
     event.preventDefault();
     dispatch(createBlog(newBlog));
+    dispatch(getUserBlogMap());
     setNewBlog({ ...initialBlog });
   };
 
