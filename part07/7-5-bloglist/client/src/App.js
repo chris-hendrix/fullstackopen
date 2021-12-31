@@ -117,6 +117,10 @@ const App = () => {
           {console.log(matched)}
           {matched && <UserView user={matched.user} blogs={matched.blogs} />}
         </Route>
+        <Route path='/users/:id'>
+          {console.log(matched)}
+          {matched && <UserView user={matched.user} blogs={matched.blogs} />}
+        </Route>
         <Route path='/'>
           <Notification />
           {user ? blogList() : loginForm()}

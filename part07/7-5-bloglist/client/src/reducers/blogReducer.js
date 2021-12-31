@@ -43,6 +43,7 @@ export const getBlogs = () => async (dispatch) => {
 export const createBlog = (blog) => async (disptach) => {
   const savedBlog = await blogService.create(blog);
   disptach({ type: CREATE_BLOG, data: savedBlog });
+  dispatch({ type: GET_USER_BLOG_MAP, })
 };
 
 export const updateBlog = (blog) => async (disptach) => {
