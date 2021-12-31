@@ -3,24 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import Notification from './components/Notification';
 import BlogForm from './components/BlogForm';
 import Togglable from './components/Togglable';
-import UserBlogTable from './components/UserBlogTable';
+import Users from './components/Users';
 import UserView from './components/UserView';
-import BlogTable from './components/BlogTable';
+import Blogs from './components/Blogs';
 import BlogView from './components/BlogView';
+import Navigation from './components/Navigation';
 
 import { setMessage } from './reducers/messageReducer';
 import { getBlogs, getUserBlogMap } from './reducers/blogReducer';
-import { getUsers, loginUser, logoutUser, setUser } from './reducers/userReducer';
+import { getUsers, loginUser, setUser } from './reducers/userReducer';
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useRouteMatch,
-  useHistory,
-} from 'react-router-dom';
+import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
+import { Form, Button } from 'react-bootstrap';
 
 const App = () => {
   const initialCredentials = { username: '', password: '' };
@@ -30,7 +24,7 @@ const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const blogs = useSelector((state) => state.blog.blogs);
-  const user = useSelector((state) => state.user.user);
+
   const userBlogMap = useSelector((state) => state.blog.userBlogMap);
 
   useEffect(() => dispatch(getBlogs()), [dispatch]);
@@ -50,18 +44,13 @@ const App = () => {
   const handleLogin = (event) => {
     event.preventDefault();
     dispatch(loginUser(credentials));
-  };
-
-  const handleLogout = () => {
-    dispatch(logoutUser());
-    displayMessage('Successful logout', 'success');
     history.push('/');
   };
 
   const loginForm = () => (
-    <form onSubmit={handleLogin}>
+    <Form onSubmit={handleLogin}>
       <div>
-        username
+        username{' '}
         <input
           id='username'
           type='text'
@@ -71,7 +60,7 @@ const App = () => {
         />
       </div>
       <div>
-        password
+        password{' '}
         <input
           id='password'
           type='password'
@@ -80,8 +69,8 @@ const App = () => {
           onChange={({ target }) => handleInputChange(target)}
         />
       </div>
-      <button type='submit'>login</button>
-    </form>
+      <Button type='submit'>login</Button>
+    </Form>
   );
 
   const blogForm = () => (
@@ -90,45 +79,27 @@ const App = () => {
     </Togglable>
   );
 
-  const loginInfo = () => {
-    return (
-      <div>
-        <p>{user.name} is logged in</p>
-        <button onClick={handleLogout} type='button'>
-          Logout
-        </button>
-      </div>
-    );
-  };
-
-  const blogList = () => {
-    return (
-      <div className='blogList'>
-        <h2>create new</h2>
-        <div>{blogForm()}</div>
-        <h2>users</h2>
-        <UserBlogTable />
-        <h2>blogs</h2>
-        <BlogTable />
-      </div>
-    );
-  };
-
   const userRoute = useRouteMatch('/users/:id');
   const matchedUserMap = userRoute ? userBlogMap[userRoute.params.id] : null;
   const blogRoute = useRouteMatch('/blogs/:id');
   const matchedBlog = blogRoute ? blogs.find((blog) => blog._id === blogRoute.params.id) : null;
 
   return (
-    <div>
+    <div className='container'>
       <Notification />
-      {user ? loginInfo() : loginForm()}
+      <Navigation />
       <Switch>
         <Route path='/users/:id'>
           {matchedUserMap && <UserView user={matchedUserMap.user} blogs={matchedUserMap.blogs} />}
         </Route>
         <Route path='/blogs/:id'>{matchedBlog && <BlogView blog={matchedBlog} />}</Route>
-        <Route path='/'>{user && blogList()}</Route>
+        <Route path='/login'>{loginForm()}</Route>
+        <Route path='/users'>
+          <Users />
+        </Route>
+        <Route path='/'>
+          <Blogs />
+        </Route>
       </Switch>
     </div>
   );

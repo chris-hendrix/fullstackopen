@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux';
 import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export default function UserBlogTable() {
+const Users = () => {
   const userBlogMap = useSelector((state) => state.blog.userBlogMap);
   return (
     <div>
+      <h2>users</h2>
       <Table striped>
         <tr>
           <th>Name</th>
@@ -25,4 +26,6 @@ export default function UserBlogTable() {
       </Table>
     </div>
   );
-}
+};
+
+export default Users;

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateBlog, deleteBlog } from '../reducers/blogReducer';
 import { setMessage } from '../reducers/messageReducer';
 import { useHistory } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 export default function BlogView({ blog }) {
   const dispatch = useDispatch();
@@ -34,16 +35,16 @@ export default function BlogView({ blog }) {
         <a href={blog.url}>{blog.url}</a>
       </div>
       <div>
-        {blog.likes} likes
-        <button onClick={handleLike} type='button'>
+        {blog.likes} likes{' '}
+        <Button primary onClick={handleLike} type='button'>
           like
-        </button>
+        </Button>
       </div>
-      <div>added by {blog.use ? blog.user.name : 'unknown user'}</div>
+      <div>added by {blog.user ? blog.user.name : 'unknown user'}</div>
       {userMatch() && (
-        <button onClick={handleDelete} type='button'>
+        <Button danger onClick={handleDelete} type='button'>
           remove
-        </button>
+        </Button>
       )}
     </div>
   );

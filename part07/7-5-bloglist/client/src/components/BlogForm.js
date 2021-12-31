@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBlog, getUserBlogMap } from '../reducers/blogReducer';
+import { Form, Button } from 'react-bootstrap';
 
 const BlogForm = () => {
   const initialBlog = { title: '', author: '', url: '' };
@@ -22,7 +23,7 @@ const BlogForm = () => {
   };
 
   return (
-    <form onSubmit={handleNewBlogSubmit}>
+    <Form onSubmit={handleNewBlogSubmit}>
       <div>
         title:
         <input
@@ -53,10 +54,10 @@ const BlogForm = () => {
           onChange={({ target }) => handleInputChange(target)}
         />
       </div>
-      <button id='submit-blog' type='submit'>
+      <Button id='submit-blog' type='submit'>
         Submit
-      </button>
-    </form>
+      </Button>
+    </Form>
   );
 };
 
