@@ -71,7 +71,6 @@ describe('DELETE BLOG', () => {
     const authorization = await getAuthorization(helper.users[0]);
     const blogsAtStart = await helper.blogsInDb();
     const blogToDelete = blogsAtStart[0];
-    console.log(blogToDelete);
     await api.delete(`/api/blogs/${blogToDelete._id}`).set(authorization).expect(204);
 
     const blogsAtEnd = await helper.blogsInDb();

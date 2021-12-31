@@ -14,7 +14,6 @@ let timeout = null;
 export const setMessage =
   (message, seconds = 5) =>
   async (dispatch) => {
-    console.log('setMessage');
     dispatch({ type: SET_MESSAGE, message });
     if (timeout) clearTimeout(timeout);
 

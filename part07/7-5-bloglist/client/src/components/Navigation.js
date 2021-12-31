@@ -11,7 +11,6 @@ const Navigation = () => {
   const user = useSelector((state) => state.user.user);
   const padding = { padding: 5 };
 
-  console.log(user);
   const handleLogout = () => {
     dispatch(logoutUser());
     dispatch(setMessage({ text: 'Successful logout', type: 'success' }));

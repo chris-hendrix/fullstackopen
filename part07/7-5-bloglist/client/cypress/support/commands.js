@@ -31,7 +31,7 @@ Cypress.Commands.add('login', ({ username, password }) => {
     password,
   }).then(({ body }) => {
     localStorage.setItem(loginService.localUserKey, JSON.stringify(body));
-    cy.visit('http://localhost:3000');
+    cy.visit('http://localhost:3003');
   });
 });
 
@@ -45,5 +45,5 @@ Cypress.Commands.add('createBlog', ({ title, author, url }) => {
     },
   });
 
-  cy.visit('http://localhost:3000');
+  cy.visit('http://localhost:3003');
 });

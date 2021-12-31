@@ -32,10 +32,6 @@ const App = () => {
   useEffect(() => dispatch(getUsers()), [dispatch]);
   useEffect(() => dispatch(setUser()), [dispatch]);
 
-  const displayMessage = (text, type) => {
-    dispatch(setMessage({ text, type }));
-  };
-
   const handleInputChange = ({ name, value }) => {
     if (name === 'username') setCredentials({ ...credentials, username: value });
     if (name === 'password') setCredentials({ ...credentials, password: value });
@@ -71,12 +67,6 @@ const App = () => {
       </div>
       <Button type='submit'>login</Button>
     </Form>
-  );
-
-  const blogForm = () => (
-    <Togglable buttonLabel='create new blog' ref={blogFormRef}>
-      <BlogForm />
-    </Togglable>
   );
 
   const userRoute = useRouteMatch('/users/:id');

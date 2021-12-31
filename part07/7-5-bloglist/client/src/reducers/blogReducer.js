@@ -6,6 +6,7 @@ const CREATE_BLOG = 'CREATE_BLOG';
 const UPDATE_BLOG = 'UPDATE_BLOG';
 const DELETE_BLOG = 'DELETE_BLOG';
 const SET_BLOG_ERROR = 'SET_BLOG_ERROR';
+const ADD_COMMENT = 'ADD_COMMENT';
 
 const initialState = {
   blogs: [],
@@ -23,6 +24,7 @@ const blogReducer = (state = initialState, action) => {
     case CREATE_BLOG:
       return { ...state, blogs: blogs.concat(action.data) };
     case UPDATE_BLOG:
+    case ADD_COMMENT:
       const updatedBlog = action.data;
       return { ...state, blogs: blogs.map((b) => (updatedBlog._id === b._id ? updatedBlog : b)) };
     case DELETE_BLOG:
@@ -78,6 +80,11 @@ export const getUserBlogMap = () => async (dispatch) => {
     map[userId].blogs.push(blog);
   });
   dispatch({ type: GET_USER_BLOG_MAP, data: map });
+};
+
+export const addBlogComment = (blog, comment) => async (dispatch) => {
+  const updatedBlog = await blogService.addComment(blog._id, comment);
+  dispatch({ type: ADD_COMMENT, data: updatedBlog });
 };
 
 export default blogReducer;
