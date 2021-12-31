@@ -7,6 +7,7 @@ import loginService from '../services/login';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { setBlogError } from '../reducers/blogReducer';
+import { Link } from 'react-router-dom';
 
 const Blog = ({ blog }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
@@ -55,7 +56,9 @@ const Blog = ({ blog }) => {
   );
   return (
     <div className='blogItem' style={blogStyle}>
-      {blog.title} by {blog.author + ' '}
+      <Link to={`/blogs/${blog._id}`}>
+        {blog.title} by {blog.author}
+      </Link>{' '}
       <button onClick={handleDetails} type='button'>
         {detailsVisible ? 'hide' : 'view'}
       </button>
