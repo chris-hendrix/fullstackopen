@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Blog from './components/Blog';
 import Notification from './components/Notification';
 import BlogForm from './components/BlogForm';
 import Togglable from './components/Togglable';
 import UserBlogTable from './components/UserBlogTable';
 import UserView from './components/UserView';
+import BlogTable from './components/BlogTable';
+import BlogView from './components/BlogView';
 
 import { setMessage } from './reducers/messageReducer';
 import { getBlogs, getUserBlogMap } from './reducers/blogReducer';
@@ -27,6 +28,7 @@ const App = () => {
   const blogFormRef = useRef();
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const blogs = useSelector((state) => state.blog.blogs);
   const user = useSelector((state) => state.user.user);
   const userBlogMap = useSelector((state) => state.blog.userBlogMap);
@@ -53,6 +55,7 @@ const App = () => {
   const handleLogout = () => {
     dispatch(logoutUser());
     displayMessage('Successful logout', 'success');
+    history.push('/');
   };
 
   const loginForm = () => (
@@ -87,44 +90,45 @@ const App = () => {
     </Togglable>
   );
 
-  const blogList = () => {
-    const sortedBlogs = [...blogs].sort((a, b) => (a.likes > b.likes ? -1 : 1));
+  const loginInfo = () => {
     return (
-      <div className='blogList'>
+      <div>
         <p>{user.name} is logged in</p>
         <button onClick={handleLogout} type='button'>
           Logout
         </button>
+      </div>
+    );
+  };
+
+  const blogList = () => {
+    return (
+      <div className='blogList'>
         <h2>create new</h2>
         <div>{blogForm()}</div>
         <h2>users</h2>
         <UserBlogTable />
         <h2>blogs</h2>
-        {sortedBlogs.map((blog) => (
-          <Blog key={blog.id} blog={blog} />
-        ))}
+        <BlogTable />
       </div>
     );
   };
 
-  const match = useRouteMatch('/users/:id');
-  const matched = match ? userBlogMap[match.params.id] : null;
+  const userRoute = useRouteMatch('/users/:id');
+  const matchedUserMap = userRoute ? userBlogMap[userRoute.params.id] : null;
+  const blogRoute = useRouteMatch('/blogs/:id');
+  const matchedBlog = blogRoute ? blogs.find((blog) => blog._id === blogRoute.params.id) : null;
 
   return (
     <div>
+      <Notification />
+      {user ? loginInfo() : loginForm()}
       <Switch>
         <Route path='/users/:id'>
-          {console.log(matched)}
-          {matched && <UserView user={matched.user} blogs={matched.blogs} />}
+          {matchedUserMap && <UserView user={matchedUserMap.user} blogs={matchedUserMap.blogs} />}
         </Route>
-        <Route path='/users/:id'>
-          {console.log(matched)}
-          {matched && <UserView user={matched.user} blogs={matched.blogs} />}
-        </Route>
-        <Route path='/'>
-          <Notification />
-          {user ? blogList() : loginForm()}
-        </Route>
+        <Route path='/blogs/:id'>{matchedBlog && <BlogView blog={matchedBlog} />}</Route>
+        <Route path='/'>{user && blogList()}</Route>
       </Switch>
     </div>
   );

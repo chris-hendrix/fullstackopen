@@ -43,7 +43,7 @@ export const getBlogs = () => async (dispatch) => {
 export const createBlog = (blog) => async (disptach) => {
   const savedBlog = await blogService.create(blog);
   disptach({ type: CREATE_BLOG, data: savedBlog });
-  dispatch({ type: GET_USER_BLOG_MAP, })
+  disptach({ type: GET_USER_BLOG_MAP });
 };
 
 export const updateBlog = (blog) => async (disptach) => {
@@ -57,7 +57,7 @@ export const updateBlog = (blog) => async (disptach) => {
 
 export const deleteBlog = (blog) => async (dispatch) => {
   try {
-    const response = await blogService.deleteOne(blog._id);
+    await blogService.deleteOne(blog._id);
     dispatch({ type: DELETE_BLOG, data: blog });
   } catch (error) {
     dispatch({ type: SET_BLOG_ERROR, data: 'invalid credentials' });
