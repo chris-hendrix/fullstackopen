@@ -18,3 +18,6 @@ jobs:
       - name: Directory content
         run: |
           ls -l
+      - name: Ubuntu version
+        run: |
+          lsb_release -a
