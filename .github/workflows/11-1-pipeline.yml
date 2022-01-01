@@ -1,4 +1,4 @@
-name: Deployment pipeline
+name: 11-1 Pokedex Deployment Pipeline
 
 on:
   push:
@@ -6,6 +6,10 @@ on:
       - main
 
 jobs:
+  build:
+    defaults:
+      run:
+        working-directory: part11/11-1-pokedex
   simple_deployment_pipeline:
     runs-on: ubuntu-18.04
     steps:
@@ -16,4 +20,4 @@ jobs:
       - name: npm install
         run: npm install
       - name: lint
-        run: npm run part11/11-1-pokedex/eslint
+        run: npm run eslint
