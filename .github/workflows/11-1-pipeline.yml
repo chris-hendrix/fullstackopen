@@ -10,7 +10,7 @@ jobs:
     defaults:
       run:
         working-directory: part11/11-1-pokedex
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -29,6 +29,4 @@ jobs:
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: http://localhost:5000
-          wait-on-timeout: 240
-          browser: chrome
-          headless: true
+          wait-on-timeout: 60
