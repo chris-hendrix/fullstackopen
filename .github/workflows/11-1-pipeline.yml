@@ -6,11 +6,10 @@ on:
       - main
 
 jobs:
-  build:
+  simple_deployment_pipeline:
     defaults:
       run:
         working-directory: part11/11-1-pokedex
-  simple_deployment_pipeline:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
