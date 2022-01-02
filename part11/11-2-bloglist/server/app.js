@@ -36,6 +36,20 @@ if (process.env.NODE_ENV === 'test') {
   app.use('/api/testing', testingRouter);
 }
 
+// serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // set static folder
+  app.use(express.static('build'));
+
+  app.get('/health', (req, res) => {
+    res.send('ok');
+  });
+
+  app.get('/version', (req, res) => {
+    res.send('1'); // change this string to ensure a new version deployed
+  });
+}
+
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
