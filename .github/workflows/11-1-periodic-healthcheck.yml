@@ -10,7 +10,7 @@ on:
   #   - cron:  '*/15 * * * *'
 
 jobs:
-  periodic healthcheck:
+  periodic_healthcheck:
     runs-on: ubuntu-latest
     steps:
       - name: Check the deployed service URL
