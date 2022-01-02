@@ -28,4 +28,4 @@ jobs:
           working-directory: part11/11-1-pokedex
           command: npm run test:e2e
           start: npm run start:full
-          wait-on: 'http://localhost:5000/, http://localhost:8080/'
+          wait-on: 'http://localhost:5000/'
