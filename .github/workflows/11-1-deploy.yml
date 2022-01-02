@@ -16,3 +16,4 @@ jobs:
           heroku_app_name: 'fullstackopen-11-1-pokedex' #Must be unique in Heroku
           heroku_email: 'chendrix1123@gmail.com'
           appdir: 'part11/11-1-pokedex'
+          healthcheck: 'https://fullstack-open-part11-bloglist.herokuapp.com/health'
