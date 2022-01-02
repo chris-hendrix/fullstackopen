@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  lint, test, and build:
+  build:
     defaults:
       run:
         working-directory: part11/11-1-pokedex
