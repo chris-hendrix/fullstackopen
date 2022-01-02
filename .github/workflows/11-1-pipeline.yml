@@ -10,7 +10,7 @@ on:
       types: [opened, synchronize]
 
 jobs:
-  build:
+  pipeline:
     defaults:
       run:
         working-directory: part11/11-1-pokedex
@@ -33,7 +33,6 @@ jobs:
           command: npm run test:e2e
           start: npm run start:full
           wait-on: 'http://localhost:5000/'
-      - uses: actions/checkout@v2
       - name: deploy to heroku
         if: ${{ github.event_name == 'push'  && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
