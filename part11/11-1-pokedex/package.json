@@ -1,5 +1,5 @@
 {
-  "name": "fullstackopen-cicd",
+  "name": "pokedex",
   "version": "1.0.0",
   "description": "Full Stack Open",
   "main": "src/index.js",
