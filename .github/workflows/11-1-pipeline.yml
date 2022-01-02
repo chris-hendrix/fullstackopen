@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+    pull_request:
+      branches: [main]
+      types: [opened, synchronize]
 
 jobs:
   build:
@@ -33,6 +36,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: deploy to heroku
+        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
