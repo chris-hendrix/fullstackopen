@@ -1,8 +1,11 @@
 {
-  "name": "11-2-bloglist",
+  "name": "bloglist",
   "version": "0.0.0",
   "description": "bloglist",
   "main": "server/index.js",
+  "engines": {
+    "node": "17.x"
+  },
   "scripts": {
     "start": "npm run start --prefix server",
     "install": "npm install --prefix client && npm install --prefix server",
