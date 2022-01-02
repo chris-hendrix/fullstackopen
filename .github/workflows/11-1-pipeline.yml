@@ -6,11 +6,11 @@ on:
       - main
 
 jobs:
-  simple_deployment_pipeline:
+  lint, test, and build:
     defaults:
       run:
         working-directory: part11/11-1-pokedex
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -29,3 +29,14 @@ jobs:
           command: npm run test:e2e
           start: npm run start:full
           wait-on: 'http://localhost:5000/'
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: 'fullstackopen-11-1-pokedex' #Must be unique in Heroku
+          heroku_email: 'chendrix1123@gmail.com'
+          appdir: 'part11/11-1-pokedex'
+          healthcheck: 'https://fullstackopen-11-1-pokedex.herokuapp.com/health'
