@@ -31,6 +31,7 @@
   "devDependencies": {
     "concurrently": "^6.4.0",
     "eslint": "^7.32.0",
+    "eslint-plugin-jest": "^25.3.4",
     "eslint-plugin-react": "^7.27.1",
     "jest": "^27.4.5",
     "nodemon": "^2.0.15",

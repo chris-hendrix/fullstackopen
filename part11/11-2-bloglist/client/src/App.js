@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Notification from './components/Notification';
-import BlogForm from './components/BlogForm';
-import Togglable from './components/Togglable';
 import Users from './components/Users';
 import UserView from './components/UserView';
 import Blogs from './components/Blogs';
 import BlogView from './components/BlogView';
 import Navigation from './components/Navigation';
 
-import { setMessage } from './reducers/messageReducer';
 import { getBlogs, getUserBlogMap } from './reducers/blogReducer';
 import { getUsers, loginUser, setUser } from './reducers/userReducer';
 
@@ -19,7 +16,6 @@ import { Form, Button } from 'react-bootstrap';
 const App = () => {
   const initialCredentials = { username: '', password: '' };
   const [credentials, setCredentials] = useState({ ...initialCredentials });
-  const blogFormRef = useRef();
 
   const dispatch = useDispatch();
   const history = useHistory();

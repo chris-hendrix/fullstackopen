@@ -11,14 +11,14 @@ const messageReducer = (state = '', action) => {
 };
 
 let timeout = null;
-export const setMessage =
-  (message, seconds = 5) =>
-  async (dispatch) => {
+export const setMessage = (message, seconds = 5) => {
+  return async (dispatch) => {
     dispatch({ type: SET_MESSAGE, message });
     if (timeout) clearTimeout(timeout);
-
     timeout = setTimeout(() => {
       dispatch({ type: SET_MESSAGE, message: '' });
     }, seconds * 1000);
   };
+};
+
 export default messageReducer;
