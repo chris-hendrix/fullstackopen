@@ -46,7 +46,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 
   app.get('/version', (req, res) => {
-    res.send('1'); // change this string to ensure a new version deployed
+    res.send('0.0.0'); // change this string to ensure a new version deployed
   });
 }
 
