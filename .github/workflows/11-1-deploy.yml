@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  healthcheck:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,4 +15,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: 'fullstackopen-11-1-pokedex' #Must be unique in Heroku
           heroku_email: 'chendrix1123@gmail.com'
-          healthcheck: 'https://fullstackopen-11-1-pokedex.herokuapp.com/health'
+          appdir: 'part11/11-1-pokedex'
