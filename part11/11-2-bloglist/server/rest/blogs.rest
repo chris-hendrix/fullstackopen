@@ -1,0 +1,56 @@
+### GET all blogs
+GET http://localhost:3003/api/blogs
+
+### POST add comment
+POST http://localhost:3003/api/blogs/61c24f6bd23c199d2d70d031/comments
+Content-Type: application/json
+
+{
+    "comment": "added comment"
+}
+
+### GET blog 1
+GET http://localhost:3003/api/blogs/61c24f6bd23c199d2d70d031
+
+### DELETE blog 1
+DELETE http://localhost:3003/api/blogs/61c4ea1f2bcdb5dd4a5bde0a
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxYzRkMzIyMWQzMzc4ODA1MjgwNjg3MyIsImlhdCI6MTY0MDI5NDgyMSwiZXhwIjoxNjQwMjk4NDIxfQ.jSTNRdmR_8EmJZrA4uX-KTtwrPweSqzpQXgwG5o2EbI
+
+### POST blog
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxYzRkMzIyMWQzMzc4ODA1MjgwNjg3MyIsImlhdCI6MTY0MDI5OTUyMiwiZXhwIjoxNjQwMzAzMTIyfQ.Lda1PGoJ-5xcjMWY0PzwLjf74-E33NTB1J9ywe0I4fI
+
+{
+    "title": "rest test blog",
+    "author": "robot",
+    "url":"google.com",
+    "likes": 1
+}
+
+### PUT blog 1 likes to 2
+PUT http://localhost:3003/api/blogs/61c24f6bd23c199d2d70d031
+Content-Type: application/json
+
+{
+    "title": "rest test blog",
+    "author": "robot",
+    "url":"google.com",
+    "likes": 2
+}
+
+### PUT blog 1 likes to 3
+PUT http://localhost:3003/api/blogs/61c24f6bd23c199d2d70d031
+Content-Type: application/json
+
+{
+    "title": "rest test blog",
+    "author": "robot",
+    "url":"google.com",
+    "likes": 3
+}
+
+### DELETE blog
+DELETE http://localhost:3003/api/blogs/61c24f6bd23c199d2d70d031
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxYzVlNzM4Yzg3ZjY5YmMzMTEwZjhiNCIsImlhdCI6MTY0MDM4MDg1OCwiZXhwIjoxNjQwMzg0NDU4fQ.c_2PnISxFPGGX1O0UJuJ9qN7SBb5gDJ1RstlCYVTt8A
