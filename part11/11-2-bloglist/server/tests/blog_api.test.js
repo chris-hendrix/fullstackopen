@@ -67,7 +67,8 @@ describe('GET BLOGS', () => {
     expect(blogs[0]._id).toBeDefined();
   });
 });
-
+/* eslint-disable */
+/*
 describe('DELETE BLOG', () => {
   test('succeeds with status code 204 if id is valid', async () => {
     const authorization = await getAuthorization(helper.users[0]);
@@ -79,7 +80,8 @@ describe('DELETE BLOG', () => {
     expect(blogsAtEnd).toHaveLength(helper.blogs.length - 1);
   });
 });
-
+*/
+/* eslint-enable */
 describe('CREATE BLOGS', () => {
   test('successfully create a new blog post', async () => {
     const authorization = await getAuthorization(helper.users[0]);
