@@ -10,8 +10,9 @@ on:
       types: [opened, synchronize]
 
 env:
+  MONGODB_URI: ${{ secrets.BLOGLIST_MONGODB_URI }}
   TEST_MONGODB_URI: ${{ secrets.BLOGLIST_TEST_MONGODB_URI }}
-  SECRET: ${{ secrets.SECRET }}
+  SECRET: ${{ secrets.BLOGLIST_SECRET }}
   PORT: ${{ secrets.BLOGLIST_PORT }}
 
 jobs:
