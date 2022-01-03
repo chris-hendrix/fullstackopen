@@ -37,7 +37,7 @@ jobs:
         with:
           working-directory: part11/11-2-bloglist
           command: npm run test:e2e
-          start: npm run start:full
+          start: npm run start
           wait-on: 'http://localhost:3003/'
       # - name: deploy to heroku
       #   if: ${{ github.event_name == 'push'  && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
