@@ -20,7 +20,7 @@ const Navigation = () => {
   const loginLink = () => {
     return (
       <Nav.Link href='#' as='span'>
-        <Link style={padding} to='/login'>
+        <Link id='login-link' style={padding} to='/login'>
           login
         </Link>
       </Nav.Link>
@@ -29,7 +29,10 @@ const Navigation = () => {
   const logoutButton = () => {
     return (
       <Nav.Link href='#' as='span' style={padding}>
-        {user.name} logged in <Button onClick={handleLogout}>logout</Button>
+        {user.name} logged in{' '}
+        <Button id='logout-button' onClick={handleLogout}>
+          logout
+        </Button>
       </Nav.Link>
     );
   };
