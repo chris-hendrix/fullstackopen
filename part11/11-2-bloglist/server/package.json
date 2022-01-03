@@ -12,7 +12,8 @@
     "dev": "NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
     "lint": "eslint .",
     "test": "NODE_ENV=test jest --verbose --runInBand",
-    "dev:test": "NODE_ENV=test concurrently \"nodemon index.js\" \"npm run client\""
+    "dev:test": "NODE_ENV=test concurrently \"nodemon index.js\" \"npm run client\"",
+    "server:test": "NODE_ENV=test nodemon index.js"
   },
   "author": "Chris Hendrix",
   "license": "MIT",
