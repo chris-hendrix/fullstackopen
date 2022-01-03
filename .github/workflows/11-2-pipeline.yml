@@ -21,6 +21,8 @@ jobs:
         working-directory: part11/11-2-bloglist
     runs-on: ubuntu-latest
     steps:
+      - name: check env
+        run: echo "${TEST_MONGODB_URI}"
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
