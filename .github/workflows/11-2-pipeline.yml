@@ -9,15 +9,16 @@ on:
       branches: [main]
       types: [opened, synchronize]
 
+env:
+  TEST_MONGODB_URI: ${{ secrets.BLOGLIST_TEST_MONGODB_URI }}
+  SECRET: ${{ secrets.SECRET }}
+  PORT: ${{ secrets.BLOGLIST_PORT }}
+
 jobs:
   pipeline:
     defaults:
       run:
         working-directory: part11/11-2-bloglist
-      env:
-        TEST_MONGODB_URI: ${{ secrets.BLOGLIST_TEST_MONGODB_URI }}
-        SECRET: ${{ secrets.SECRET }}
-        PORT: ${{ secrets.BLOGLIST_PORT }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
