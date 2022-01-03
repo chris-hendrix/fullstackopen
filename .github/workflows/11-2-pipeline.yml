@@ -26,13 +26,13 @@ jobs:
         run: npm run lint
       - name: test
         run: npm run test
-      # - name: e2e tests
-      #   uses: cypress-io/github-action@v2
-      #   with:
-      #     working-directory: part11/11-1-pokedex
-      #     command: npm run test:e2e
-      #     start: npm run start:full
-      #     wait-on: 'http://localhost:5000/'
+      - name: e2e tests
+        uses: cypress-io/github-action@v2
+        with:
+          working-directory: part11/11-1-pokedex
+          command: npm run test:e2e
+          start: npm run start:full
+          wait-on: 'http://localhost:3003/'
       # - name: deploy to heroku
       #   if: ${{ github.event_name == 'push'  && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
       #   uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
