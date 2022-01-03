@@ -20,12 +20,12 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '17.x'
-      - name: npm install
-        run: npm run install
-      - name: lint
-        run: npm run lint
-      - name: test
-        run: npm run test
+      # - name: npm install
+      #   run: npm run install
+      # - name: lint
+      #   run: npm run lint
+      # - name: test
+      #   run: npm run test
       - name: e2e tests
         uses: cypress-io/github-action@v2
         with:
@@ -33,6 +33,10 @@ jobs:
           command: npm run test:e2e
           start: npm run start:full
           wait-on: 'http://localhost:3003/'
+        env:
+          TEST_MONGODB_URI: ${{ secrets.BLOGLIST_TEST_MONGODB_URI }}
+          SECRET: ${{ secrets.SECRET }}
+          PORT: ${{ secrets.BLOGLIST_PORT }}
       # - name: deploy to heroku
       #   if: ${{ github.event_name == 'push'  && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
       #   uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
