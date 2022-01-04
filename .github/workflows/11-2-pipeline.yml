@@ -39,10 +39,12 @@ jobs:
           command: npm run test:e2e
           start: npm run server:test
           wait-on: 'http://localhost:3003/'
-    deploy:
-        defaults:
-          run:
-            working-directory: part11/11-2-bloglist
+  deploy:
+    defaults:
+      run:
+        working-directory: part11/11-2-bloglist
+    runs-on: ubuntu-latest
+    steps:
       - name: deploy to heroku
         if: ${{ github.event_name == 'push'  && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
