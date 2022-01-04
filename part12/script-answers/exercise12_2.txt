@@ -1,0 +1,15 @@
+Script started on 2022-01-04 16:30:48-05:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="190" LINES="30"]
+]0;chendrix@CMH-MBXP: ~/git/fullstackopen/part12/script-answers[01;32mchendrix@CMH-MBXP[00m:[01;34m~/git/fullstackopen/part12/script-answers[00m$ docker run -it ubuntu bash
+]0;root@542ba7064227: /root@542ba7064227:/# 
+]0;root@542ba7064227: /root@542ba7064227:/# cd  /usr/src/app[1P[1P[1P[1@m[1@k[1@d[1@i[1@r [1@ 
+]0;root@542ba7064227: /root@542ba7064227:/# cd usr
+]0;root@542ba7064227: /usrroot@542ba7064227:/usr# cd src/app
+]0;root@542ba7064227: /usr/src/approot@542ba7064227:/usr/src/app# cat index.js
+cat: index.js: No such file or directory
+]0;root@542ba7064227: /usr/src/approot@542ba7064227:/usr/src/app# touch index.js
+]0;root@542ba7064227: /usr/src/approot@542ba7064227:/usr/src/app# exit
+exit
+]0;chendrix@CMH-MBXP: ~/git/fullstackopen/part12/script-answers[01;32mchendrix@CMH-MBXP[00m:[01;34m~/git/fullstackopen/part12/script-answers[00m$ exit
+exit
+
+Script done on 2022-01-04 16:33:29-05:00 [COMMAND_EXIT_CODE="0"]
