@@ -1,8 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, prettyDOM } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import BlogForm from '../components/BlogForm';
-import { act } from 'react-dom/test-utils';
 
 describe('<BlogForm />', () => {
   const testBlog = { title: 'Test Title', author: 'Test Author', url: 'test.com', likes: 2 };

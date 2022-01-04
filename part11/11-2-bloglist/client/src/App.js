@@ -1,29 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Notification from './components/Notification';
-import BlogForm from './components/BlogForm';
-import Togglable from './components/Togglable';
 import Users from './components/Users';
 import UserView from './components/UserView';
 import Blogs from './components/Blogs';
 import BlogView from './components/BlogView';
 import Navigation from './components/Navigation';
 
-import { setMessage } from './reducers/messageReducer';
 import { getBlogs, getUserBlogMap } from './reducers/blogReducer';
 import { getUsers, loginUser, setUser } from './reducers/userReducer';
 
-import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
+import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 
 const App = () => {
   const initialCredentials = { username: '', password: '' };
   const [credentials, setCredentials] = useState({ ...initialCredentials });
-  const blogFormRef = useRef();
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  //const history = useHistory();
   const blogs = useSelector((state) => state.blog.blogs);
+  const user = useSelector((state) => state.user.user);
 
   const userBlogMap = useSelector((state) => state.blog.userBlogMap);
 
@@ -40,34 +37,39 @@ const App = () => {
   const handleLogin = (event) => {
     event.preventDefault();
     dispatch(loginUser(credentials));
-    history.push('/');
   };
 
-  const loginForm = () => (
-    <Form onSubmit={handleLogin}>
-      <div>
-        username{' '}
-        <input
-          id='username'
-          type='text'
-          value={credentials.username}
-          name='username'
-          onChange={({ target }) => handleInputChange(target)}
-        />
-      </div>
-      <div>
-        password{' '}
-        <input
-          id='password'
-          type='password'
-          value={credentials.password}
-          name='password'
-          onChange={({ target }) => handleInputChange(target)}
-        />
-      </div>
-      <Button type='submit'>login</Button>
-    </Form>
-  );
+  const loginForm = () => {
+    console.log('render login');
+    console.log(user);
+    return (
+      <Form onSubmit={handleLogin}>
+        <div>
+          username{' '}
+          <input
+            id='username'
+            type='text'
+            value={credentials.username}
+            name='username'
+            onChange={({ target }) => handleInputChange(target)}
+          />
+        </div>
+        <div>
+          password{' '}
+          <input
+            id='password'
+            type='password'
+            value={credentials.password}
+            name='password'
+            onChange={({ target }) => handleInputChange(target)}
+          />
+        </div>
+        <Button id='login-submit' type='submit'>
+          login
+        </Button>
+      </Form>
+    );
+  };
 
   const userRoute = useRouteMatch('/users/:id');
   const matchedUserMap = userRoute ? userBlogMap[userRoute.params.id] : null;
@@ -83,7 +85,7 @@ const App = () => {
           {matchedUserMap && <UserView user={matchedUserMap.user} blogs={matchedUserMap.blogs} />}
         </Route>
         <Route path='/blogs/:id'>{matchedBlog && <BlogView blog={matchedBlog} />}</Route>
-        <Route path='/login'>{loginForm()}</Route>
+        <Route path='/login'>{!user ? loginForm() : <Redirect to='/' />}</Route>
         <Route path='/users'>
           <Users />
         </Route>

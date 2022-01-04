@@ -1,19 +1,19 @@
 {
   "name": "bloglist-backend",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cd client && npm run build",
-    "install": "cd client && npm install",
     "start": "NODE_ENV=production node index.js",
+    "build:server": "npm run build:server --prefix ../client",
     "server": "NODE_ENV=development nodemon index.js",
     "client": "npm start --prefix ../client",
     "debug": "npm run dev",
     "dev": "NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
     "lint": "eslint .",
     "test": "NODE_ENV=test jest --verbose --runInBand",
-    "dev:test": "NODE_ENV=test concurrently \"nodemon index.js\" \"npm run client\""
+    "dev:test": "NODE_ENV=test concurrently \"nodemon index.js\" \"npm run client\"",
+    "server:test": "npm run build:server && NODE_ENV=test node index.js"
   },
   "author": "Chris Hendrix",
   "license": "MIT",
@@ -31,6 +31,7 @@
   "devDependencies": {
     "concurrently": "^6.4.0",
     "eslint": "^7.32.0",
+    "eslint-plugin-jest": "^25.3.4",
     "eslint-plugin-react": "^7.27.1",
     "jest": "^27.4.5",
     "nodemon": "^2.0.15",

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-
+import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateBlog, deleteBlog, addBlogComment } from '../reducers/blogReducer';
 import { setMessage } from '../reducers/messageReducer';
 import { useHistory } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 
-export default function BlogView({ blog }) {
+const BlogView = ({ blog }) => {
   const dispatch = useDispatch();
   const [newComment, setNewComment] = useState('');
   const history = useHistory();
@@ -80,10 +80,15 @@ export default function BlogView({ blog }) {
       <h4>comments</h4>
       <ul>
         {blog.comments.map((comment) => (
-          <li>{comment}</li>
+          <li key={blog._id}>{comment}</li>
         ))}
       </ul>
       {commentForm()}
     </div>
   );
-}
+};
+
+BlogView.propTypes = {
+  blog: PropTypes.object.isRequired,
+};
+export default BlogView;

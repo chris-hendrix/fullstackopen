@@ -24,12 +24,14 @@ const blogReducer = (state = initialState, action) => {
     case CREATE_BLOG:
       return { ...state, blogs: blogs.concat(action.data) };
     case UPDATE_BLOG:
-    case ADD_COMMENT:
+    case ADD_COMMENT: {
       const updatedBlog = action.data;
       return { ...state, blogs: blogs.map((b) => (updatedBlog._id === b._id ? updatedBlog : b)) };
-    case DELETE_BLOG:
+    }
+    case DELETE_BLOG: {
       const deletedBlog = action.data;
       return { ...state, blogs: blogs.filter((b) => b._id !== deletedBlog._id) };
+    }
     case SET_BLOG_ERROR:
       return { ...state, error: action.data };
     default:
