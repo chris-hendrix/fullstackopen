@@ -18,7 +18,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:server": "react-scripts build && mv build ../server/build",
+    "build:server": "react-scripts build && cp -rlf build ../server && rm -r build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cy:open": "cypress open",
