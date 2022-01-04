@@ -26,25 +26,19 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '17.x'
-      - name: npm install
-        run: npm run install
-      - name: lint
-        run: npm run lint
-      - name: test
-        run: npm run test
-      - name: e2e tests
-        uses: cypress-io/github-action@v2
-        with:
-          working-directory: part11/11-2-bloglist
-          command: npm run test:e2e
-          start: npm run server:test
-          wait-on: 'http://localhost:3003/'
-  deploy:
-    defaults:
-      run:
-        working-directory: part11/11-2-bloglist
-    runs-on: ubuntu-latest
-    steps:
+      # - name: npm install
+      #   run: npm run install
+      # - name: lint
+      #   run: npm run lint
+      # - name: test
+      #   run: npm run test
+      # - name: e2e tests
+      #   uses: cypress-io/github-action@v2
+      #   with:
+      #     working-directory: part11/11-2-bloglist
+      #     command: npm run test:e2e
+      #     start: npm run server:test
+      #     wait-on: 'http://localhost:3003/'
       - name: deploy to heroku
         if: ${{ github.event_name == 'push'  && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
