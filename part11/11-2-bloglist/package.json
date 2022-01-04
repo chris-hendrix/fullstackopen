@@ -19,7 +19,7 @@
     "deploy": "cd ../.. && git subtree push --prefix part11/11-2-bloglist heroku master",
     "deploy:full": "git add . && git commit -m uibuild && git push && npm run deploy",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install && npm run build",
-    "delete:build": "[ -d /server/build ] && rm -r /server/build"
+    "dev:test": "npm run dev:test --prefix server"
   },
   "author": "Chris Hendrix",
   "license": "MIT"
