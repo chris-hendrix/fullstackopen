@@ -39,6 +39,10 @@ jobs:
           command: npm run test:e2e
           start: npm run server:test
           wait-on: 'http://localhost:3003/'
+    deploy:
+        defaults:
+          run:
+            working-directory: part11/11-2-bloglist
       - name: deploy to heroku
         if: ${{ github.event_name == 'push'  && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
@@ -46,29 +50,29 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: 'fullstackopen-11-2-bloglist' #Must be unique in Heroku
           heroku_email: 'chendrix1123@gmail.com'
-          appdir: 'part11/11-2-bloglist'
+          appdir: 'part11/11-2-bloglist/server'
           healthcheck: 'https://fullstackopen-11-2-bloglist.herokuapp.com/health'
           rollbackonhealthcheckfailed: true
-      - uses: actions/checkout@v2
-      - name: bump version
-        if: ${{ github.event_name == 'push'  && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
-        uses: anothrNick/github-tag-action@1.33.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: patch
-          RELEASE_BRANCHES: main
-      - name: send slack notification
-        uses: 8398a7/action-slack@v3
-        with:
-          status: custom
-          fields: workflow,job,commit,repo,ref,author,took
-          custom_payload: |
-            {
-              attachments: [{
-                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}`,
-              }]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always() # Pick up events even if the job fails or is canceled.
+      # - uses: actions/checkout@v2
+      # - name: bump version
+      #   if: ${{ github.event_name == 'push'  && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+      #   uses: anothrNick/github-tag-action@1.33.0
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     DEFAULT_BUMP: patch
+      #     RELEASE_BRANCHES: main
+      # - name: send slack notification
+      #   uses: 8398a7/action-slack@v3
+      #   with:
+      #     status: custom
+      #     fields: workflow,job,commit,repo,ref,author,took
+      #     custom_payload: |
+      #       {
+      #         attachments: [{
+      #           color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+      #           text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}`,
+      #         }]
+      #       }
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #   if: always() # Pick up events even if the job fails or is canceled.
