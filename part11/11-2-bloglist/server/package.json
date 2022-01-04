@@ -13,7 +13,10 @@
     "lint": "eslint .",
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "dev:test": "NODE_ENV=test concurrently \"nodemon index.js\" \"npm run client\"",
-    "server:test": "npm run build:server && NODE_ENV=test node index.js"
+    "server:test": "npm run build:server && NODE_ENV=test node index.js",
+    "deploy": "cd ../../.. && git subtree push --prefix part11/11-2-bloglist/server heroku master",
+    "deploy:full": "git add . && git commit -m uibuild && git push && npm run deploy",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install && npm run build"
   },
   "author": "Chris Hendrix",
   "license": "MIT",
