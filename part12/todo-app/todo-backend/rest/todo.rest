@@ -19,3 +19,15 @@ Content-Type: application/json
 {
   "done": true
 }
+
+### POST todo
+POST http://localhost:3000/todos
+Content-Type: application/json
+
+{
+  "text": "added from rest client",
+  "done": true
+}
+
+### GET session created count
+GET http://localhost:3000/todos/count
