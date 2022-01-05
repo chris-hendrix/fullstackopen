@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    ports:
+      - 3456:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: the_database
+    volumes:
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+  redis:
+    image: redis
+    command: ['redis-server'] #, '/usr/local/etc/redis/redis.conf']
+# docker-compose -f docker-compose.dev.yml up
+# docker-compose -f docker-compose.dev.yml up -d run in background
+# docker-compose -f docker-compose.dev.yml down --volumes to ensure that nothing is left and start from a clean slate
+# docker exec -it wonderful_ramanujan bash
+# https://stackoverflow.com/questions/33675914/redis-docker-connection-refused
