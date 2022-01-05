@@ -1,0 +1,224 @@
+Script started on 2022-01-05 15:40:36-05:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="175" LINES="30"]
+]0;chendrix@CMH-MBXP: ~/git/fullstackopen/part12/todo-app/todo-backend[01;32mchendrix@CMH-MBXP[00m:[01;34m~/git/fullstackopen/part12/todo-app/todo-backend[00m$ docker container ls
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS              PORTS                     NAMES
+efb210522c60   nginx     "/docker-entrypoint.…"   11 minutes ago   Up 11 minutes       0.0.0.0:8080->80/tcp      kind_knuth
+9fc3397bd79e   mongo     "docker-entrypoint.s…"   18 hours ago     Up About a minute   0.0.0.0:3456->27017/tcp   todo-backend_mongo_1
+]0;chendrix@CMH-MBXP: ~/git/fullstackopen/part12/todo-app/todo-backend[01;32mchendrix@CMH-MBXP[00m:[01;34m~/git/fullstackopen/part12/todo-app/todo-backend[00m$ docker exec -it 9f bash
+Error response from daemon: Multiple IDs found with provided prefix: 9f
+]0;chendrix@CMH-MBXP: ~/git/fullstackopen/part12/todo-app/todo-backend[01;32mchendrix@CMH-MBXP[00m:[01;34m~/git/fullstackopen/part12/todo-app/todo-backend[00m$ doc[K[K[Kdocker exec -it 9f bash[Cc bash[C[C[C[C[C
+]0;root@9fc3397bd79e: /root@9fc3397bd79e:/# show dbs
+bash: show: command not found
+]0;root@9fc3397bd79e: /root@9fc3397bd79e:/# mongo
+MongoDB shell version v5.0.5
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("72b92c02-b81b-4973-94d8-bec5e8d5d8c6") }
+MongoDB server version: 5.0.5
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+	https://docs.mongodb.com/
+Questions? Try the MongoDB Developer Community Forums
+	https://community.mongodb.com
+> mongo show dbs[3G[Jmongo show dbs[17G
+uncaught exception: SyntaxError: unexpected token: identifier :
+@(shell):1:6
+> show databases[3G[Jshow databases[17G
+> who[3G[Jwh[5G[3G[Jw[4G[3G[J[3Gshow dbs[3G[Jshow dbs[11G
+> [3G[J[3G^C
+bye
+]0;root@9fc3397bd79e: /root@9fc3397bd79e:/# show dbs
+bash: show: command not found
+]0;root@9fc3397bd79e: /root@9fc3397bd79e:/# mongo
+MongoDB shell version v5.0.5
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("775438cb-0532-4215-b42f-72ad16134172") }
+MongoDB server version: 5.0.5
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+> [3G[J[3G^C
+bye
+]0;root@9fc3397bd79e: /root@9fc3397bd79e:/# mongosh
+]0;mongosh mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000Current Mongosh Log ID:	61d6035789e1178ece52d0ec
+Connecting to:		[1m[32mmongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000[0m
+Using MongoDB:		5.0.5
+[1m[33mUsing Mongosh[0m:		1.1.6
+
+For mongosh info see: [1mhttps://docs.mongodb.com/mongodb-shell/[0m
+
+
+To help improve our products, anonymous usage data is collected and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the [1mdisableTelemetry()[0m command.
+
+[1G[0J [1G[1m[33mWarning: Found ~/.mongorc.js, but not ~/.mongoshrc.js. ~/.mongorc.js will not be loaded.
+  You may want to copy or rename ~/.mongorc.js to ~/.mongoshrc.js.
+[0m[1G[0Jtest> [7Gshow dbs
+Uncaught [1m[31mMongoServerError[0m: command listDatabases requires authentication
+[1G[0Jtest> [7Guse admin
+switched to db admin
+[1G[0Jadmin> [8Gshow dbs
+Uncaught [1m[31mMongoServerError[0m: command listDatabases requires authentication
+[1G[0Jadmin> [8G
+(To exit, press Ctrl+C again or Ctrl+D or type .exit)
+[1G[0Jadmin> [8Gm[1G[0Jadmin> [8G
+]0;root@9fc3397bd79e: /root@9fc3397bd79e:/# mongod
+{"t":{"$date":"2022-01-05T20:46:34.526+00:00"},"s":"I",  "c":"CONTROL",  "id":23285,   "ctx":"-","msg":"Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'"}
+{"t":{"$date":"2022-01-05T20:46:34.527+00:00"},"s":"I",  "c":"NETWORK",  "id":4915701, "ctx":"-","msg":"Initialized wire specification","attr":{"spec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":13},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":13},"outgoing":{"minWireVersion":0,"maxWireVersion":13},"isInternalClient":true}}}
+{"t":{"$date":"2022-01-05T20:46:34.533+00:00"},"s":"W",  "c":"ASIO",     "id":22601,   "ctx":"main","msg":"No TransportLayer configured during NetworkInterface startup"}
+{"t":{"$date":"2022-01-05T20:46:34.533+00:00"},"s":"I",  "c":"NETWORK",  "id":4648601, "ctx":"main","msg":"Implicit TCP FastOpen unavailable. If TCP FastOpen is required, set tcpFastOpenServer, tcpFastOpenClient, and tcpFastOpenQueueSize."}
+{"t":{"$date":"2022-01-05T20:46:34.536+00:00"},"s":"W",  "c":"ASIO",     "id":22601,   "ctx":"main","msg":"No TransportLayer configured during NetworkInterface startup"}
+{"t":{"$date":"2022-01-05T20:46:34.537+00:00"},"s":"I",  "c":"REPL",     "id":5123008, "ctx":"main","msg":"Successfully registered PrimaryOnlyService","attr":{"service":"TenantMigrationDonorService","ns":"config.tenantMigrationDonors"}}
+{"t":{"$date":"2022-01-05T20:46:34.537+00:00"},"s":"I",  "c":"REPL",     "id":5123008, "ctx":"main","msg":"Successfully registered PrimaryOnlyService","attr":{"service":"TenantMigrationRecipientService","ns":"config.tenantMigrationRecipients"}}
+{"t":{"$date":"2022-01-05T20:46:34.537+00:00"},"s":"I",  "c":"CONTROL",  "id":5945603, "ctx":"main","msg":"Multi threading initialized"}
+{"t":{"$date":"2022-01-05T20:46:34.538+00:00"},"s":"I",  "c":"CONTROL",  "id":4615611, "ctx":"initandlisten","msg":"MongoDB starting","attr":{"pid":104,"port":27017,"dbPath":"/data/db","architecture":"64-bit","host":"9fc3397bd79e"}}
+{"t":{"$date":"2022-01-05T20:46:34.539+00:00"},"s":"I",  "c":"CONTROL",  "id":23403,   "ctx":"initandlisten","msg":"Build Info","attr":{"buildInfo":{"version":"5.0.5","gitVersion":"d65fd89df3fc039b5c55933c0f71d647a54510ae","openSSLVersion":"OpenSSL 1.1.1f  31 Mar 2020","modules":[],"allocator":"tcmalloc","environment":{"distmod":"ubuntu2004","distarch":"x86_64","target_arch":"x86_64"}}}}
+{"t":{"$date":"2022-01-05T20:46:34.539+00:00"},"s":"I",  "c":"CONTROL",  "id":51765,   "ctx":"initandlisten","msg":"Operating System","attr":{"os":{"name":"Ubuntu","version":"20.04"}}}
+{"t":{"$date":"2022-01-05T20:46:34.539+00:00"},"s":"I",  "c":"CONTROL",  "id":21951,   "ctx":"initandlisten","msg":"Options set by command line","attr":{"options":{}}}
+{"t":{"$date":"2022-01-05T20:46:34.541+00:00"},"s":"E",  "c":"CONTROL",  "id":20568,   "ctx":"initandlisten","msg":"Error setting up listener","attr":{"error":{"code":9001,"codeName":"SocketException","errmsg":"Address already in use"}}}
+{"t":{"$date":"2022-01-05T20:46:34.541+00:00"},"s":"I",  "c":"REPL",     "id":4784900, "ctx":"initandlisten","msg":"Stepping down the ReplicationCoordinator for shutdown","attr":{"waitTimeMillis":15000}}
+{"t":{"$date":"2022-01-05T20:46:34.549+00:00"},"s":"I",  "c":"COMMAND",  "id":4784901, "ctx":"initandlisten","msg":"Shutting down the MirrorMaestro"}
+{"t":{"$date":"2022-01-05T20:46:34.549+00:00"},"s":"I",  "c":"SHARDING", "id":4784902, "ctx":"initandlisten","msg":"Shutting down the WaitForMajorityService"}
+{"t":{"$date":"2022-01-05T20:46:34.549+00:00"},"s":"I",  "c":"NETWORK",  "id":4784905, "ctx":"initandlisten","msg":"Shutting down the global connection pool"}
+{"t":{"$date":"2022-01-05T20:46:34.549+00:00"},"s":"I",  "c":"NETWORK",  "id":4784918, "ctx":"initandlisten","msg":"Shutting down the ReplicaSetMonitor"}
+{"t":{"$date":"2022-01-05T20:46:34.549+00:00"},"s":"I",  "c":"SHARDING", "id":4784921, "ctx":"initandlisten","msg":"Shutting down the MigrationUtilExecutor"}
+{"t":{"$date":"2022-01-05T20:46:34.550+00:00"},"s":"I",  "c":"ASIO",     "id":22582,   "ctx":"MigrationUtil-TaskExecutor","msg":"Killing all outstanding egress activity."}
+{"t":{"$date":"2022-01-05T20:46:34.550+00:00"},"s":"I",  "c":"COMMAND",  "id":4784923, "ctx":"initandlisten","msg":"Shutting down the ServiceEntryPoint"}
+{"t":{"$date":"2022-01-05T20:46:34.550+00:00"},"s":"I",  "c":"CONTROL",  "id":4784925, "ctx":"initandlisten","msg":"Shutting down free monitoring"}
+{"t":{"$date":"2022-01-05T20:46:34.550+00:00"},"s":"I",  "c":"CONTROL",  "id":4784927, "ctx":"initandlisten","msg":"Shutting down the HealthLog"}
+{"t":{"$date":"2022-01-05T20:46:34.550+00:00"},"s":"I",  "c":"CONTROL",  "id":4784928, "ctx":"initandlisten","msg":"Shutting down the TTL monitor"}
+{"t":{"$date":"2022-01-05T20:46:34.550+00:00"},"s":"I",  "c":"CONTROL",  "id":4784929, "ctx":"initandlisten","msg":"Acquiring the global lock for shutdown"}
+{"t":{"$date":"2022-01-05T20:46:34.550+00:00"},"s":"I",  "c":"-",        "id":4784931, "ctx":"initandlisten","msg":"Dropping the scope cache for shutdown"}
+{"t":{"$date":"2022-01-05T20:46:34.550+00:00"},"s":"I",  "c":"FTDC",     "id":4784926, "ctx":"initandlisten","msg":"Shutting down full-time data capture"}
+{"t":{"$date":"2022-01-05T20:46:34.550+00:00"},"s":"I",  "c":"CONTROL",  "id":20565,   "ctx":"initandlisten","msg":"Now exiting"}
+{"t":{"$date":"2022-01-05T20:46:34.551+00:00"},"s":"I",  "c":"CONTROL",  "id":23138,   "ctx":"initandlisten","msg":"Shutting down","attr":{"exitCode":48}}
+]0;root@9fc3397bd79e: /root@9fc3397bd79e:/# mongoh
+bash: mongoh: command not found
+]0;root@9fc3397bd79e: /root@9fc3397bd79e:/# mongos 
+MongoDB shell version v5.0.5
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("3e799793-dd10-4357-9c84-4f99e8b0456b") }
+MongoDB server version: 5.0.5
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+> [3G[J[3G^C
+bye
+]0;root@9fc3397bd79e: /root@9fc3397bd79e:/# mongosh
+]0;mongosh mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000Current Mongosh Log ID:	61d603c137d361a738bd4e52
+Connecting to:		[1m[32mmongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000[0m
+Using MongoDB:		5.0.5
+[1m[33mUsing Mongosh[0m:		1.1.6
+
+For mongosh info see: [1mhttps://docs.mongodb.com/mongodb-shell/[0m
+
+[1G[0J [1G[1m[33mWarning: Found ~/.mongorc.js, but not ~/.mongoshrc.js. ~/.mongorc.js will not be loaded.
+  You may want to copy or rename ~/.mongorc.js to ~/.mongoshrc.js.
+[0m[1G[0Jtest> [7Gshow dbs
+Uncaught [1m[31mMongoServerError[0m: command listDatabases requires authentication
+[1G[0Jtest> [7Gdb.create([1G[0Jtest> db.create[16GUser({user[33muser[39m:root[1G[0Jtest> db.createUser({[33muser[39m:roo[30G[1G[0Jtest> db.createUser({[33muser[39m:ro[29G[1G[0Jtest> db.createUser({[33muser[39m:r[28G[1G[0Jtest> db.createUser({[33muser[39m:[27G root, pwd[33mpwd[39m: example, roles[33mroles[39m: [ { role[33mrole[39m: [32m"[39m[32mu[39m[32ms[39m[32me[39m[32mr[39m[32mA[39m[32md[39m[32mm[39m[32mi[39m[32mn[39m[32mA[39m[32mn[39m[32my[39m[32mD[39m[32ma[39m[32mt[39m[32ma[39m[32mb[39m[32ma[39m[32ms[39m[32me[39m[32m"[39m, db[33mdb[39m: [32m"[39m[32ma[39m[32md[39m[32mm[39m[32mi[39m[32mn[39m[32m"[39m }, [32m"[39m[32mr[39m[32me[39m[32ma[39m[32md[39m[32mW[39m[32mr[39m[32mi[39m[32mt[39m[32me[39m[32mA[39m[32mn[39m[32my[39m[32mD[39m[32ma[39m[32mt[39m[32ma[39m[32mb[39m[32ma[39m[32ms[39m[32me[39m[32m"[39m ] } )
+Uncaught [1m[31mReferenceError[0m: root is not defined
+[1G[0Jtest> [7G[1G[0Jtest> show dbs[15G[1G[0Jtest> use admin[16G[1G[0Jtest> show dbs[15G[1G[0Jtest> [7G[1G[0Jtest> show dbs[15G[1G[0Jtest> use admin[16G[1G[0Jtest> show dbs[15G[1G[0Jtest> [7G[1G[0Jtest> show dbs[15G[1G[0Jtest> use admin[16G[1G[0Jtest> show dbs[15G[1G[0Jtest> [7Gdb.createUser
+[1]+  Stopped                 mongosh
+]0;root@9fc3397bd79e: /root@9fc3397bd79e:/# mongosh
+]0;mongosh mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000Current Mongosh Log ID:	61d6042ee352cb81c840ce08
+Connecting to:		[1m[32mmongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000[0m
+Using MongoDB:		5.0.5
+[1m[33mUsing Mongosh[0m:		1.1.6
+
+For mongosh info see: [1mhttps://docs.mongodb.com/mongodb-shell/[0m
+
+[1G[0J [1G[1m[33mWarning: Found ~/.mongorc.js, but not ~/.mongoshrc.js. ~/.mongorc.js will not be loaded.
+  You may want to copy or rename ~/.mongorc.js to ~/.mongoshrc.js.
+[0m[1G[0Jtest> [7Gdb.createUser({user[33muser[39m: root, pwd[33mpwd[39m: example, roles[33mroles[39m: [ { role[33mrole[39m: [32m"[39m[32mu[39m[32ms[39m[32me[39m[32mr[39m[32mA[39m[32md[39m[32mm[39m[32mi[39m[32mn[39m[32mA[39m[32mn[39m[32my[39m[32mD[39m[32ma[39m[32mt[39m[32ma[39m[32mb[39m[32ma[39m[32ms[39m[32me[39m[32m"[39m, db[33mdb[39m: [32m"[39m[32ma[39m[32md[39m[32mm[39m[32mi[39m[32mn[39m[32m"[39m }, [32m"[39m[32mr[39m[32me[39m[32ma[39m[32md[39m[32mW[39m[32mr[39m[32mi[39m[32mt[39m[32me[39m[32mA[39m[32mn[39m[32my[39m[32mD[39m[32ma[39m[32mt[39m[32ma[39m[32mb[39m[32ma[39m[32ms[39m[32me[39m[32m"[39m ] } )[1D[1G[0Jtest> db.createUser[44m([49m{[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[131G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[130G[1D[1G[0Jtest> db.createUser([44m{[49m[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[129G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[128G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [44m[[49m { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[127G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[126G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [44m[32m"[49mreadWriteAnyDatabase"[39m ] } )[125G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[124G[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase[44m"[39m[49m ] } )[104G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[103G[1D[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ [44m{[49m [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[101G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[100G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [44m[32m"[49madmin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[99G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[98G[1D[1D[1D[1D[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin[44m"[39m[49m }, [32m"readWriteAnyDatabase"[39m ] } )[93G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[92G[1D[1D[1D[1D[1D[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [44m[32m"[49muserAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[86G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[85G[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase[44m"[39m[49m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[65G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[64G[1D[1D[1D[1D[1D[1D[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m [44m}[49m, [32m"readWriteAnyDatabase"[39m ] } )[57G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[56G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m [44m][49m } )[55G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[54G[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1C[1C[1C[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example[32m', roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ] } )[39m[47G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example[32m', roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ] } )[39m[46G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example[32m', roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ] } )[39m[45G[1D[1D[1D[1D[1D[1D[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m:[32m' example'[39m, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[39G[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: example[32m', roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ] } )[39m[38G[1C[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: [32m'example'[39m, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[40G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: [32m'example[44m'[39m[49m, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[39G[1D[1G[0Jtest> db.createUser({[33muser[39m: root, [33mpwd[39m: [32m'example'[39m, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[38G[1D[1D[1D[1D[1D[1D[1D[1D[1D[1D[1G[0Jtest> db.createUser({[33muser[39m: [32m'root, pwd: '[39mexample[32m', roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ] } )[39m[29G[1C[1C[1C[1C[1G[0Jtest> db.createUser({[33muser[39m: [32m'root'[39m, [33mpwd[39m: [32m'example'[39m, [33mroles[39m: [ { [33mrole[39m: [32m"userAdminAnyDatabase"[39m, [33mdb[39m: [32m"admin"[39m }, [32m"readWriteAnyDatabase"[39m ] } )[34G[102C
+Uncaught [1m[31mMongoServerError[0m: command createUser requires authentication
+[1G[0Jtest> [7Guse admin
+switched to db admin
+[1G[0Jadmin> [8Gdb.createUser({user[33muser[39m: [32m'[39m[32mr[39m[32mo[39m[32mo[39m[32mt[39m[32m'[39m, pwd[33mpwd[39m: [32m'[39m[32me[39m[32mx[39m[32ma[39m[32mm[39m[32mp[39m[32ml[39m[32me[39m[32m'[39m, roles[33mroles[39m: [ { role[33mrole[39m: [32m"[39m[32mu[39m[32ms[39m[32me[39m[32mr[39m[32mA[39m[32md[39m[32mm[39m[32mi[39m[32mn[39m[32mA[39m[32mn[39m[32my[39m[32mD[39m[32ma[39m[32mt[39m[32ma[39m[32mb[39m[32ma[39m[32ms[39m[32me[39m[32m"[39m, db[33mdb[39m: [32m"[39m[32ma[39m[32md[39m[32mm[39m[32mi[39m[32mn[39m[32m"[39m }, [32m"[39m[32mr[39m[32me[39m[32ma[39m[32md[39m[32mW[39m[32mr[39m[32mi[39m[32mt[39m[32me[39m[32mA[39m[32mn[39m[32my[39m[32mD[39m[32ma[39m[32mt[39m[32ma[39m[32mb[39m[32ma[39m[32ms[39m[32me[39m[32m"[39m ] } )
+Uncaught [1m[31mMongoServerError[0m: command createUser requires authentication
+[1G[0Jadmin> [8Gdb.auth()
+Uncaught [1m[31mMongoshInvalidInputError[0m: [COMMON-10001] auth expects (username), (username, password), or ({ user: username, pwd: password })
+[1G[0Jadmin> [8Gdb.auth([32m'[39m[32mr[39m[32mo[39m[32mo[39m[32mt[39m[32m'[39m, [32m'[39m[32me[39m[32mx[39m[32ma[39m[32mm[39m[32mp[39m[32ml[39m[32me[39m[32m'[39m)
+{ ok: [33m1[39m }
+[1G[0Jadmin> [8Gshow dbs
+[1madmin[0m          102 kB
+[1mconfig[0m        36.9 kB
+[1mlocal[0m         73.7 kB
+[1mthe_database[0m  57.3 kB
+[1G[0Jadmin> [8Guse the_database
+switched to db the_database
+[1G[0Jthe_database> [15Gshow collections
+[1mtodos[0m
+[1G[0Jthe_database> [15Gdb.todos.find({})
+[
+  {
+    _id: ObjectId("61d509266e7db38054be46f2"),
+    text: [32m'Write code'[39m,
+    done: [33mtrue[39m
+  },
+  {
+    _id: ObjectId("61d509266e7db38054be46f3"),
+    text: [32m'Learn about containers'[39m,
+    done: [33mfalse[39m
+  }
+]
+[1G[0Jthe_database> [15Gdb.insert[1G[0Jthe_database> db.inser[23G[1G[0Jthe_database> db.inse[22G[1G[0Jthe_database> db.ins[21G[1G[0Jthe_database> db.in[20G[1G[0Jthe_database> db.i[19G[1G[0Jthe_database> db.[18G[1G[0Jthe_database> db[17G[1G[0Jthe_database> d[16G[1G[0Jthe_database> [15Gdb.todos.insertOne({ text[33mtext[39m: [32m"[39m[32mI[39m[32mn[39m[32mc[39m[32mr[39m[32me[39m[32ma[39m[32ms[39m[32me[39m [32mt[39m[32mh[39m[32me[39m [32mn[39m[32mu[39m[32mm[39m[32mb[39m[32me[39m[32mr[39m [32mo[39m[32mf[39m [32mt[39m[32mo[39m[32mo[39m[32ml[39m[32ms[39m [32mi[39m[32mn[39m [32mm[39m[32my[39m [32mt[39m[32mo[39m[32mo[39m[32ml[39m[32mb[39m[32me[39m[32ml[39m[32mt[39m[32m"[39m, d[36mdo[39mdone[33mdone[39m: False} })
+Uncaught:
+[1m[31mSyntaxError[0m: Unexpected token, expected "," (1:87)
+
+[0m[31m[1m>[22m[39m[90m 1 |[39m db[33m.[39mtodos[33m.[39minsertOne({ text[33m:[39m [32m"Increase the number of tools in my toolbelt"[39m[33m,[39m done[33m:[39m [33mFalse[39m} })[0m
+[0m [90m   |[39m                                                                                        [31m[1m^[22m[39m[0m
+[0m [90m 2 |[39m[0m
+
+[1G[0Jthe_database> [15Gdb.todos.insertOne({ text[33mtext[39m: [32m"[39m[32mI[39m[32mn[39m[32mc[39m[32mr[39m[32me[39m[32ma[39m[32ms[39m[32me[39m [32mt[39m[32mh[39m[32me[39m [32mn[39m[32mu[39m[32mm[39m[32mb[39m[32me[39m[32mr[39m [32mo[39m[32mf[39m [32mt[39m[32mo[39m[32mo[39m[32ml[39m[32ms[39m [32mi[39m[32mn[39m [32mm[39m[32my[39m [32mt[39m[32mo[39m[32mo[39m[32ml[39m[32mb[39m[32me[39m[32ml[39m[32mt[39m[32m"[39m, d[36mdo[39mdone[33mdone[39m: False})
+Uncaught [1m[31mReferenceError[0m: False is not defined
+[1G[0Jthe_database> [15Gdb.todos.insertOne({ [32m"[39m[32mt[39m[32me[39m[32mx[39m[32mt[39m[32m"[39m: [32m"[39m[32mI[39m[32mn[39m[32mc[39m[32mr[39m[32me[39m[32ma[39m[32ms[39m[32me[39m [32mt[39m[32mh[39m[32me[39m [32mn[39m[32mu[39m[32mm[39m[32mb[39m[32me[39m[32mr[39m [32mo[39m[32mf[39m [32mt[39m[32mo[39m[32mo[39m[32ml[39m[32ms[39m [32mi[39m[32mn[39m [32mm[39m[32my[39m [32mt[39m[32mo[39m[32mo[39m[32ml[39m[32mb[39m[32me[39m[32ml[39m[32mt[39m[32m"[39m, [32m"[39m[32md[39m[32mo[39m[32mn[39m[32me[39m[32m"[39m: fals[33mfalse[39m})
+{
+  acknowledged: [33mtrue[39m,
+  insertedId: ObjectId("61d6057c216685244fe9b5ed")
+}
+[1G[0Jthe_database> [15G[1G[0Jthe_database> db.todos.insertOne({ [32m"text"[39m: [32m"Increase the number of tools in my toolbelt"[39m, [32m"done"[39m: [33mfalse[39m})[106G[1G[0Jthe_database> db.todos.insertOne({ [33mtext[39m: [32m"Increase the number of tools in my toolbelt"[39m, [33mdone[39m: False})[102G[1G[0Jthe_database> db.todos.insertOne({ [33mtext[39m: [32m"Increase the number of tools in my toolbelt"[39m, [33mdone[39m: False} })[104G[1G[0Jthe_database> db.todos.find({})[32G[1G[0Jthe_database> show collections[31G[1G[0Jthe_database> db.todos.find({})[32G
+[
+  {
+    _id: ObjectId("61d509266e7db38054be46f2"),
+    text: [32m'Write code'[39m,
+    done: [33mtrue[39m
+  },
+  {
+    _id: ObjectId("61d509266e7db38054be46f3"),
+    text: [32m'Learn about containers'[39m,
+    done: [33mfalse[39m
+  },
+  {
+    _id: ObjectId("61d6057c216685244fe9b5ed"),
+    text: [32m'Increase the number of tools in my toolbelt'[39m,
+    done: [33mfalse[39m
+  }
+]
+[1G[0Jthe_database> [15G
+(To exit, press Ctrl+C again or Ctrl+D or type .exit)
+[1G[0Jthe_database> [15G
+]0;root@9fc3397bd79e: /root@9fc3397bd79e:/# ^C
+]0;root@9fc3397bd79e: /root@9fc3397bd79e:/# exit
+exit
+There are stopped jobs.
+]0;root@9fc3397bd79e: /root@9fc3397bd79e:/# exit
+exit
+]0;chendrix@CMH-MBXP: ~/git/fullstackopen/part12/todo-app/todo-backend[01;32mchendrix@CMH-MBXP[00m:[01;34m~/git/fullstackopen/part12/todo-app/todo-backend[00m$ exit
+exit
+
+Script done on 2022-01-05 15:54:49-05:00 [COMMAND_EXIT_CODE="1"]
