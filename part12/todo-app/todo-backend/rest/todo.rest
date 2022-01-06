@@ -30,4 +30,4 @@ Content-Type: application/json
 }
 
 ### GET session created count
-GET http://localhost:3000/todos/count
+GET http://localhost:3000/todos/statistics
