@@ -21,3 +21,4 @@ services:
 # docker-compose -f docker-compose.dev.yml down --volumes to ensure that nothing is left and start from a clean slate
 # docker exec -it wonderful_ramanujan bash
 # https://stackoverflow.com/questions/33675914/redis-docker-connection-refused
+# docker run --name=redis-devel --publish=6379:6379 --hostname=redis --restart=on-failure --detach redis:latest
