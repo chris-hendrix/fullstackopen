@@ -14,4 +14,7 @@ RUN npm install -g serve
 
 CMD ["serve", "build"]
 
-# docker build . -t todo-frontend && docker run -p 3001:3000 todo-frontend
+# docker build . -t frontend && docker run -p 3001:3000 frontend
+
+# https://stackoverflow.com/questions/53681041/webpack-build-fails-with-epipe-error-linux-subsystem-only
+# sudo apt-get install libpng16-dev
