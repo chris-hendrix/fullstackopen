@@ -1,6 +1,6 @@
 FROM node:16
 
-ENV REACT_APP_BACKEND_URL=http://localhost:5000
+ENV REACT_APP_BACKEND_URL=http://localhost:5001
 
 WORKDIR /usr/src/app
 
