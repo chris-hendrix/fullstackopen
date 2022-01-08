@@ -5,16 +5,16 @@ const router = express.Router();
 
 const COUNT_KEY = 'counter';
 
+/* GET todos statistics. */
+router.get('/statistics', async (_, res) => {
+  const count = (await redis.getAsync(COUNT_KEY)) || 0;
+  res.send({ added_todos: count });
+});
+
 /* GET todos listing. */
 router.get('/', async (_, res) => {
   const todos = await Todo.find({});
   res.send(todos);
-});
-
-/* GET todos session count. */
-router.get('/count', async (_, res) => {
-  const count = await redis.getAsync(COUNT_KEY);
-  res.send({ added_todos: count });
 });
 
 /* POST todo to listing. */
@@ -24,7 +24,6 @@ router.post('/', async (req, res) => {
     done: false,
   });
   const count = (await redis.getAsync(COUNT_KEY)) || 0;
-  console.log(count);
   redis.setAsync(COUNT_KEY, Number(count) + 1);
   res.send(todo);
 });

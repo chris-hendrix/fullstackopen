@@ -1,11 +1,11 @@
 ### GET all todos 
-GET http://localhost:3000/todos
+GET http://localhost:5001/todos
 
 ### GET one todo
-GET http://localhost:3000/todos/61d509266e7db38054be46f2
+GET http://localhost:5001/todos/61d509266e7db38054be46f2
 
 ### PUT done=false for todo 61d509266e7db38054be46f2" 
-PUT http://localhost:3000/todos/61d509266e7db38054be46f2
+PUT http://localhost:5001/todos/61d509266e7db38054be46f2
 Content-Type: application/json
 
 {
@@ -13,7 +13,7 @@ Content-Type: application/json
 }
 
 ### PUT done=true for todo 61d509266e7db38054be46f2
-PUT http://localhost:3000/todos/61d509266e7db38054be46f2
+PUT http://localhost:5001/todos/61d509266e7db38054be46f2
 Content-Type: application/json
 
 {
@@ -21,7 +21,7 @@ Content-Type: application/json
 }
 
 ### POST todo
-POST http://localhost:3000/todos
+POST http://localhost:5001/todos
 Content-Type: application/json
 
 {
@@ -30,4 +30,4 @@ Content-Type: application/json
 }
 
 ### GET session created count
-GET http://localhost:3000/todos/count
+GET http://localhost:5001/todos/statistics
