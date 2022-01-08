@@ -9,5 +9,7 @@ services:
     ports:
       - 3000:3000
     container_name: hello-front-dev # This will name the container hello-front-dev
-
+  debug-helper:
+    image: busybox
 # docker-compose up
+# docker-compose run debug-helper wget -O - http://hello-front-dev:3000
