@@ -7,7 +7,7 @@
     "node": "17.x"
   },
   "scripts": {
-    "start": "npm run start --prefix server",
+    "start": "npm run start --prefix client",
     "install": "npm install --prefix client && npm install --prefix server",
     "dev": "npm run dev --prefix server",
     "build": "npm run build:server --prefix client",
