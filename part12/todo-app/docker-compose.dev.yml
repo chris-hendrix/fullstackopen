@@ -11,13 +11,15 @@ services:
   frontend:
     image: todo-frontend-dev
     build:
-      context: ./todo-frontend/
+      context: ./frontend/
       dockerfile: dev.Dockerfile
     volumes:
       - ./frontend/:/usr/src/app
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:5001/
     ports:
       - 3000:3000
-    container_name: todo-frontend-dev
+    # container_name: todo-frontend-dev
 # docker-compose -f docker-compose.dev.yml up
 # docker-compose -f docker-compose.dev.yml up -d              run in background
 # docker-compose -f docker-compose.dev.yml down --volumes     to ensure that nothing is left and start from a clean slate
