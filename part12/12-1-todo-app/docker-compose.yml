@@ -36,7 +36,8 @@ services:
       - 'redis'
     environment:
       - REDIS_URL=redis://redis:6379
-      - MONGO_URL=mongodb://the_username:the_password@mongo:27017/the_database
+      # - MONGO_URL=mongodb://the_username:the_password@mongo:27017/the_database
+      - MONGO_URL=${MONGO_URL_CONTAINER}
   mongo:
     image: mongo
     ports:
@@ -59,5 +60,7 @@ services:
 # docker-compose up -d              run in background
 # docker-compose down --volumes     to ensure that nothing is left and start from a clean slate
 
+# docker-compose --env-file ./backend/.env up
+# docker-compose --env-file ./backend/.env config
 # docker exec -it reverse-proxy bash
 # curl http://app:3000
