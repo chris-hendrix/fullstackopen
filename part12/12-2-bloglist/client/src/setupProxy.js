@@ -10,4 +10,4 @@ module.exports = function (app) {
   );
 };
 
-// replaces "proxy": "http://localhost:3003", in package.json
+// replaces "proxy": "http://localhost:3003" in package.json
