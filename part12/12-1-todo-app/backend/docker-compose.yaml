@@ -1,13 +1,13 @@
-version: '3.8'
+version: '3.8' # Version 3.8 is quite new and should work
 
 services:
-  server:
+  backend:
     image: todo-backend-dev
     build:
-      context: .
-      dockerfile: dev.Dockerfile
+      context: ./
+      dockerfile: Dockerfile
     volumes:
-      - ./:/usr/src/app # The path can be relative, so ./ is enough to say "the same location as the docker-compose.yml"
+      - ./:/usr/src/app
     ports:
       - 5001:5001
     depends_on:
@@ -33,9 +33,6 @@ services:
     command: ['redis-server', '--appendonly', 'yes'] # Overwrite the CMD
     volumes: # Declare the volume
       - ./redis_data:/data
-# docker-compose -f docker-compose.dev.yml up
-# docker-compose -f docker-compose.dev.yml up -d              run in background
-# docker-compose -f docker-compose.dev.yml down --volumes     to ensure that nothing is left and start from a clean slate
-# docker exec -it wonderful_ramanujan bash
-# https://stackoverflow.com/questions/33675914/redis-docker-connection-refused
-# docker run --name=redis-devel --publish=6379:6379 --hostname=redis --restart=on-failure --detach redis:latest
+# docker-compose up
+# docker-compose up -d              run in background
+# docker-compose down --volumes     to ensure that nothing is left and start from a clean slate
