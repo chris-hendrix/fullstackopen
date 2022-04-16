@@ -30,25 +30,25 @@ jobs:
         run: npm run install
       - name: lint
         run: npm run lint
-      - name: test
-        run: npm run test
-      - name: e2e tests
-        uses: cypress-io/github-action@v2
-        with:
-          working-directory: part11/11-2-bloglist
-          command: npm run test:e2e
-          start: npm run server:test
-          wait-on: 'http://localhost:3003/'
-      - name: deploy to heroku
-        if: ${{ github.event_name == 'push'  && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
-        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: 'fullstackopen-11-2-bloglist' #Must be unique in Heroku
-          heroku_email: 'chendrix1123@gmail.com'
-          appdir: 'part11/11-2-bloglist/server'
-          healthcheck: 'https://fullstackopen-11-2-bloglist.herokuapp.com/health'
-          rollbackonhealthcheckfailed: true
+      # - name: test
+      #   run: npm run test
+      # - name: e2e tests
+      #   uses: cypress-io/github-action@v2
+      #   with:
+      #     working-directory: part11/11-2-bloglist
+      #     command: npm run test:e2e
+      #     start: npm run server:test
+      #     wait-on: 'http://localhost:3003/'
+      # - name: deploy to heroku
+      #   if: ${{ github.event_name == 'push'  && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+      #   uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+      #   with:
+      #     heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+      #     heroku_app_name: 'fullstackopen-11-2-bloglist' #Must be unique in Heroku
+      #     heroku_email: 'chendrix1123@gmail.com'
+      #     appdir: 'part11/11-2-bloglist/server'
+      #     healthcheck: 'https://fullstackopen-11-2-bloglist.herokuapp.com/health'
+      #     rollbackonhealthcheckfailed: true
       - uses: actions/checkout@v2
       - name: bump version
         if: ${{ github.event_name == 'push'  && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
