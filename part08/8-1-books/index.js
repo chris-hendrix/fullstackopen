@@ -1,4 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server')
+const { v1: uuid } = require('uuid')
+
 const bookData = require('./bookData.js')
 
 let books = bookData.books
@@ -8,7 +10,7 @@ const typeDefs = gql`
   type Author {
     id: ID!
     name: String!
-    born: Int!
+    born: Int
     bookCount: Int!
   }
   type Book {
@@ -16,13 +18,26 @@ const typeDefs = gql`
     title: String!
     published: Int!
     author: String!
-    genres: [String]
+    genres: [String!]
   }
   type Query {
     bookCount: Int!
     authorCount: Int!
     allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]!
+  }
+
+  type Mutation {
+    addBook(
+      title: String!
+      author: String!
+      published: Int!
+      genres: [String!]
+    ): Book
+    editAuthor(
+      name: String! 
+      setBornTo: Int
+    ): Author
   }
 `
 
@@ -41,6 +56,24 @@ const resolvers = {
   },
   Author: {
     bookCount: (root) => books.filter(b => b.author === root.name).length
+  },
+  Mutation: {
+    addBook: (root, args) => {
+      const book = { ...args, id: uuid() }
+      const { author } = args
+      if (!authors.find(a => a.name === author)) {
+        authors = authors.concat({ id: uuid(), name: author })
+      }
+      books = books.concat(book)
+      return book
+    },
+    editAuthor: (root, args) => {
+      const { name, setBornTo } = args
+      const index = authors.findIndex(a => a.name === name)
+      if (index === -1) return null
+      authors[index] = { ...authors[index], born: setBornTo }
+      return authors[index]
+    }
   }
 }
 
