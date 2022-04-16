@@ -1,0 +1,28 @@
+services:
+  debug-helper:
+    image: busybox
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: reverse-proxy
+  frontend:
+    image: todo-frontend-dev
+    build:
+      context: ./frontend/
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./frontend/:/usr/src/app
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:5001/
+    ports:
+      - 3000:3000
+    # container_name: todo-frontend-dev
+# docker-compose -f docker-compose.dev.yml up
+# docker-compose -f docker-compose.dev.yml up -d              run in background
+# docker-compose -f docker-compose.dev.yml down --volumes     to ensure that nothing is left and start from a clean slate
+
+# docker exec -it reverse-proxy bash
+# curl http://app:3000

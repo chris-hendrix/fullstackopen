@@ -1,0 +1,33 @@
+### GET all todos 
+GET http://localhost:5001/todos
+
+### GET one todo
+GET http://localhost:5001/todos/61d509266e7db38054be46f2
+
+### PUT done=false for todo 61d509266e7db38054be46f2" 
+PUT http://localhost:5001/todos/61d509266e7db38054be46f2
+Content-Type: application/json
+
+{
+  "done": false
+}
+
+### PUT done=true for todo 61d509266e7db38054be46f2
+PUT http://localhost:5001/todos/61d509266e7db38054be46f2
+Content-Type: application/json
+
+{
+  "done": true
+}
+
+### POST todo
+POST http://localhost:5001/todos
+Content-Type: application/json
+
+{
+  "text": "added from rest client",
+  "done": true
+}
+
+### GET session created count
+GET http://localhost:5001/todos/statistics
