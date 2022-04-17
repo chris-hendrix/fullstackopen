@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { UserInputError } = require('apollo-server')
 
 module.exports = {
   saveDoc: async (document, args) => {
