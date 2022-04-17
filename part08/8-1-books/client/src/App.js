@@ -1,15 +1,27 @@
 import { useEffect, useState } from 'react'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient, useQuery } from '@apollo/client'
+
+import { CURRENT_USER } from './queries'
+
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
+import Recommendations from './components/Recommendations'
 import LoginForm from './components/LoginForm'
 
 const App = () => {
+  const [user, setUser] = useState(null)
   const [token, setToken] = useState(null)
   const [message, setMessage] = useState(null)
   const [page, setPage] = useState('authors')
   const client = useApolloClient()
+
+  const result = useQuery(CURRENT_USER)
+
+  useEffect(() => {
+    if (result.loading) return
+    setUser(result.data.me)
+  }, [result.data]) // eslint-disable-line
 
   const logout = () => {
     setToken(null)
@@ -25,6 +37,7 @@ const App = () => {
         <button onClick={() => setPage('authors')}>authors</button>
         <button onClick={() => setPage('books')}>books</button>
         {token && <button onClick={() => setPage('add')}>add book</button>}
+        {token && <button onClick={() => setPage('recs')}>recommendations</button>}
         {!token && <button onClick={() => setPage('login')}>login</button>}
         {token && <button onClick={() => {
           logout()
@@ -37,6 +50,7 @@ const App = () => {
       <Authors token={token} show={page === 'authors'} />
       <Books show={page === 'books'} />
       <NewBook setPage={setPage} show={page === 'add'} />
+      <Recommendations user={user} show={page === 'recs'} />
       <LoginForm
         setToken={setToken}
         setMessage={setMessage}
