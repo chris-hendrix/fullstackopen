@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server')
+const { ApolloServer, gql, AuthenticationError, UserInputError } = require('apollo-server')
 require('dotenv').config();
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
@@ -46,7 +46,7 @@ const typeDefs = gql`
     personCount: Int!
     allPersons(phone: YesNo): [Person!]!
     findPerson(name: String!): Person
-    me: Person
+    me: User
   }
   type Mutation {
     addPerson(
