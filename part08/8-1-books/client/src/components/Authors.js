@@ -3,10 +3,10 @@ import { useQuery } from '@apollo/client'
 import BornForm from './BornForm'
 import { ALL_AUTHORS } from '../queries'
 
-const Authors = (props) => {
+const Authors = ({ token, show }) => {
   const result = useQuery(ALL_AUTHORS)
 
-  if (!props.show) return null
+  if (!show) return null
 
   if (result.loading) return <div>loading...</div>
 
@@ -31,7 +31,7 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
-      <BornForm authors={authors} />
+      {token && <BornForm authors={authors} />}
     </div>
   )
 }

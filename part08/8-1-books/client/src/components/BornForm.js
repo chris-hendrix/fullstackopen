@@ -24,8 +24,8 @@ const BornForm = ({ authors }) => {
 
       <form onSubmit={submit}>
         <div>
-          <select value={name} onChange={({ target }) => setName(target.value)}>
-            {authors.map((a, i) => (<option value={a.name} selected={i === 0} >{a.name}</option>))}
+          <select defaultValue={authors[0].name} onChange={({ target }) => setName(target.value)}>
+            {authors.map((a, i) => (<option key={a.name} value={a.name} >{a.name}</option>))}
           </select>
         </div>
         <div>
