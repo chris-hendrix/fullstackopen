@@ -83,7 +83,7 @@ const resolvers = {
       const query = {}
       if (args.author) query.author = args.author
       if (args.genre) query.genres = args.genre
-      return await Book.find(query)
+      return await Book.find(query).populate('author')
     },
     allAuthors: async () => Author.find({})
   },
