@@ -19,8 +19,6 @@ const App = () => {
 
   if (message) window.alert(message)
 
-  console.log(token)
-
   return (
     <div>
       <div>
