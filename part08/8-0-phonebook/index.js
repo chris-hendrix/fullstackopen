@@ -1,5 +1,4 @@
 const { ApolloServer, gql } = require('apollo-server')
-const { v1: uuid } = require('uuid')
 require('dotenv').config();
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
