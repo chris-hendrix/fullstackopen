@@ -7,6 +7,7 @@ module.exports = {
       const savedDocument = await document.save()
       return savedDocument
     } catch (error) {
+      console.log(error)
       throw new UserInputError(error.message, { invalidArgs: args })
     }
   }
