@@ -1,4 +1,5 @@
 const { UserInputError, AuthenticationError } = require('apollo-server')
+const { PubSub } = require('graphql-subscriptions')
 const jwt = require('jsonwebtoken')
 
 const { saveDoc } = require('./utils/mongoHelper')
@@ -8,6 +9,7 @@ const Author = require('./models/author')
 const User = require('./models/user')
 
 const { JWT_SECRET } = process.env
+const pubsub = new PubSub()
 
 const resolvers = {
   Query: {
@@ -30,7 +32,9 @@ const resolvers = {
       if (!context.currentUser) throw new AuthenticationError("not authenticated")
       let author = await Author.findOne({ name: args.author })
       if (!author) author = await saveDoc(new Author({ name: args.author }), args)
-      return await saveDoc(new Book({ ...args, author }, args))
+      const book = new Book({ ...args, author })
+      pubsub.publish('BOOK_ADDED', { bookAdded: book })
+      return await saveDoc(book, args)
     },
     editAuthor: async (root, args, context) => {
       if (!context.currentUser) throw new AuthenticationError("not authenticated")
@@ -49,7 +53,12 @@ const resolvers = {
       const userForToken = { username: user.username, id: user._id, }
       return { value: jwt.sign(userForToken, JWT_SECRET) }
     },
-  }
+  },
+  Subscription: {
+    bookAdded: {
+      subscribe: () => pubsub.asyncIterator(['BOOK_ADDED'])
+    },
+  },
 }
 
 const context = async ({ req }) => {
