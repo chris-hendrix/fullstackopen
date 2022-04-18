@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useApolloClient, useQuery } from '@apollo/client'
+import { useApolloClient, useQuery, useSubscription } from '@apollo/client'
 
-import { CURRENT_USER } from './queries'
+import { CURRENT_USER, BOOK_ADDED } from './queries'
 
 import Authors from './components/Authors'
 import Books from './components/Books'
@@ -16,6 +16,14 @@ const App = () => {
   const [page, setPage] = useState('authors')
   const client = useApolloClient()
 
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      console.log(subscriptionData)
+      const bookAdded = subscriptionData.data.bookAdded
+      window.alert(`book added: ${bookAdded.title}`)
+    },
+  })
+
   const result = useQuery(CURRENT_USER)
 
   useEffect(() => {
@@ -28,6 +36,7 @@ const App = () => {
     localStorage.clear()
     client.resetStore()
   }
+
 
   if (message) window.alert(message)
 
