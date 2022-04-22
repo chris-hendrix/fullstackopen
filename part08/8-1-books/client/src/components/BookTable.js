@@ -1,17 +1,21 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { ALL_BOOKS } from '../queries'
 
 const BookTable = ({ genre }) => {
+  const [books, setBooks] = useState([])
   const result = useQuery(ALL_BOOKS, {
     variables: genre ? { genre } : undefined
   })
 
   useEffect(() => result.refetch(), [genre]) // eslint-disable-line
 
-  if (result.loading) return <div>loading...</div>
+  useEffect(() => {
+    if (result.loading) return
+    setBooks(result.data.allBooks)
+  }, [result.data]) // eslint-disable-line
 
-  const books = result.data.allBooks
+  if (result.loading) return <div>loading...</div>
 
   return (
     <>
