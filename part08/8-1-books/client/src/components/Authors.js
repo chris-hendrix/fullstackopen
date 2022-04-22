@@ -22,7 +22,7 @@ const Authors = ({ token, show }) => {
             <th>born</th>
             <th>books</th>
           </tr>
-          {authors.map((a) => (
+          {authors.length > 0 && authors.map((a) => (
             <tr key={a.name}>
               <td>{a.name}</td>
               <td>{a.born}</td>
@@ -31,7 +31,7 @@ const Authors = ({ token, show }) => {
           ))}
         </tbody>
       </table>
-      {token && <BornForm authors={authors} />}
+      {token && authors.length && <BornForm authors={authors} />}
     </div>
   )
 }
