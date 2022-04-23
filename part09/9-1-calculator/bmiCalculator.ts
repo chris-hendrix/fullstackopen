@@ -3,7 +3,7 @@ interface BmiValues {
   weight: number;
 }
 
-const parseArguments = (args: Array<string>) : BmiValues => {
+const getBmiArgs = (args: Array<string>) : BmiValues => {
   if (args.length < 4) throw new Error('Not enough arguments');
   if (args.length > 4) throw new Error('Too many arguments');
 
@@ -17,7 +17,7 @@ const parseArguments = (args: Array<string>) : BmiValues => {
   }
 }
 
-const calculateBmi = (height: number, weight: number) => {
+export const calculateBmi = (height: number, weight: number) => {
   
   const getBmiCategory = (bmi: number) : string => {
     if (bmi >= 30) return 'obese'
@@ -26,11 +26,11 @@ const calculateBmi = (height: number, weight: number) => {
     return 'underweight'
   }
 
-  return {bmi: height/weight, category: getBmiCategory(height/weight)}
+  return {bmi: height/weight, category: getBmiCategory(height/weight), height, weight}
 }
 
 try {
-  const { height, weight } = parseArguments(process.argv);
+  const { height, weight } = getBmiArgs(process.argv);
   const bmiResult = calculateBmi(height, weight)
   console.log(bmiResult)
 } catch (error: unknown) {
