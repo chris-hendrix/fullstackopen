@@ -1,4 +1,4 @@
-interface ExerciseResult {
+export interface ExerciseResult {
   periodLength: number,
   trainingDays: number,
   success: boolean,
@@ -8,7 +8,7 @@ interface ExerciseResult {
   average: number
 }
 
-const calculateExercise = (log: number[], target = 2): ExerciseResult => {
+export const calculateExercise = (log: number[], target = 2): ExerciseResult => {
   const average: number = log.reduce((a, b) => a + b) / log.length;
   const success: boolean = average >= target;
 
