@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client'
 import { EDIT_AUTHOR } from '../queries'
 
 const BornForm = ({ authors }) => {
-  const [name, setName] = useState(authors[0].name)
+  const [name, setName] = useState(authors.length ? authors[0].name : [])
   const [born, setBorn] = useState('')
 
   const [setBornTo] = useMutation(EDIT_AUTHOR)
