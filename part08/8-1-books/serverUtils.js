@@ -24,15 +24,14 @@ const resolvers = {
     },
     allAuthors: async () => Author.find({})
   },
-  Author: {
-    bookCount: async (root) => Book.find({ author: root.author.name }).countDocuments()
-  },
   Mutation: {
     addBook: async (root, args, context) => {
       if (!context.currentUser) throw new AuthenticationError("not authenticated")
       let author = await Author.findOne({ name: args.author })
       if (!author) author = await saveDoc(new Author({ name: args.author }), args)
       const book = new Book({ ...args, author })
+      const bookCount = await Book.find({ author }).countDocuments()
+      await Author.findOneAndUpdate({ author }, { bookCount })
       pubsub.publish('BOOK_ADDED', { bookAdded: book })
       return await saveDoc(book, args)
     },
