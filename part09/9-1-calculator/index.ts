@@ -25,18 +25,29 @@ app.get('/bmi', (req, res) => {
 });
 
 app.post('/exercises', (req, res) => {
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const isArrayOfNumbers = (value: any): boolean => {
+    return Array.isArray(value) && value.every(item => typeof item === "number");
+ };
   try {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const {log, target} = req.body;
+    if (!log || !isArrayOfNumbers(log)) {
+      return res.send({ error: 'log is not array of number'}).status(400);
+    }
+    if ( !target || isNaN(Number(target))) {
+      return res.send({ error: 'target is not a number'}).status(400);
+    }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const exerciseResult = calculateExercise(log, target);
-    res.json(exerciseResult);
+    return res.json(exerciseResult);
   } catch (error: unknown) {
     let errorMessage = 'Something bad happened.';
     if (error instanceof Error) {
       errorMessage += ' Error: ' + error.message;
     }
-    res.send(errorMessage);
+    return res.send(errorMessage);
   }
 });
 
