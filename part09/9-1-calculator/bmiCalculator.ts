@@ -11,30 +11,30 @@ const getBmiArgs = (args: Array<string>) : BmiValues => {
     return {
       height: Number(args[2]),
       weight: Number(args[3])
-    }
+    };
   } else {
     throw new Error('Provided values were not numbers!');
   }
-}
+};
 
 export const calculateBmi = (height: number, weight: number) => {
   
   const getBmiCategory = (bmi: number) : string => {
-    if (bmi >= 30) return 'obese'
-    if (bmi >= 25) return 'overweight'
-    if (bmi >= 18.5) return 'normal'
-    return 'underweight'
-  }
+    if (bmi >= 30) return 'obese';
+    if (bmi >= 25) return 'overweight';
+    if (bmi >= 18.5) return 'normal';
+    return 'underweight';
+  };
 
-  return {bmi: height/weight, category: getBmiCategory(height/weight), height, weight}
-}
+  return {bmi: height/weight, category: getBmiCategory(height/weight), height, weight};
+};
 
 try {
   const { height, weight } = getBmiArgs(process.argv);
-  const bmiResult = calculateBmi(height, weight)
-  console.log(bmiResult)
+  const bmiResult = calculateBmi(height, weight);
+  console.log(bmiResult);
 } catch (error: unknown) {
-  let errorMessage = 'Something bad happened.'
+  let errorMessage = 'Something bad happened.';
   if (error instanceof Error) {
     errorMessage += ' Error: ' + error.message;
   }
