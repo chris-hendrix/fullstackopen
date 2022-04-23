@@ -27,4 +27,16 @@ const calculateExercise = (log: number[], target: number = 2): ExerciseResult =>
   }
 }
 
-console.log(calculateExercise([1,2,3,0,1], 1))
+const getLogFromArgs = (argv: string[]): number[] => {
+  if (argv.length < 3) throw new Error('not enough args')
+  return argv.slice(2).map(v => parseFloat(v))
+}
+
+try {
+  const log: number[] = getLogFromArgs(process.argv)
+  console.log(calculateExercise(log))
+} catch (error: unknown) {
+  let errorMessage = 'Something bad happened.'
+  if (error instanceof Error) errorMessage += ' Error: ' + error.message;
+  console.log(errorMessage);
+}
