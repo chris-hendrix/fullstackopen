@@ -1,35 +1,13 @@
-const courseName = "Half Stack application development";
-const courseParts = [
-  {
-    name: "Fundamentals",
-    exerciseCount: 10
-  },
-  {
-    name: "Using props to pass data",
-    exerciseCount: 7
-  },
-  {
-    name: "Deeper type usage",
-    exerciseCount: 14
-  }
-];
+interface Course { name: string, exerciseCount: number }
 
-const Header = () => <><h1>{courseName}</h1></>
+const Header = ({ courseName }: { courseName: string }) => <><h1>{courseName}</h1></>
 
-const Content = () => 
+const Content = ({ courseParts }:{ courseParts: Array<Course> }) => 
   <>
-    <p>
-      {courseParts[0].name} {courseParts[0].exerciseCount}
-    </p>
-    <p>
-      {courseParts[1].name} {courseParts[1].exerciseCount}
-    </p>
-    <p>
-      {courseParts[2].name} {courseParts[2].exerciseCount}
-    </p>
+    {courseParts.map(c => <p key={c.name}>{`${c.name} ${c.exerciseCount}`}</p>)}
   </>
 
-const Total = () => 
+const Total = ({ courseParts }:{ courseParts: Array<Course> }) => 
   <>
     <p>
       Number of exercises{" "}
@@ -38,11 +16,26 @@ const Total = () =>
   </>
 
 const App = () => {
+  const courseName = "Half Stack application development";
+  const courseParts = [
+    {
+      name: "Fundamentals",
+      exerciseCount: 10
+    },
+    {
+      name: "Using props to pass data",
+      exerciseCount: 7
+    },
+    {
+      name: "Deeper type usage",
+      exerciseCount: 14
+    }
+  ];
   return (
     <div>
-      <Header />
-      <Content />
-      <Total />
+      <Header courseName={courseName} />
+      <Content courseParts={courseParts}/>
+      <Total courseParts={courseParts}/>
     </div>
   );
 };
