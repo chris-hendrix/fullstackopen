@@ -2,11 +2,11 @@
   "name": "9-2-flights",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
-    "server": "ts-node-dev index.ts",
+    "server": "ts-node-dev src/index.ts",
     "client": "npm start --prefix ../client",
     "dev": "NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
     "lint": "eslint --ext .ts .",
