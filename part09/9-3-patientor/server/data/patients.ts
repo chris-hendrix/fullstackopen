@@ -1,4 +1,5 @@
-import { Patient, Gender } from "../src/types";
+import { Patient } from "../src/types";
+import createPatient from "../src/utils";
 
 const patients: Array<Patient> = [
   {
@@ -41,10 +42,6 @@ const patients: Array<Patient> = [
       "gender": "male",
       "occupation": "Digital evangelist"
   }
-].map(p => ({
-    ...p,
-     dateOfBirth: new Date(p.dateOfBirth),
-     gender: p.gender as Gender
-}));
+].map(p => createPatient(p));
 
 export default patients;
