@@ -15,7 +15,8 @@ export interface Patient {
   name: string,
   dateOfBirth: Date,
   ssn: string,
-  gender: Gender
+  gender: Gender,
+  occupation: string
 }
 
 export type SafePatient = Omit<Patient, 'ssn'>;
