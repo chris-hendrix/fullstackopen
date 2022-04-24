@@ -1,0 +1,33 @@
+{
+  "name": "9-2-flights",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc",
+    "server": "ts-node-dev src/index.ts",
+    "client": "npm start --prefix ../client",
+    "dev": "NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
+    "lint": "eslint --ext .ts .",
+    "start": "node build/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
+    "concurrently": "^7.1.0",
+    "eslint": "^8.14.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "uuid": "^8.3.2"
+  }
+}
