@@ -37,7 +37,7 @@ const parseGender = (gender: unknown): Gender => {
 };
 
 type PatientFields = { id: unknown, name: unknown, dateOfBirth: unknown, 
-  ssn: unknown, gender: unknown, occupation: unknown, entries: unknown };
+  ssn: unknown, gender: unknown, occupation: unknown };
 
 const createPatient = (
     {id, name, dateOfBirth, ssn, gender, occupation}: PatientFields
