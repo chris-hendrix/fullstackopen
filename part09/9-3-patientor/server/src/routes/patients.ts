@@ -5,12 +5,12 @@ import createPatient from '../utils';
 const router = express.Router();
 
 router.get('/', (_req, res) => {
-  res.send(patientService.getPublicPatients());
+  // res.send(patientService.getPublicPatients());
+  res.send(patientService.getPatients());
 });
 
 router.get('/:id', (req, res) => {
-  const patients = patientService.getPublicPatients();
-  const patient = patients.find(p=> p.id === req.params.id);
+  const patient = patientService.getPatient(req.params.id);
   if (!patient) return res.status(404).send('No patient with that id');
   return res.send(patient);
 });

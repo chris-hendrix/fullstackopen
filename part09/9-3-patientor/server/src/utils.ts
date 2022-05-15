@@ -58,7 +58,7 @@ const parseHealthCheckRating = (rating: unknown): HealthCheckRating => {
 const isDischarge = (param: any): param is Discharge => {
   if (!param) return false;
   /* eslint-disable @typescript-eslint/no-unsafe-argument */
-  if (!Object.keys(param).includes('date') || Object.keys(param).includes('criteria')) return false;
+  if (!Object.keys(param).includes('date') || !Object.keys(param).includes('criteria')) return false;
   if (!isDate(param.date)) return false;
   if (!isString(param.date)) return false;
   /* eslint-enable @typescript-eslint/no-unsafe-argument */
@@ -73,29 +73,86 @@ const parseDischarge = (discharge: unknown): Discharge => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isSickLeave = (sickLeave: any): sickLeave is SickLeave => {
-  if (!sickLeave) return false;
+const isSickLeave = (param: any): param is SickLeave => {
+  if (!param) return false;
   /* eslint-disable @typescript-eslint/no-unsafe-argument */
-  if (!Object.keys(sickLeave).includes('startDate') || Object.keys(sickLeave).includes('endDate')) return false;
-  if (!isDate(sickLeave.startDate)) return false;
-  if (!isString(sickLeave.endDate)) return false;
+  if (!Object.keys(param).includes('startDate') || !Object.keys(param).includes('endDate')) return false;
+  if (!isDate(param.startDate)) return false;
+  if (!isString(param.endDate)) return false;
   /* eslint-enable @typescript-eslint/no-unsafe-argument */
   return true;
 };
 
-const parseSickLeave = (sickLeave: any): SickLeave => {
+const parseSickLeave = (sickLeave: unknown): SickLeave => {
   if (!isSickLeave(sickLeave)) throw new Error("Incorrect or missing sick leave data");
   const startDate = parseDate(sickLeave.startDate);
   const endDate = parseDate(sickLeave.endDate);
   return { startDate, endDate };
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const isEntry = (param: any): param is Entry => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    const createdEntry: Entry | null = createEntry(param);
+    return Boolean(createdEntry);
+  } catch (err) {
+    return false;
+  }
+};
+
+type EntryFields = { id: unknown, type: unknown, description : unknown, date: unknown, specialist: unknown, 
+  diagnosisCodes?: unknown, healthCheckRating?: unknown, discharge?: unknown, employerName?: unknown, sickLeave?: unknown };
+
+export const createEntry = ({ id, type, description, date, specialist, diagnosisCodes, 
+  healthCheckRating, discharge, employerName, sickLeave}: EntryFields): Entry | null => {
+  const baseEntry = {
+    id: id ? parseString(id) : uuid(),
+    description: parseString(description),
+    date: parseDate(date),
+    specialist: parseString(specialist),
+    diagnosisCodes: parseDiagnosisCodes(diagnosisCodes)
+  };
+
+  switch (type) {
+    case "Hospital":
+      return {
+        ...baseEntry,
+        type: type,
+        discharge: parseDischarge(discharge),
+      };
+    case "HealthCheck":
+      return {
+        ...baseEntry,
+        type: type,
+        healthCheckRating: parseHealthCheckRating(
+          healthCheckRating
+        ),
+      };
+    case "OccupationalHealthcare":
+      return {
+        ...baseEntry,
+        type: type,
+        employerName: parseString(employerName),
+        sickLeave: parseSickLeave(sickLeave),
+      };
+  }
+  return null;
+};
+
 type PatientFields = { id: unknown, name: unknown, dateOfBirth: unknown, 
   ssn: unknown, gender: unknown, occupation: unknown, entries: unknown };
 
 const createPatient = (
-    {id, name, dateOfBirth, ssn, gender, occupation}: PatientFields
+    {id, name, dateOfBirth, ssn, gender, occupation, entries}: PatientFields
   ): Patient => {
+  const patientEntries: Entry[] = [];
+  if(Array.isArray(entries)) {
+    entries.forEach((e: Entry) => {
+      if (isEntry(e)) {patientEntries.push(e);}
+    });
+  }
+
   const patient: Patient = {
     id: id ? parseString(id) : uuid(),
     name: parseString(name),
@@ -103,47 +160,9 @@ const createPatient = (
     ssn: parseString(ssn),
     gender: parseGender(gender),
     occupation: parseString(occupation),
-    entries: []
+    entries: patientEntries
   };
   return patient;
 };
-
-type EntryFields = { id: unknown, type: unknown, description : unknown, date: unknown, specialist: unknown, 
-  diagnosisCodes?: unknown, healthCheckRating?: unknown, discharge?: unknown, employerName?: unknown, sickLeave?: unknown };
-
-  export const createEntry = ({ id, type, description, date, specialist, diagnosisCodes, 
-    healthCheckRating, discharge, employerName, sickLeave}: EntryFields): Entry | undefined | void => {
-    const baseEntry = {
-      id: id ? parseString(id) : uuid(),
-      description: parseString(description),
-      date: parseDate(date),
-      specialist: parseString(specialist),
-      diagnosisCodes: parseDiagnosisCodes(diagnosisCodes)
-    };
-  
-    switch (type) {
-      case "Hospital":
-        return {
-          ...baseEntry,
-          type: type,
-          discharge: parseDischarge(discharge),
-        };
-      case "HealthCheck":
-        return {
-          ...baseEntry,
-          type: type,
-          healthCheckRating: parseHealthCheckRating(
-            healthCheckRating
-          ),
-        };
-      case "OccupationalHealthcare":
-        return {
-          ...baseEntry,
-          type: type,
-          employerName: parseString(employerName),
-          sickLeave: parseSickLeave(sickLeave),
-        };
-    }
-  };
 
 export default createPatient;
