@@ -36,19 +36,20 @@ const parseGender = (gender: unknown): Gender => {
   return gender;
 };
 
-type PatientFields = { name: unknown, dateOfBirth: unknown, 
-  ssn: unknown, gender: unknown, occupation: unknown };
+type PatientFields = { id: unknown, name: unknown, dateOfBirth: unknown, 
+  ssn: unknown, gender: unknown, occupation: unknown, entries: unknown };
 
 const createPatient = (
-    {name, dateOfBirth, ssn, gender, occupation}: PatientFields
+    {id, name, dateOfBirth, ssn, gender, occupation}: PatientFields
   ): Patient => {
   const patient: Patient = {
-    id: uuid(),
+    id: id ? parseString(id) : uuid(),
     name: parseString(name),
     dateOfBirth: parseDate(dateOfBirth),
     ssn: parseString(ssn),
     gender: parseGender(gender),
-    occupation: parseString(occupation)
+    occupation: parseString(occupation),
+    entries: []
   };
   return patient;
 };
