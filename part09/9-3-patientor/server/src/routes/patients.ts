@@ -10,8 +10,6 @@ router.get('/', (_req, res) => {
 
 router.get('/:id', (req, res) => {
   const patients = patientService.getPublicPatients();
-  console.log(req.params.id);
-  console.log(patients);
   const patient = patients.find(p=> p.id === req.params.id);
   if (!patient) return res.status(404).send('No patient with that id');
   return res.send(patient);
