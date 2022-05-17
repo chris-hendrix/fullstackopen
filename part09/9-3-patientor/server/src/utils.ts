@@ -119,7 +119,7 @@ export const createEntry = ({ id, type, description, date, specialist, diagnosis
       return {
         ...baseEntry,
         type: type,
-        discharge: parseDischarge(discharge),
+        discharge: discharge ? parseDischarge(discharge) : undefined,
       };
     case "HealthCheck":
       return {
@@ -134,7 +134,7 @@ export const createEntry = ({ id, type, description, date, specialist, diagnosis
         ...baseEntry,
         type: type,
         employerName: parseString(employerName),
-        sickLeave: parseSickLeave(sickLeave),
+        sickLeave: sickLeave ? parseSickLeave(sickLeave) : undefined,
       };
   }
   return null;
