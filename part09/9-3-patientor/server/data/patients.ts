@@ -1,5 +1,5 @@
 import { Patient, Gender } from '../src/types';
-import createPatient from "../src/utils";
+import { createPatient } from "../src/utils";
 
 const patients: Array<Patient> = [
     {

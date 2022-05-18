@@ -1,5 +1,5 @@
 import patients from "../../data/patients";
-import { Patient, PublicPatient } from "../types";
+import { Patient, PublicPatient, Entry } from "../types";
 
 const getPatients = (): Array<Patient> => {
   return patients;
@@ -18,9 +18,16 @@ const addPatient = (patient: Patient): PublicPatient => {
   return patient;
 };
 
+const addEntry = (patient: Patient, entry: Entry): Entry => {
+  if(!Array.isArray(patient.entries)) patient.entries = [];
+  patient.entries.push(entry);
+  return entry;
+};
+
 export default {
   getPatients,
   getPatient,
   getPublicPatients,
-  addPatient
+  addPatient,
+  addEntry
 };

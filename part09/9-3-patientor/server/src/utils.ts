@@ -143,7 +143,7 @@ export const createEntry = ({ id, type, description, date, specialist, diagnosis
 type PatientFields = { id: unknown, name: unknown, dateOfBirth: unknown, 
   ssn: unknown, gender: unknown, occupation: unknown, entries: unknown };
 
-const createPatient = (
+export const createPatient = (
     {id, name, dateOfBirth, ssn, gender, occupation, entries}: PatientFields
   ): Patient => {
   const patientEntries: Entry[] = [];
@@ -164,5 +164,3 @@ const createPatient = (
   };
   return patient;
 };
-
-export default createPatient;
