@@ -1,16 +1,16 @@
 import { v1 as uuid } from 'uuid';
 import { Patient, Gender, Entry, Diagnosis, HealthCheckRating, Discharge, SickLeave } from './types';
 
-const isString = (text: unknown): text is string => {
-  return typeof text === 'string' || text instanceof String;
+const isString = (param: unknown): param is string => {
+  return typeof param === 'string' || param instanceof String;
 };
 
-const parseString = (comment: unknown): string => {
-  if (!comment || !isString(comment)) throw new Error('Incorrect or missing comment');
-  return comment;
+const parseString = (text: unknown): string => {
+  if (!text || !isString(text)) throw new Error('Incorrect or missing field');
+  return text;
 };
 
-const isDate = (date: string): boolean => Boolean(Date.parse(date));
+const isDate = (param: string): boolean => Boolean(Date.parse(param));
 
 const parseDate = (date: unknown): Date => {
   if (!date || !isString(date) || !isDate(date)) {

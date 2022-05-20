@@ -7,7 +7,7 @@ import {
   TextField as TextFieldMUI,
   Typography,
 } from "@material-ui/core";
-import { Diagnosis, Gender } from "../types";
+import { Diagnosis, Gender, EntryType } from "../types";
 import { InputLabel } from "@material-ui/core";
 import Input from '@material-ui/core/Input';
 
@@ -24,9 +24,40 @@ type SelectFieldProps = {
   options: GenderOption[];
 };
 
+export type EntryTypeOption = {
+  value: EntryType;
+  label: string;
+};
+
+// props for select field component
+type EntryTypeSelectFieldProps = {
+  name: string;
+  label: string;
+  options: EntryTypeOption[];
+};
+
 const FormikSelect = ({ field, ...props }: FieldProps) => <Select {...field} {...props} />;
 
 export const SelectField = ({ name, label, options }: SelectFieldProps) => (
+  <>
+    <InputLabel>{label}</InputLabel>
+    <Field
+      fullWidth
+      style={{ marginBottom: "0.5em" }}
+      label={label}
+      component={FormikSelect}
+      name={name}
+    >
+      {options.map((option) => (
+        <MenuItem key={option.value} value={option.value}>
+          {option.label || option.value}
+        </MenuItem>
+      ))}
+    </Field>
+  </>
+);
+
+export const EntryTypeSelectField = ({ name, label, options }: EntryTypeSelectFieldProps) => (
   <>
     <InputLabel>{label}</InputLabel>
     <Field
@@ -74,8 +105,7 @@ interface NumberProps extends FieldProps {
 }
 
 export const NumberField = ({ field, label, min, max }: NumberProps) => {
-  const [value, setValue] = useState<number>();
-
+  const [value, setValue] = useState<number>(0);
   return (
     <div style={{ marginBottom: "1em" }}>
       <TextFieldMUI

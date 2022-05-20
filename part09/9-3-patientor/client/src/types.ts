@@ -24,10 +24,15 @@ export enum HealthCheckRating {
 }
 export type Discharge = { date: Date, criteria: string };
 export type SickLeave = { startDate: Date, endDate: Date };
+export enum EntryType {
+  Hospital = "Hospital",
+  OccupationalHealthcare = "OccupationalHealthcare",
+  HealthCheck = "HealthCheck"
+}
 
 export interface Entry {
   id: string;
-  type: string;
+  type: EntryType;
   description: string;
   date: string;
   specialist: string;

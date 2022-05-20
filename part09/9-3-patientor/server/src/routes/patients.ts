@@ -39,7 +39,7 @@ router.post('/:id/entries', (req, res) => {
     const entry = createEntry(req.body);
     if (!entry) return res.status(400).send('Invalid entry type');
     const addedEntry = patientService.addEntry(patient, entry);
-    return res.send(addedEntry);
+    return res.json(addedEntry);
   } catch (error: unknown) {
     let errorMessage = 'Something went wrong.';
     if (error instanceof Error) {
