@@ -1,21 +1,33 @@
 import patients from "../../data/patients";
-import { Patient, SafePatient } from "../types";
+import { Patient, PublicPatient, Entry } from "../types";
 
 const getPatients = (): Array<Patient> => {
   return patients;
 };
 
-const getSafePatients = (): Array<SafePatient> => {
+const getPatient = (patientId: string): Patient | undefined => {
+  return patients.find((p: Patient) => p.id === patientId);
+};
+
+const getPublicPatients = (): Array<PublicPatient> => {
   return patients.map(p => ({...p, ssn: undefined}));
 };
 
-const addPatient = (patient: Patient): SafePatient => {
+const addPatient = (patient: Patient): PublicPatient => {
   patients.push(patient);
   return patient;
 };
 
+const addEntry = (patient: Patient, entry: Entry): Entry => {
+  if(!Array.isArray(patient.entries)) patient.entries = [];
+  patient.entries.push(entry);
+  return entry;
+};
+
 export default {
   getPatients,
-  getSafePatients,
-  addPatient
+  getPatient,
+  getPublicPatients,
+  addPatient,
+  addEntry
 };
