@@ -47,4 +47,16 @@ router.delete('/:id', blogFinder, async (req, res) => {
   }
 })
 
+// PUT blog by id
+router.put('/:id', blogFinder, async (req, res) => {
+  if (req.blog) {
+    await req.blog.update(req.body)
+    await req.blog.save()
+    console.log(req.blog.toJSON())
+    res.json(req.blog)
+  } else {
+    res.status(404).end()
+  }
+})
+
 module.exports = router
