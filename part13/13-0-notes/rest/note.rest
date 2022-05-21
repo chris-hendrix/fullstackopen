@@ -1,2 +1,25 @@
-### GET all users
-GET http://localhost:3001/api/users
+@createdAt = {{$datetime iso8601}}
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoZW5kcml4IiwiaWQiOjEsImlhdCI6MTY1MzE3NjU4NH0.-OeXx8KQwk9BZolRjgY1txbJz1COS4Jd8sd765DBvLM
+
+### POST login
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+    "username": "chendrix",
+    "password": "secret"
+}
+
+### GET all notes
+GET http://localhost:3001/api/notes
+
+### POST note
+POST http://localhost:3001/api/notes HTTP/1.1
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "content": "Test note",
+  "important": true,
+  "date": "{{createdAt}}"
+}
