@@ -1,4 +1,4 @@
-name: 11-1 Pokedex Periodic Health Check
+name: Bloglist Periodic Health Check
 
 on:
   # schedule:
