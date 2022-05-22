@@ -27,7 +27,13 @@ const tokenExtractor = (req, res, next) => {
 
 // GET blogs
 router.get('/', async (req, res) => {
-  const blogs = await Blog.findAll()
+  const blogs = await Blog.findAll({
+    attributes: { exclude: ['userId'] },
+    include: {
+      model: User,
+      attributes: ['name']
+    }
+  })
   console.log(JSON.stringify(blogs, null, 2))
   res.json(blogs)
 })
@@ -54,7 +60,7 @@ router.get('/:id', blogFinder, async (req, res) => {
 })
 
 // DELETE blog by id
-router.delete('/:id', blogFinder, async (req, res) => {
+router.delete('/:id', [blogFinder, tokenExtractor], async (req, res) => {
   if (req.blog) {
     await req.blog.destroy()
     console.log(req.blog.toJSON())
