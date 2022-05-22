@@ -59,6 +59,9 @@ router.post('/', tokenExtractor, async (req, res) => {
     const blog = await Blog.create({ ...req.body, userId: user.id })
     return res.json(blog)
   } catch (error) {
+    if (error.name = 'SequelizeValidationError') {
+      return res.status(400).json({ error: error.message })
+    }
     return res.status(400).json({ error })
   }
 })
