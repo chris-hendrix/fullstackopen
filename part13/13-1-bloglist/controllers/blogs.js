@@ -45,7 +45,8 @@ router.get('/', async (req, res) => {
       model: User,
       attributes: ['name']
     },
-    where
+    where,
+    order: [['likes', 'DESC']]
   })
   console.log(JSON.stringify(blogs, null, 2))
   res.json(blogs)
