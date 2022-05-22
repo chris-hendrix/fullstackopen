@@ -25,19 +25,33 @@ const tokenExtractor = (req, res, next) => {
 }
 
 router.get('/', async (req, res) => {
+  const where = {}
+
+  if (req.query.important) {
+    where.important = req.query.important === "true"
+  }
+
+  if (req.query.search) {
+    where.content = {
+      [Op.substring]: req.query.search
+    }
+  }
+
   const notes = await Note.findAll({
     attributes: { exclude: ['userId'] },
     include: {
       model: User,
       attributes: ['name']
-    }
+    },
+    where
   })
+
   res.json(notes)
 })
 
 router.post('/', tokenExtractor, async (req, res) => {
   try {
-    const user = await User.findOne()
+    const user = await User.findByPk(req.decodedToken.id)
     const note = await Note.create({ ...req.body, userId: user.id })
     res.json(note)
   } catch (error) {
