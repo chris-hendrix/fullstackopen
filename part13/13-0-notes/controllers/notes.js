@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const router = require('express').Router()
+const { Op } = require('sequelize')
 
 const { SECRET } = require('../util/config')
 const { Note, User } = require('../models')
