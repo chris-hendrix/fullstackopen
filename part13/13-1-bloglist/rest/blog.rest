@@ -41,3 +41,6 @@ content-type: application/json
 {
   "likes": 1
 }
+
+### GET grouped authors
+GET http://localhost:3001/api/authors

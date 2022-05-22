@@ -96,4 +96,11 @@ router.put('/:id', blogFinder, async (req, res) => {
   }
 })
 
+// GET grouped authors
+router.put('/authors', async (_req, res) => {
+  const blogs = await Blog.findAll()
+  console.log(JSON.stringify(blogs, null, 2))
+  res.json(blogs)
+})
+
 module.exports = router
