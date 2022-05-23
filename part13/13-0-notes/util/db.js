@@ -49,4 +49,4 @@ const rollbackMigration = async () => {
   await migrator.down()
 }
 
-module.exports = { connectToDatabase, sequelize, rollbackMigration }
+module.exports = { connectToDatabase, sequelize, rollbackMigration, runMigrations }
