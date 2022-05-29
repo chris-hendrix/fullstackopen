@@ -1,9 +1,6 @@
 ### GET all users
 GET http://localhost:3001/api/users
 
-### GET user by id
-GET http://localhost:3001/api/users/1
-
 ### POST user
 POST http://localhost:3001/api/users HTTP/1.1
 content-type: application/json
@@ -12,3 +9,6 @@ content-type: application/json
   "username": "chendrix",
   "name": "Chris Hendrix"
 }
+
+### GET user by id
+GET http://localhost:3001/api/users/1
