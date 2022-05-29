@@ -22,14 +22,14 @@ ReadingList.init({
   },
   read: {
     type: DataTypes.BOOLEAN,
+    default: false,
     allowNull: false,
-    default: false
   },
 }, {
   sequelize,
   underscored: true,
   timestamps: false,
-  modelName: 'reading_List'
+  modelName: 'readingList'
 })
 
 module.exports = ReadingList
