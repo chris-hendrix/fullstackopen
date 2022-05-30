@@ -1,11 +1,11 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoZW5kcml4IiwiaWQiOjEsImlhdCI6MTY1MzIyODQwOH0.avUeLa6KTKSjgpyZpLF1fpXHAShrC0I3H1uTWpQpKtE
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoZW5kcml4MTEyM0BnbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNjUzMjQ4MTg0fQ.DZ8oVlGSyL7ZDYdxtnlGKSr4smCfktDljYA63OUhIFA
 
 ### POST login
 POST http://localhost:3001/api/login
 Content-Type: application/json
 
 {
-    "username": "chendrix",
+    "username": "chendrix1123@gmail.com",
     "password": "secret"
 }
 
@@ -28,9 +28,10 @@ content-type: application/json
 Authorization: bearer {{token}}
 
 {
-  "author": "Mark Z",
+  "author": "Mark Zuckerburg",
   "url": "facebook.com",
   "title": "Facebook",
+  "year": 2020,
   "likes": 0
 }
 

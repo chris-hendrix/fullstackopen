@@ -1,0 +1,28 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoZW5kcml4MTEyM0BnbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNjUzODY0NzUxfQ.0guLUp7ITmIywqenHANeguLXKxl8rTB1T0RpHOD-xYM
+
+### POST login
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+    "username": "chendrix1123@gmail.com",
+    "password": "secret"
+}
+
+### PUT reading list by id
+PUT http://localhost:3001/api/readinglists/1 HTTP/1.1
+content-type: application/json
+Authorization: bearer {{token}}
+
+{
+  "read": true
+}
+
+### POST reading list
+POST http://localhost:3001/api/readinglists HTTP/1.1
+content-type: application/json
+
+{
+  "blogId": 2,
+  "userId": 1
+}

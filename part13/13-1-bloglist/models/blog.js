@@ -1,3 +1,4 @@
+const { user } = require('pg/lib/defaults')
 const { Model, DataTypes } = require('sequelize')
 
 const { sequelize } = require('../util/db')
@@ -25,7 +26,14 @@ Blog.init({
   likes: {
     type: DataTypes.INTEGER,
     defaultValue: 0
-  }
+  },
+  year: {
+    type: DataTypes.INTEGER,
+    validate: {
+      max: (new Date()).getFullYear(),
+      min: 1991
+    }
+  },
 }, {
   sequelize,
   underscored: true,
